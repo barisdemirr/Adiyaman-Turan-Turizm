@@ -4,17 +4,17 @@ const ToursSection = () => {
   return (
     <section
       className="md:py-xl bg-slate-50 px-4 md:px-6 border-y border-surface-variant/30 py-20 md:py-10"
-      id="tours"
+      id="turlar"
     >
       <div className="max-w-[1280px] mx-auto">
         {/* Başlık ve Tablar */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 gap-4 md:gap-6">
           <div className="text-center md:text-left">
             <h2 className="font-bold md:font-h2 text-2xl md:text-h2 text-on-surface mb-2 md:mb-4">
-              Explore Our Handpicked Destinations
+              Turlarımızı Keşfedin
             </h2>
             <p className="font-body-md text-sm md:text-body-md text-secondary">
-              Curated itineraries designed to showcase the best of the region.
+              Bölgenin en iyi yönlerini sergilemek için hazırlanmış özel programlar.
             </p>
           </div>
           <div className="flex gap-1.5 p-1 bg-surface-container-highest rounded-lg self-center md:self-end">

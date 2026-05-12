@@ -2,7 +2,7 @@ import React from 'react';
 
 const ReservationSection = () => {
   return (
-    <section className="relative z-20 -mt-6 md:-mt-12 px-4 md:px-6 max-w-5xl mx-auto">
+    <section className="relative z-20 -mt-6 md:-mt-12 px-4 md:px-6 max-w-5xl mx-auto" id="hizli-rezervasyon">
       <div className="bg-surface-container-lowest rounded-xl shadow-lg p-4 md:p-6 border border-surface-variant flex flex-col md:flex-row gap-3 md:gap-4 items-stretch md:items-end">
         {/* Destination */}
         <div className="w-full md:flex-1 flex flex-col gap-1">

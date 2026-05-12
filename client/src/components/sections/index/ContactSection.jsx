@@ -4,7 +4,7 @@ const ContactSection = () => {
   return (
     <section
       className="py-10 md:py-xl px-4 md:px-6 bg-secondary text-on-secondary"
-      id="contact"
+      id="iletisim"
     >
       <div className="max-w-[1280px] mx-auto">
         {/* Başlık Bölümü */}

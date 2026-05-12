@@ -1,8 +1,8 @@
 import React from 'react';
 
-const WhyChooseUsSection = () => {
+const AboutSection = () => {
   return (
-    <section className="py-10 md:py-xl px-4 md:px-6 bg-secondary text-on-secondary">
+    <section className="py-10 md:py-xl px-4 md:px-6 bg-secondary text-on-secondary" id='hakkimizda'>
       <div className="max-w-[1280px] mx-auto">
         {/* Başlık Bölümü */}
         <div className="mb-10 md:mb-16 text-center">
@@ -65,4 +65,4 @@ const WhyChooseUsSection = () => {
   );
 };
 
-export default WhyChooseUsSection;
+export default AboutSection;

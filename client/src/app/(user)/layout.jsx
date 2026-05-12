@@ -1,7 +1,7 @@
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "@/styles/globals.css";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
+import Navbar from "@/components/layout/Navbar/Navbar";
+import Footer from "@/components/layout/Footer/Footer";
 
 // Fontları Next.js üzerinden optimize ederek çağırıyoruz
 const inter = Inter({
@@ -42,7 +42,7 @@ export default function RootLayout({ children }) {
             </head>
             <body className={`${inter.variable} ${plusJakarta.variable} antialiased`}>
                 <Navbar />
-                <main className="pt-20">
+                <main>
                     {children}
                 </main>
                 <Footer />
