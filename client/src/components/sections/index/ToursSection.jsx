@@ -10,14 +10,14 @@ const ToursSection = () => {
         {/* Başlık ve Tablar */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 gap-4 md:gap-6">
           <div className="text-center md:text-left">
-            <h2 className="font-bold md:font-h2 text-2xl md:text-h2 text-on-surface mb-2 md:mb-4">
+            <h2 className="reveal font-bold md:font-h2 text-2xl md:text-h2 text-on-surface mb-2 md:mb-4">
               Turlarımızı Keşfedin
             </h2>
-            <p className="font-body-md text-sm md:text-body-md text-secondary">
+            <p className="reveal font-body-md text-sm md:text-body-md text-secondary">
               Bölgenin en iyi yönlerini sergilemek için hazırlanmış özel programlar.
             </p>
           </div>
-          <div className="flex gap-1.5 p-1 bg-surface-container-highest rounded-lg self-center md:self-end">
+          <div className="reveal flex gap-1.5 p-1 bg-surface-container-highest rounded-lg self-center md:self-end">
             <button className="px-4 md:px-6 py-1.5 md:py-2 bg-surface-container-lowest text-on-surface font-label-bold text-[11px] md:text-label-bold rounded shadow-sm">
               Günübirlik
             </button>
@@ -32,7 +32,7 @@ const ToursSection = () => {
           {[1, 2, 3].map((_, index) => (
             <article
               key={index}
-              className="group rounded-xl overflow-hidden bg-surface-container-lowest shadow-sm hover:shadow-md transition-all duration-300 flex flex-col"
+              className="reveal group rounded-xl overflow-hidden bg-surface-container-lowest shadow-sm hover:shadow-md transition-all duration-300 flex flex-col"
             >
               <div className="relative h-48 md:h-64 overflow-hidden">
                 <img
@@ -88,7 +88,7 @@ const ToursSection = () => {
 
         {/* Pagination */}
         <div>
-          <nav className="flex justify-center items-center gap-1.5 md:gap-2 mt-8 md:mt-12 pb-4">
+          <nav className="reveal flex justify-center items-center gap-1.5 md:gap-2 mt-8 md:mt-12 pb-4">
             <button className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full border border-surface-variant text-secondary hover:bg-surface-container-low transition-colors active:scale-90">
               <span className="material-symbols-outlined text-[18px] md:text-[20px]">chevron_left</span>
             </button>

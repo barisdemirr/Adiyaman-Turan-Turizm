@@ -3,8 +3,11 @@
 import React from 'react';
 import { useState } from 'react';
 import NavLink from './components/NavLink';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 const Navbar = () => {
+    useScrollReveal();
+
     const [isActive, setIsActive] = useState('home');
     const [isNavOpen, setIsNavOpen] = useState(false);
 

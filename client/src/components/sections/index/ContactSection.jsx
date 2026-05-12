@@ -9,10 +9,10 @@ const ContactSection = () => {
       <div className="max-w-[1280px] mx-auto">
         {/* Başlık Bölümü */}
         <div className="mb-10 md:mb-16 text-center">
-          <h2 className="font-h2 font-bold text-2xl md:text-h2 text-white mb-3 md:mb-4">
+          <h2 className="reveal font-h2 font-bold text-2xl md:text-h2 text-white mb-3 md:mb-4">
             Bizimle İletişime Geçin
           </h2>
-          <p className="font-body-md text-xs md:text-body-md text-secondary-fixed max-w-2xl mx-auto px-2 opacity-90">
+          <p className="reveal font-body-md text-xs md:text-body-md text-secondary-fixed max-w-2xl mx-auto px-2 opacity-90">
             Sorularınız ve rezervasyon talepleriniz için bize her zaman ulaşabilirsiniz.
             Ekibimiz size yardımcı olmaktan mutluluk duyacaktır.
           </p>
@@ -64,7 +64,7 @@ const ContactSection = () => {
             ].map((item, index) => (
               <a
                 key={index}
-                className="group flex flex-col items-center text-center p-4 md:p-6 bg-white/10 backdrop-blur-md rounded-xl border border-white/20 transition-all duration-300 hover:bg-white/15 active:scale-95"
+                className="reveal group flex flex-col items-center text-center p-4 md:p-6 bg-white/10 backdrop-blur-md rounded-xl border border-white/20 transition-all duration-300 hover:bg-white/15 active:scale-95"
                 href={item.href}
                 target="_blank"
                 rel="noopener noreferrer"

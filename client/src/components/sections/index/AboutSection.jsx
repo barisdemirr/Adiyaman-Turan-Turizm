@@ -6,10 +6,10 @@ const AboutSection = () => {
       <div className="max-w-[1280px] mx-auto">
         {/* Başlık Bölümü */}
         <div className="mb-10 md:mb-16 text-center">
-          <h2 className="font-h2 font-bold text-2xl md:text-h2 text-white mb-3 md:mb-4">
+          <h2 className="reveal font-h2 font-bold text-2xl md:text-h2 text-white mb-3 md:mb-4">
             Neden Bizi Tercih Etmelisiniz?
           </h2>
-          <p className="font-body-md text-sm md:text-body-md text-secondary-fixed max-w-2xl mx-auto px-4 opacity-90">
+          <p className="reveal font-body-md text-sm md:text-body-md text-secondary-fixed max-w-2xl mx-auto px-4 opacity-90">
             1988'den beri misafirlerimize en kaliteli ve güvenilir seyahat deneyimini sunmak için çalışıyoruz.
           </p>
         </div>
@@ -44,7 +44,7 @@ const AboutSection = () => {
           ].map((card, index) => (
             <div
               key={index}
-              className="bg-white/10 backdrop-blur-md p-6 md:p-8 rounded-xl border border-white/20 hover:bg-white/15 transition-all text-center"
+              className="reveal bg-white/10 backdrop-blur-md p-6 md:p-8 rounded-xl border border-white/20 hover:bg-white/15 transition-all text-center"
             >
               <div className="text-primary-fixed mb-4 md:mb-6">
                 <span className="material-symbols-outlined text-[32px] md:text-[40px]">
