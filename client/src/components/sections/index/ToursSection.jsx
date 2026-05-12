@@ -84,6 +84,7 @@ const ToursSection = () => {
               </div>
             </article>
           ))}
+          
         </div>
 
         {/* Pagination */}
@@ -95,11 +96,10 @@ const ToursSection = () => {
             {[1, 2, 3].map((page) => (
               <button
                 key={page}
-                className={`w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full ${
-                  page === 1
+                className={`w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full ${page === 1
                     ? "bg-primary text-on-primary shadow-sm"
                     : "border border-surface-variant text-secondary hover:bg-surface-container-low"
-                } font-label-bold text-xs md:text-sm active:scale-90`}
+                  } font-label-bold text-xs md:text-sm active:scale-90`}
               >
                 {page}
               </button>
