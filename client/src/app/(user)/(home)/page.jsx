@@ -1,6 +1,6 @@
 import ReservationSection from "@/components/sections/index/ReservationSection";
 import HeroSection from "@/components/sections/index/HeroSection";
-import ServicesSection from "@/components/sections/index/ServicesSection";
+import ServicesSection from "@/components/sections/index/ServicesSection/ServicesSection";
 import ToursSection from "@/components/sections/index/ToursSection";
 import FavoritesSection from "@/components/sections/index/FavoritesSection";
 import GallerySection from "@/components/sections/index/GallerySection";
