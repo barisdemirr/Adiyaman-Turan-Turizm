@@ -4,6 +4,7 @@ import React from 'react';
 import { useState } from 'react';
 import NavLink from './components/NavLink';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
+import Image from 'next/image';
 
 const Navbar = () => {
     useScrollReveal();
@@ -32,7 +33,7 @@ const Navbar = () => {
             <div className="flex justify-between items-center max-w-[1280px] mx-auto px-6 h-20">
                 {/* Logo */}
                 <a className="text-xl font-extrabold tracking-tight text-slate-900 font-h4" href="#">
-                    Adıyaman Turan Turizm
+                    <Image src="/attlogonavbar.png" alt="Adıyaman Turan Turizm" width={0} height={0} sizes="100vw" className='h-[40px] sm:h-[50px] lg:h-[60px] w-auto' />
                 </a>
                 {/* Desktop Nav */}
                 <nav className="hidden md:flex items-center gap-8">

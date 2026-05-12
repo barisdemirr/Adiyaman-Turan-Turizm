@@ -27,7 +27,7 @@ export const metadata = {
     title: "Adıyaman Turan Turizm - Discover the Lands Where History Began",
     description: "Embark on unforgettable journeys through Adıyaman and beyond. Heritage, hospitality, and expert guides await you.",
     icons: {
-        icon: "/favicon.ico", // Varsa icon yolun
+        icon: "/attlogo.png", // Varsa icon yolun
     },
 };
 
