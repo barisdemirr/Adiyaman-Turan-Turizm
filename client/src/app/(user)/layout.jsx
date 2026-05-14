@@ -3,19 +3,17 @@ import "@/styles/globals.css";
 import Navbar from "@/components/layout/Navbar/Navbar";
 import Footer from "@/components/layout/Footer/Footer";
 
-// Fontları Next.js üzerinden optimize ederek çağırıyoruz
-const inter = Inter({
-    subsets: ["latin"],
-    weight: ["400", "500", "600", "700", "800"],
-    variable: "--font-inter",
-    display: "swap",
+const plusJakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-plus-jakarta", // Senin CSS'teki adıyla BİREBİR aynı olmalı
+  display: "swap",
+  // preload: false yapabilirsin uyarı alıyorsan
 });
 
-const plusJakarta = Plus_Jakarta_Sans({
-    subsets: ["latin"],
-    weight: ["400", "500", "600", "700", "800"],
-    variable: "--font-plus-jakarta",
-    display: "swap", // Font yüklenene kadar boşluk kalmasın diye
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter", // Senin CSS'teki adıyla BİREBİR aynı olmalı
+  display: "swap",
 });
 
 export const viewport = {
@@ -33,7 +31,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
     return (
-        <html lang="en" className="light">
+        <html lang="tr" className="light">
             <head>
                 <link
                     rel="stylesheet"
@@ -42,7 +40,7 @@ export default function RootLayout({ children }) {
             </head>
             <body className={`${inter.variable} ${plusJakarta.variable} antialiased`}>
                 <Navbar />
-                    <main>
+                    <main className="">
                         {children}
                     </main>
                 <Footer />

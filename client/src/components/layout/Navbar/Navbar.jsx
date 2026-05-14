@@ -1,29 +1,53 @@
 "use client"
 
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import NavLink from './components/NavLink';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const Navbar = () => {
+    const router = useRouter();
 
-    const [isActive, setIsActive] = useState('home');
     const [isNavOpen, setIsNavOpen] = useState(false);
+
+    const [activeSection, setActiveSection] = useState("");
 
     const toggleMenu = () => setIsNavOpen(!isNavOpen);
 
-    const handleLinkClick = (id) => {
-        setIsActive(id);
-        setIsNavOpen(false);
-    };
 
     const scrollDown = () => {
         setIsNavOpen(false);
-        window.scrollTo({
-            top: 550,
-            behavior: 'smooth' 
-        });
+        router.push('/?quickReservation=true');
     };
+
+
+    useEffect(() => {
+        const sectionIds = ["home", "turlar", "hakkimizda", "iletisim"]; 
+
+        const observerOptions = {
+            root: null, 
+            rootMargin: "-20% 0px -70% 0px", 
+            threshold: 0, 
+        };
+
+        const observerCallback = (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    setActiveSection(entry.target.id);
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+        sectionIds.forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) observer.observe(el);
+        });
+
+        return () => observer.disconnect(); 
+    }, []);
 
     return (
         <header className={`fixed top-0 w-full z-50 border-b border-slate-200/50 backdrop-blur-md shadow-sm ${isNavOpen ? 'bg-white' : 'bg-white/80'}`}>
@@ -33,11 +57,11 @@ const Navbar = () => {
                     <Image src="/attlogonavbar.png" loading="eager" alt="Adıyaman Turan Turizm" width={0} height={0} sizes="100vw" className='h-[40px] sm:h-[50px] lg:h-[60px] w-auto' />
                 </a>
                 {/* Desktop Nav */}
-                <nav className="hidden md:flex items-center gap-8">
-                    <NavLink href="#" title="Anasayfa" isActive={isActive === 'home'} onClick={() => setIsActive('home')} />
-                    <NavLink href="#turlar" title="Turları Keşfet" isActive={isActive === 'tours'} onClick={() => setIsActive('tours')} />
-                    <NavLink href="#hakkimizda" title="Hakkımızda" isActive={isActive === 'about'} onClick={() => setIsActive('about')} />
-                    <NavLink href="#iletisim" title="İletişim" isActive={isActive === 'contact'} onClick={() => setIsActive('contact')} />
+                <nav className="hidden lg:flex items-center gap-8">
+                    <NavLink href="/#" title="Anasayfa" isActive={activeSection === 'home'}/>
+                    <NavLink href="/#turlar" title="Turları Keşfet" isActive={activeSection === 'turlar'}/>
+                    <NavLink href="/#hakkimizda" title="Hakkımızda" isActive={activeSection === 'hakkimizda'}/>
+                    <NavLink href="/#iletisim" title="İletişim" isActive={activeSection === 'iletisim'}/>
                 </nav>
                 {/* CTA & Mobile Menu */}
                 <div className="flex items-center gap-4">
@@ -47,9 +71,9 @@ const Navbar = () => {
                         </span>
                         <span>EN</span>
                     </div>
-                    <div className="hidden md:block w-px h-6 bg-surface-variant"></div>
+                    <div className="hidden lg:block w-px h-6 bg-surface-variant"></div>
                     <button
-                        className="hidden md:inline-flex items-center justify-center bg-primary text-on-primary font-label-bold text-label-bold px-6 py-3 rounded-full hover:bg-tertiary transition-colors scale-95 active:scale-90 shadow-sm"
+                        className="hidden lg:inline-flex items-center justify-center bg-primary text-on-primary font-label-bold text-label-bold px-6 py-3 rounded-full hover:bg-tertiary transition-colors scale-95 active:scale-90 shadow-sm"
                         onClick={scrollDown}
                     >
                         Hızlı Rezervasyon
@@ -58,7 +82,7 @@ const Navbar = () => {
                     {/* Hamburger Button */}
                     <button
                         onClick={toggleMenu}
-                        className="md:hidden p-2 text-on-surface hover:bg-surface-container rounded-full transition-colors"
+                        className="lg:hidden p-2 text-on-surface hover:bg-surface-container rounded-full transition-colors"
                     >
                         <span className="material-symbols-outlined">
                             {isNavOpen ? 'close' : 'menu'}
@@ -67,13 +91,13 @@ const Navbar = () => {
                 </div>
             </div>
             {/* Mobile Menu Content */}
-            <div className={`md:hidden overflow-hidden transition-all duration-300 bg-white border-t border-slate-100
+            <div className={`lg:hidden overflow-hidden transition-all duration-300 bg-white border-t border-slate-100
                 ${isNavOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
                 <nav className="flex flex-col gap-4 p-6">
-                    <NavLink href="#" title="Anasayfa" isActive={isActive === 'home'} onClick={() => handleLinkClick('home')} />
-                    <NavLink href="#turlar" title="Turları Keşfet" isActive={isActive === 'tours'} onClick={() => handleLinkClick('tours')} />
-                    <NavLink href="#hakkimizda" title="Hakkımızda" isActive={isActive === 'about'} onClick={() => handleLinkClick('about')} />
-                    <NavLink href="#iletisim" title="İletişim" isActive={isActive === 'contact'} onClick={() => handleLinkClick('contact')} />
+                    <NavLink href="/#" title="Anasayfa" isActive={activeSection === 'home'} onClick={() => setIsNavOpen(false)} />
+                    <NavLink href="/#turlar" title="Turları Keşfet" isActive={activeSection === 'turlar'} onClick={() => setIsNavOpen(false)} />
+                    <NavLink href="/#hakkimizda" title="Hakkımızda" isActive={activeSection === 'hakkimizda'} onClick={() => setIsNavOpen(false)} />
+                    <NavLink href="/#iletisim" title="İletişim" isActive={activeSection === 'iletisim'} onClick={() => setIsNavOpen(false)} />
 
                     <hr className="border-slate-100 my-2" />
 

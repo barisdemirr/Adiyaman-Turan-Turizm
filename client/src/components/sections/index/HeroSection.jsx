@@ -1,13 +1,17 @@
 import React from 'react';
+import Image from 'next/image';
 
 const HeroSection = () => {
   return (
-    <section className="relative h-[110vh]  flex items-center justify-center overflow-hidden">
+    <section className="relative h-[110vh]  flex items-center justify-center overflow-hidden" id='home'>
       <div className="absolute inset-0 z-0">
-        <img
+        <Image
           alt="Mount Nemrut stone heads at sunrise"
-          className="w-full h-full object-cover object-center"
-          src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqntdXfVmWMTGk2kYf53PRtELTYEmgGi-ARDuAN3KT1kTpCaLLJs0PLy3_bne9qde5fNOmBC4psJhItW3AzoioF2aEJ3d9tnZMNrAELezsnpzGQuPOP_NHRzD9iIMXgythqydmvQ0Cqr7Hk9TORBq6UC0IZYzxAIx1sfF0yONQiw3FbNidE-MmF2NLeXLoOYTkNEps4kaWjXV_2n5qkWNrYo9lifdgJeCp9V5xSkvo5rno3JtUcV0s-1o8yBQpGLQ4Ur4UjROpzGVi"
+          className="w-auto h-[110vh] object-cover object-center"
+          src="https://cdn.akkahotels.com/Uploads/Blog/antalyada-kalabalik-sezonda-tatil-yaparken-nelere-dikkat-edilmeli.jpg"
+          width={0}
+          height={0}
+          sizes="100vw"
         />
         <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent"></div>
       </div>
