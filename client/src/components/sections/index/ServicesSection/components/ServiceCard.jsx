@@ -5,7 +5,7 @@ const ServiceCard = ({ icon, title, description }) => {
 
         <div className="reveal group bg-surface-container-lowest border border-surface-variant rounded-xl p-5 md:p-8 hover:shadow-md transition-all duration-300">
             <div className="w-12 h-12 md:w-14 md:h-14 bg-secondary-container text-on-secondary-container rounded-lg flex items-center justify-center mb-4 md:mb-6 group-hover:scale-105 transition-transform">
-                <p className="text-[24px] md:text-[28px]" >
+                <p className="text-[24px] md:text-[28px] text-[2rem]" >
                     {icon}
                 </p>
             </div>

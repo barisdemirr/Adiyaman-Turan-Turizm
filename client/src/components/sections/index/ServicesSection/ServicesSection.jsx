@@ -20,7 +20,7 @@ const ServicesSection = () => {
     {
       id: 3,
       title: "Stayover Tours",
-      icon: "🎨",
+      icon: "✈️​",
       description: "Multi-day adventures with selected accommodations for a complete experience."
     }
   ]);

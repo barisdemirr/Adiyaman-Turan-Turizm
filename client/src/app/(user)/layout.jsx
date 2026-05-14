@@ -42,9 +42,9 @@ export default function RootLayout({ children }) {
             </head>
             <body className={`${inter.variable} ${plusJakarta.variable} antialiased`}>
                 <Navbar />
-                <main>
-                    {children}
-                </main>
+                    <main>
+                        {children}
+                    </main>
                 <Footer />
             </body>
         </html>
