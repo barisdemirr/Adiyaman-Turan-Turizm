@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import TourCard from './components/TourCard';
 
 const ToursSection = () => {
@@ -55,6 +55,8 @@ const ToursSection = () => {
     },
   ]);
 
+  const isFirstRender = useRef(true);
+
   // category
 
   const [selectedCategory, setSelectedCategory] = useState("daily");
@@ -76,6 +78,11 @@ const ToursSection = () => {
 
 
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+  }
+
     if (window.innerWidth < 768) {
       const element = document.getElementById("tours-grid");
       if (element) {
@@ -108,7 +115,7 @@ const ToursSection = () => {
           <div className="reveal relative flex p-1 bg-surface-container-highest rounded-lg self-center md:self-end w-fit">
             {/* Günübirlik Butonu */}
             <button
-              onClick={() => setSelectedCategory("daily")}
+              onClick={() => {setSelectedCategory("daily"); setCurrentPage(1);}}
               className="peer/daily relative cursor-pointer z-10 px-4 md:px-6 py-1.5 md:py-2 font-label-bold text-[11px] md:text-label-bold rounded transition-colors duration-300 text-on-surface"
             >
               Günübirlik
@@ -116,7 +123,7 @@ const ToursSection = () => {
 
             {/* Konaklamalı Butonu */}
             <button
-              onClick={() => setSelectedCategory("overnight")}
+              onClick={() => {setSelectedCategory("overnight"); setCurrentPage(1);}}
               className="peer/overnight cursor-pointer relative z-10 px-4 md:px-6 py-1.5 md:py-2 font-label-bold text-[11px] md:text-label-bold rounded transition-colors duration-300 text-on-surface"
             >
               Konaklamalı
