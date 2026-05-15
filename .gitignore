@@ -1,0 +1,29 @@
+# --- OS Specific ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- IDE & Editors ---
+.visualstudio/
+.vs/
+.vscode/
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+.idea/
+*.swp
+*.LSO
+*.sublime-project
+*.sublime-workspace
+
+# --- SERVER (.NET 9) ---
+**/bin/
+**/obj/
+**/publish/
+**/TestResults/
+server/AdiyamanTuran.API/appsettings.Development.json
+# Eğer veritabanı dosyasını localde tutuyorsan (SQLite vb.)
+*.db
+*.db-shm
+*.db-wal

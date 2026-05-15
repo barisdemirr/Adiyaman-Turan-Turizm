@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Abstract\Common\" />
+    <Folder Include="Concrete\Common\" />
+    <Folder Include="DTOs\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ATT.Core\ATT.Core.csproj" />
+    <ProjectReference Include="..\ATT.DataAcces\ATT.DataAccess.csproj" />
+  </ItemGroup>
+
+</Project>
