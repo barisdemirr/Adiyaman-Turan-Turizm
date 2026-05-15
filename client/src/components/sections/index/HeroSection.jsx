@@ -7,11 +7,11 @@ const HeroSection = () => {
       <div className="absolute inset-0 z-0">
         <Image
           alt="Mount Nemrut stone heads at sunrise"
-          className="w-auto h-[110vh] object-cover object-center"
+          className="object-cover object-center"
           src="https://cdn.akkahotels.com/Uploads/Blog/antalyada-kalabalik-sezonda-tatil-yaparken-nelere-dikkat-edilmeli.jpg"
-          width={0}
-          height={0}
-          sizes="100vw"
+          fill
+          sizes="(max-width: 768px) 100vw, 1900px"
+          priority
         />
         <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent"></div>
       </div>

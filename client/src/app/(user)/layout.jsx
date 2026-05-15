@@ -31,7 +31,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
     return (
-        <html lang="tr" className="light">
+        <html lang="tr" className="light" data-scroll-behavior="smooth">
             <head>
                 <link
                     rel="stylesheet"

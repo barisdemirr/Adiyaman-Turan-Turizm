@@ -4,22 +4,14 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import NavLink from './components/NavLink';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 
 const Navbar = () => {
-    const router = useRouter();
-
     const [isNavOpen, setIsNavOpen] = useState(false);
 
     const [activeSection, setActiveSection] = useState("");
 
     const toggleMenu = () => setIsNavOpen(!isNavOpen);
 
-
-    const scrollDown = () => {
-        setIsNavOpen(false);
-        router.push('/?quickReservation=true');
-    };
 
 
     useEffect(() => {
@@ -72,12 +64,12 @@ const Navbar = () => {
                         <span>EN</span>
                     </div>
                     <div className="hidden lg:block w-px h-6 bg-surface-variant"></div>
-                    <button
+                    <a
+                        href='/#hizli-rezervasyon'
                         className="hidden lg:inline-flex items-center justify-center bg-primary text-on-primary font-label-bold text-label-bold px-6 py-3 rounded-full hover:bg-tertiary transition-colors scale-95 active:scale-90 shadow-sm"
-                        onClick={scrollDown}
                     >
                         Hızlı Rezervasyon
-                    </button>
+                    </a>
 
                     {/* Hamburger Button */}
                     <button
@@ -101,12 +93,12 @@ const Navbar = () => {
 
                     <hr className="border-slate-100 my-2" />
 
-                    <button
+                    <a
+                        href='/#hizli-rezervasyon'
                         className="w-full flex items-center justify-center bg-primary text-on-primary font-label-bold px-6 py-4 rounded-xl shadow-sm active:scale-95 transition-transform"
-                        onClick={scrollDown}
-                    >
+                     >
                         Hızlı Rezervasyon
-                    </button>
+                    </a>
                 </nav>
             </div>
         </header>

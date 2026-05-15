@@ -134,6 +134,10 @@ section {
   scroll-margin-top: 120px;
 }
 
+#hizli-rezervasyon {
+  scroll-margin-top: 440px;
+}
+
 /* .reveal {
   opacity: 0;
   transform: translateY(30px);
@@ -165,3 +169,42 @@ section {
 .animate-prev {
   animation: slideInLeft 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
+
+
+@keyframes road-infinite {
+          from { transform: translateX(0); }
+          to { transform: translateX(-100px); }
+        }
+        @keyframes wheel-spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        @keyframes van-vibrate {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-1.5px); }
+        }
+        @keyframes wind-fast {
+          0% { transform: translateX(400px); opacity: 0; }
+          50% { opacity: 0.5; }
+          100% { transform: translateX(-200px); opacity: 0; }
+        }
+        @keyframes wind-slow {
+          0% { transform: translateX(300px); opacity: 0; }
+          50% { opacity: 0.3; }
+          100% { transform: translateX(-300px); opacity: 0; }
+        }
+        .animate-road-infinite {
+          animation: road-infinite 0.4s linear infinite;
+        }
+        .animate-wheel-spin {
+          animation: wheel-spin 0.2s linear infinite;
+        }
+        .animate-van-vibrate {
+          animation: van-vibrate 0.15s ease-in-out infinite;
+        }
+        .animate-wind-fast {
+          animation: wind-fast 0.8s linear infinite;
+        }
+        .animate-wind-slow {
+          animation: wind-slow 1.2s linear infinite;
+        }
