@@ -10,5 +10,10 @@ namespace ATT.DataAccess.Concrete.EntityFramework.Repositories
         public FavoritesSectionRepository(ATTDbContext context) : base(context)
         {
         }
+
+        public FavoritesSection GetFavoritesSection()
+        {
+            return _context.FavoritesSections.FirstOrDefault();
+        }
     }
 }

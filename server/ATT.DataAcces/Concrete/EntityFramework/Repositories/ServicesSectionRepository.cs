@@ -10,5 +10,10 @@ namespace ATT.DataAccess.Concrete.EntityFramework.Repositories
         public ServicesSectionRepository(ATTDbContext context) : base(context)
         {
         }
+
+        public ServicesSection GetServicesSection()
+        {
+            return _context.ServicesSections.FirstOrDefault();
+        }
     }
 }

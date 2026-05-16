@@ -10,5 +10,10 @@ namespace ATT.DataAccess.Concrete.EntityFramework.Repositories
         public HeroSectionRepository(ATTDbContext context) : base(context)
         {
         }
+
+        public HeroSection GetHero()
+        {
+            return _context.HeroSections.FirstOrDefault();
+        }
     }
 }

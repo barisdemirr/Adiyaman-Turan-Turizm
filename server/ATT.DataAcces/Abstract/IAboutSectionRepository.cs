@@ -5,5 +5,6 @@ namespace ATT.DataAccess.Abstract
 {
     public interface IAboutSectionRepository : IGenericRepository<AboutSection>
     {
+        AboutSection GetAboutSection();
     }
 }

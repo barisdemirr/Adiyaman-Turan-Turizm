@@ -10,5 +10,10 @@ namespace ATT.DataAccess.Concrete.EntityFramework.Repositories
         public GallerySectionRepository(ATTDbContext context) : base(context)
         {
         }
+
+        public GallerySection GetGallerySection()
+        {
+            return _context.GallerySections.FirstOrDefault();
+        }
     }
 }

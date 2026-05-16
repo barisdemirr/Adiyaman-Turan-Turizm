@@ -5,5 +5,6 @@ namespace ATT.DataAccess.Abstract
 {
     public interface IToursSectionRepository : IGenericRepository<ToursSection>
     {
+        ToursSection GetToursSection();
     }
 }

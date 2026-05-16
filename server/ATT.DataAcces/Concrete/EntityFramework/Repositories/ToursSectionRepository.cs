@@ -10,5 +10,10 @@ namespace ATT.DataAccess.Concrete.EntityFramework.Repositories
         public ToursSectionRepository(ATTDbContext context) : base(context)
         {
         }
+
+        public ToursSection GetToursSection()
+        {
+            return _context.ToursSections.FirstOrDefault();
+        }
     }
 }

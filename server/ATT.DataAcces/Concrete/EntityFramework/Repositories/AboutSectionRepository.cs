@@ -10,5 +10,10 @@ namespace ATT.DataAccess.Concrete.EntityFramework.Repositories
         public AboutSectionRepository(ATTDbContext context) : base(context)
         {
         }
+
+        public AboutSection GetAboutSection()
+        {
+            return _context.AboutSections.FirstOrDefault();
+        }
     }
 }

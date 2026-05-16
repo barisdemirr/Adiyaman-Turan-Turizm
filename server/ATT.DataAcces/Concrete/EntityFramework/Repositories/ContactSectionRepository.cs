@@ -10,5 +10,10 @@ namespace ATT.DataAccess.Concrete.EntityFramework.Repositories
         public ContactSectionRepository(ATTDbContext context) : base(context)
         {
         }
+
+        public ContactSection GetContactSection()
+        {
+            return _context.ContactSections.FirstOrDefault();
+        }
     }
 }

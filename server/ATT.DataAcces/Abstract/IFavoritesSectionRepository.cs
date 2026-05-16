@@ -5,5 +5,6 @@ namespace ATT.DataAccess.Abstract
 {
     public interface IFavoritesSectionRepository : IGenericRepository<FavoritesSection>
     {
+        FavoritesSection GetFavoritesSection();
     }
 }

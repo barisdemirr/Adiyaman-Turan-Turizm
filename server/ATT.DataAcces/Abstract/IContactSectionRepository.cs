@@ -5,5 +5,6 @@ namespace ATT.DataAccess.Abstract
 {
     public interface IContactSectionRepository : IGenericRepository<ContactSection>
     {
+        ContactSection GetContactSection();
     }
 }

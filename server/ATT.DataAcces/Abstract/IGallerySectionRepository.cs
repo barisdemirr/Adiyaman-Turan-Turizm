@@ -5,5 +5,6 @@ namespace ATT.DataAccess.Abstract
 {
     public interface IGallerySectionRepository : IGenericRepository<GallerySection>
     {
+        GallerySection GetGallerySection();
     }
 }

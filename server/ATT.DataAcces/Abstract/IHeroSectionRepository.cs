@@ -5,5 +5,6 @@ namespace ATT.DataAccess.Abstract
 {
     public interface IHeroSectionRepository : IGenericRepository<HeroSection>
     {
+        HeroSection GetHero();
     }
 }
