@@ -21,14 +21,14 @@ export default function GlobalError({ error, reset }) {
                 Bir Şeyler Ters Gitti!
             </h1>
             <p className="text-sm md:text-body-lg text-outline mb-8 mt-2">
-                Yolculuk sırasında ufak bir teknik arıza yaşadık. Sayfayı yeniden yüklemeyi deneyebilir veya ana sayfaya güvenli bir dönüş yapabilirsin.
+                Sayfa yüklenirken ufak bir teknik arıza yaşandı. Yeniden yüklemeyi deneyebilir veya ana sayfaya güvenli bir dönüş yapabilirsiniz.
             </p>
 
             {/* Aksiyon Butonları */}
             <div className="flex flex-col sm:flex-row gap-4 items-center">
                 {/* Yeniden Dene Butonu */}
                 <button
-                    onClick={() => reset()} // 🚀 Next.js büyüsü: Sayfayı tamamen yenilemeden sadece bozulan kısmı ayağa kaldırmayı dener
+                    onClick={() => reset()} 
                     className="inline-flex items-center justify-center bg-primary text-on-primary font-label-bold text-sm px-6 py-3 rounded-full hover:bg-primary/95 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 cursor-pointer"
                 >
                     <span className="material-symbols-outlined mr-2 text-[18px]">refresh</span>

@@ -1,0 +1,14 @@
+﻿using ATT.Core.Entities.Common;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ATT.DataAccess.Abstract.Common
+{
+    public interface IBaseSectionRepository<T> : IGenericRepository<T> where T : BaseEntity
+    {
+        Task<T?> GetSectionAsync();
+    }
+}

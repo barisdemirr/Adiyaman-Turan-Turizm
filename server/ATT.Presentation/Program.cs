@@ -1,12 +1,16 @@
 using ATT.Business.Abstract;
 using ATT.Business.Abstract.Common;
+using ATT.Business.Abstract.Sections;
 using ATT.Business.Concrete;
 using ATT.Business.Concrete.Common;
+using ATT.Business.Concrete.Sections;
 using ATT.DataAccess.Abstract;
 using ATT.DataAccess.Abstract.Common;
+using ATT.DataAccess.Abstract.Sections;
 using ATT.DataAccess.Concrete.EntityFramework.Context;
 using ATT.DataAccess.Concrete.EntityFramework.Repositories;
 using ATT.DataAccess.Concrete.EntityFramework.Repositories.Common;
+using ATT.DataAccess.Concrete.EntityFramework.Repositories.Sections;
 using ATT.Presentation;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -49,6 +53,7 @@ builder.Services.AddScoped<IHeroSectionService, HeroSectionService>();
 builder.Services.AddScoped<IHomePageService, HomePageService>();
 builder.Services.AddScoped<IServicesSectionService, ServicesSectionService>();
 builder.Services.AddScoped<IToursSectionService, ToursSectionService>();
+builder.Services.AddScoped<ITourService, TourService>();
 
 
 builder.Services.AddCors(options =>
@@ -80,7 +85,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-//  SEEDING
+//SEEDING
 //using (var scope = app.Services.CreateScope())
 //{
 //    var services = scope.ServiceProvider;

@@ -13,6 +13,7 @@ namespace ATT.Core.Entities
     {
         public string Title { get; set; } = default!;
         public string Slug { get; set; } = default!;
+        public string ShortDescription { get; set; } = default!;
         public string Description { get; set; } = default!;
         public string BannerImgUrl { get; set; } = default!;
         public string ImageUrl { get; set; } = default!; 

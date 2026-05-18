@@ -16,9 +16,9 @@ namespace ATT.Presentation.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetHome()
+        public async Task<IActionResult> GetHome()
         {
-            var homePageData = _homePageService.GetHomePage();
+            var homePageData = await _homePageService.GetHomePage();
 
             return Ok(homePageData);
         }

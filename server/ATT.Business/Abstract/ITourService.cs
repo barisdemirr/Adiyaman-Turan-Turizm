@@ -1,4 +1,4 @@
-﻿using ATT.Business.DTOs;
+﻿using ATT.Business.DTOs.Tour;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace ATT.Business.Abstract
 {
-    public interface IHomePageService
+    public interface ITourService
     {
-        Task<HomePageDto> GetHomePage();
+        Task<List<TourDto>> GetAllTours();
     }
 }

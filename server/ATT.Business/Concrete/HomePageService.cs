@@ -1,4 +1,5 @@
 ﻿using ATT.Business.Abstract;
+using ATT.Business.Abstract.Sections;
 using ATT.Business.DTOs;
 using System;
 using System.Collections.Generic;
@@ -31,17 +32,27 @@ namespace ATT.Business.Concrete
             _toursSectionService = toursSectionService;
         }
 
-        public HomePageDto GetHomePage()
+        public async Task<HomePageDto> GetHomePage()
         {
+
+            var HeroSection = await _heroSectionService.GetHeroSection();
+            var AboutSection = await _aboutSectionService.GetAboutSection();
+            var ContactSection = await _contactSectionService.GetContactSection();
+            var FavoritesSection = await _favoritesSectionService.GetFavoritesSection();
+            var ToursSection = await _toursSectionService.GetToursSection();
+            var GallerySection = await _gallerySectionService.GetGallerySection();
+            var ServicesSection = await _servicesSectionService.GetServicesSection();
+
+
             return new HomePageDto
             {
-                HeroSection = _heroSectionService.GetHeroSection(),
-                AboutSection = _aboutSectionService.GetAboutSection(),
-                ContactSection = _contactSectionService.GetContactSection(),
-                FavoritesSection = _favoritesSectionService.GetFavoritesSection(),
-                ToursSection = _toursSectionService.GetToursSection(),
-                GallerySection = _gallerySectionService.GetGallerySection(),
-                ServicesSection = _servicesSectionService.GetServicesSection(),
+                HeroSection = HeroSection,
+                AboutSection = AboutSection,
+                ContactSection = ContactSection,
+                FavoritesSection = FavoritesSection,
+                ServicesSection = ServicesSection,
+                ToursSection = ToursSection,
+                GallerySection = GallerySection,
             };
         }
     }
