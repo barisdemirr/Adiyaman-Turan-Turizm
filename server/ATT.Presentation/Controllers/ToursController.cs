@@ -32,5 +32,13 @@ namespace ATT.Presentation.Controllers
 
             return Ok(tour);
         }
+
+        [HttpGet("reservation")]
+        public async Task<IActionResult> GetToursForReservation()
+        {
+            var list = await _tourService.GetToursForReservationAsync();
+
+            return Ok(list);
+        }
     }
 }

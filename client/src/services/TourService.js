@@ -47,7 +47,7 @@ async function GetTourBySlug(slug) {
     return await res.json();
 
   } catch (error) {
-    console.error("🚨 [TourService] Kritik Hata Yakalandı:", error);
+    console.error("[TourService] Kritik Hata Yakalandı:", error);
 
     throw new Error(
       "Şu anda backend servislerimize ulaşılamıyor. Lütfen .NET API'nizin ayakta ve doğru portta (örn: localhost:5001) çalıştığından emin olun."
@@ -55,4 +55,32 @@ async function GetTourBySlug(slug) {
   }
 }
 
-export  {GetAllTours, GetTourBySlug};
+
+async function GetToursForReservation() {
+  const apiUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/tours/reservation`;
+
+  try {
+    const res = await fetch(apiUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      next: { revalidate: 3600 }
+    });
+
+    if (!res.ok) {
+      throw new Error(`Backend API hata döndürdü! Durum Kodu: ${res.status}`);
+    }
+
+    return await res.json();
+
+  } catch (error) {
+    console.error("[TourService] Kritik Hata Yakalandı:", error);
+
+    throw new Error(
+      "Şu anda backend servislerimize ulaşılamıyor. Lütfen .NET API'nizin ayakta ve doğru portta (örn: localhost:5001) çalıştığından emin olun."
+    );
+  }
+}
+
+export  {GetAllTours, GetTourBySlug, GetToursForReservation};

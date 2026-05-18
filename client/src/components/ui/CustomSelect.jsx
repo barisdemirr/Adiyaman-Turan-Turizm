@@ -2,13 +2,30 @@
 
 import React, { useState, useEffect } from 'react';
 
-const CustomSelect = ({ options, label, onSelect, placeholder = "Seçiniz...", value, disabled }) => {
+const CustomSelect = ({
+    options = [],
+    label,
+    onSelect,
+    placeholder = "Seçiniz...",
+    value,
+    disabled,
+    labelKey = "name", // 🚀 Varsayılan olarak name okur
+    valueKey = "id"     // 🚀 Varsayılan olarak id okur
+}) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null);
 
     useEffect(() => {
-        if (value === null) setSelectedOption(null);
-    }, [value]);
+        if (value === null || value === undefined) {
+            setSelectedOption(null);
+            setIsOpen(false);
+        } else if (typeof value === 'object') {
+            setSelectedOption(value);
+        } else {
+            const found = options.find(opt => opt[valueKey] === value);
+            if (found) setSelectedOption(found);
+        }
+    }, [value, options, valueKey]);
 
     const handleOptionClick = (option) => {
         setSelectedOption(option);
@@ -24,10 +41,10 @@ const CustomSelect = ({ options, label, onSelect, placeholder = "Seçiniz...", v
             <div
                 onClick={() => !disabled && setIsOpen(!isOpen)}
                 className={`w-full bg-white border border-slate-200 rounded-xl px-4 py-3 flex justify-between items-center shadow-sm
-          ${disabled ? 'cursor-not-allowed bg-slate-50' : 'cursor-pointer hover:border-orange-500'}`}
+                ${disabled ? 'cursor-not-allowed bg-slate-50' : 'cursor-pointer hover:border-orange-500'}`}
             >
                 <span className={selectedOption ? "text-slate-900" : "text-slate-400"}>
-                    {selectedOption ? selectedOption.name : placeholder}
+                    {selectedOption ? selectedOption[labelKey] : placeholder}
                 </span>
                 <span className={`material-symbols-outlined transition-transform ${isOpen ? 'rotate-180' : ''}`}>
                     expand_more
@@ -38,17 +55,17 @@ const CustomSelect = ({ options, label, onSelect, placeholder = "Seçiniz...", v
             {isOpen && (
                 <ul className="absolute z-50 w-full mt-2 bg-white border border-slate-100 rounded-xl shadow-xl max-h-60 overflow-y-auto reveal visible">
                     {options.length > 0 ? (
-                        options.map((option) => (
+                        options.map((option, index) => (
                             <li
-                                key={option.id}
+                                key={option[valueKey] || index}
                                 onClick={() => handleOptionClick(option)}
                                 className="px-4 py-3 hover:bg-orange-50 cursor-pointer text-slate-700 transition-colors border-b border-slate-50 last:border-none"
                             >
-                                {option.name}
+                                {option[labelKey]}
                             </li>
                         ))
                     ) : (
-                        <li className="px-4 py-3 text-slate-400 italic">Veri yükleniyor...</li>
+                        <li className="px-4 py-3 text-slate-400 italic">Veri bulunamadı...</li>
                     )}
                 </ul>
             )}

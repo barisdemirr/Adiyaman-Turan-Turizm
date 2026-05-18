@@ -5,7 +5,7 @@ import TourCard from './components/TourCard';
 import { GetAllTours } from '@/services/TourService';
 import TourCardSkeleton from '@/components/ui/skeletons/TourCardSkeleton';
 
-const ToursSection = ({ ToursData }) => {
+const ToursSection = ({ ToursData  }) => {
   const [tours, setTours] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 

@@ -61,6 +61,16 @@ namespace ATT.Business.Concrete
                 Extras = tour.Extras.Select(e => new TourExtraDto { Id = e.Id, Title = e.Title, Description = e.Description }).ToList(),
                 Images = tour.Images.Select(i => new ImageDto { Id = i.Id, ImageUrl = i.ImageUrl, IsInGallery = i.IsInGallery }).ToList()
             };
-    }
+        }
+
+        public async Task<List<TourReservationDto>> GetToursForReservationAsync()
+        {
+            return await _tourRepository.GetSelectedAsync(t => new TourReservationDto
+            {
+                Title = t.Title,
+                Slug = t.Slug,
+                Dates = t.Dates.Select(d=> new TourDateDto { Id=d.Id, Date = d.Date }).ToList(),
+            });
+        }
     }
 }
