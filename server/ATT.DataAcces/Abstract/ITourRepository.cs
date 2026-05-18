@@ -6,5 +6,6 @@ namespace ATT.DataAccess.Abstract
     public interface ITourRepository : IGenericRepository<Tour>
     {
         Task<List<Tour>> GetAllWithDetailsAsync();
+        Task<Tour?> GetBySlugWithDetailsAsync(string slug);
     }
 }

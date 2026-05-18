@@ -41,5 +41,26 @@ namespace ATT.Business.Concrete
 
             return(tourList);
         }
+
+        public async Task<TourDto> GetTourBySlugAsync(string slug)
+        {
+            var tour = await _tourRepository.GetBySlugWithDetailsAsync(slug);
+
+            return new TourDto
+            {
+                Title = tour.Title,
+                Slug = tour.Slug,
+                ShortDescription = tour.ShortDescription,
+                Description = tour.Description,
+                BannerImgUrl = tour.BannerImgUrl,
+                ImageUrl = tour.ImageUrl,
+                Price = tour.Price,
+                Duration = tour.Duration,
+                Type = tour.Type,
+                Dates = tour.Dates.Select(d => new TourDateDto { Id = d.Id, Date = d.Date }).ToList(),
+                Extras = tour.Extras.Select(e => new TourExtraDto { Id = e.Id, Title = e.Title, Description = e.Description }).ToList(),
+                Images = tour.Images.Select(i => new ImageDto { Id = i.Id, ImageUrl = i.ImageUrl, IsInGallery = i.IsInGallery }).ToList()
+            };
+    }
     }
 }

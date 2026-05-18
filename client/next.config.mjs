@@ -11,6 +11,12 @@ const nextConfig = {
         port: '',
         pathname: '/**', // Tüm alt klasörlere izin verir
       },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com', // Buraya resmin geldiği domaini yaz
+        port: '',
+        pathname: '/**', // Tüm alt klasörlere izin verir
+      },
     ],
   },
 };

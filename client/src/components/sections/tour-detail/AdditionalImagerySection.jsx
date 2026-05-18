@@ -70,12 +70,12 @@ const AdditionalImagerySection = ({ photos }) => {
 
       {/* Puzzle/Masonry Container */}
       <div className="columns-2  md:columns-4 gap-3 md:gap-4 space-y-3 md:space-y-4">
-        {photos.map((image, index) => (
-          <div key={index} className="break-inside-avoid">
+        {photos.map((image) => (
+          <div key={image.id} className="break-inside-avoid">
             <Image
               className="w-full h-auto rounded-lg md:rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] cursor-zoom-in"
-              alt={`Tour Image ${index + 1}`}
-              src={image}
+              alt={`Tour Image ${image.id + 1}`}
+              src={image.imageUrl}
               width={0}
               height={0}
               sizes='(max-width: 768px) 100vw, 800px'

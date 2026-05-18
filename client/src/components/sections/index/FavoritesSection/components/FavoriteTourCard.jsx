@@ -3,18 +3,21 @@ import React from 'react'
 import Link from 'next/link';
 import Image from 'next/image';
 
-const FavoriteTourCard = ({ img, title }) => {
+const FavoriteTourCard = ({ img, title, slug, onRemove }) => {
+
+    
+
     return (
         <Link
-            href={`/tours/mardin-discovery`}
+            href={`/${slug}`}
             className="group relative block h-[300px] w-[300px] border border-primary-fixed aspect-square rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500"
         >
             {/* Silme Butonu - Sağ Üst */}
             <button
                 onClick={(e) => {
-                    e.preventDefault(); // Link'in yönlendirmesini engeller
-                    e.stopPropagation(); // Click olayının Link'e ulaşmasını engeller
-                    console.log("Tur favorilerden siliniyor kanka...");
+                    e.preventDefault(); 
+                    e.stopPropagation(); 
+                    onRemove(slug);
                 }}
                 className="absolute top-4 right-4 z-30 flex items-center justify-center w-10 h-10 rounded-full border border-primary-fixed text-primary-fixed bg-transparent hover:bg-primary-fixed hover:text-black transition-all duration-300 active:scale-90 shadow-lg"
                 title="Favorilerden Kaldır"

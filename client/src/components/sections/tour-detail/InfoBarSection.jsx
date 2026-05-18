@@ -16,7 +16,7 @@ const InfoBarSection = ({ type, duration }) => {
               Kategori
             </p>
             <p className="font-label-bold text-[12px] md:text-body-md leading-tight">
-              {type}
+              {type == "daily" ? "Günübirlik" : "Konaklamalı"}
             </p>
           </div>
         </div>

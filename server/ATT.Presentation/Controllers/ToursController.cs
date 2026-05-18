@@ -22,5 +22,15 @@ namespace ATT.Presentation.Controllers
 
             return Ok(tourList);
         }
+
+        [HttpGet("{slug}")]
+        public async Task<IActionResult> GetBySlug(string slug)
+        {
+
+            var tour = await _tourService.GetTourBySlugAsync(slug);
+
+
+            return Ok(tour);
+        }
     }
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 
-function TourCard({ img, title, description, price, slug }) {
+function TourCard({ title, shortDescription, bannerImage, price, slug, duration }) {
     return (
         <article
             key={slug}
@@ -10,7 +10,7 @@ function TourCard({ img, title, description, price, slug }) {
                 <img
                     alt={title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    src={img}
+                    src={bannerImage}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                 <div className="absolute bottom-3 left-3 right-3 text-left">
@@ -19,14 +19,14 @@ function TourCard({ img, title, description, price, slug }) {
                     </h3>
                     <div className="flex items-center text-white/90 font-caption text-[10px] md:text-caption gap-3">
                         <span className="flex items-center gap-1">
-                            <span className="material-symbols-outlined text-[14px]">schedule</span> Full Day
+                            <span className="material-symbols-outlined text-[14px]">schedule</span> {duration}
                         </span>
                     </div>
                 </div>
             </div>
             <div className="p-4 md:p-6 flex-1 flex flex-col text-left">
                 <p className="font-body-sm text-[12px] md:text-body-sm text-secondary mb-4 flex-1">
-                    {description}
+                    {shortDescription}
                 </p>
                 <div className="flex items-center justify-between mt-auto pt-2 border-t border-slate-100">
                     <div className="font-h4 text-base md:text-h4 text-on-surface">

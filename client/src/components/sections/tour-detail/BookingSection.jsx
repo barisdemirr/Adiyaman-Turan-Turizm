@@ -1,9 +1,13 @@
+"use client"
+
 import React, { useState } from 'react'
 
 function BookingSection({ dates, price, title }) {
     const [wpphone, setWpphone] = useState("90123456789");
 
     const todayTime = new Date().getTime();
+    dates = dates.map(date => date.date);
+    dates = dates.filter(date => new Date(date).getTime() >= todayTime);
     const sortedDates = [...dates].sort((a, b) => {
         const dateA = new Date(a);
         const dateB = new Date(b);

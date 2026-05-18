@@ -2,7 +2,8 @@ import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "@/styles/globals.css";
 import Navbar from "@/components/layout/Navbar/Navbar";
 import Footer from "@/components/layout/Footer/Footer";
-import AnimationProvider from "@/utils/AnimationProvider";
+import AnimationProvider from "@/components/ui/AnimationProvider";
+import HandleHashScroll from "@/components/ui/HandleHashScroll";
 
 const plusJakarta = Plus_Jakarta_Sans({
     subsets: ["latin"],
@@ -41,6 +42,7 @@ export default function RootLayout({ children }) {
             <body className={`${inter.variable} ${plusJakarta.variable} antialiased`}>
                 <AnimationProvider>
                     <Navbar />
+                    <HandleHashScroll />
                     <main className="">
                         {children}
                     </main>

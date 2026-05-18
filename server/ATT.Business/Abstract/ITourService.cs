@@ -10,5 +10,6 @@ namespace ATT.Business.Abstract
     public interface ITourService
     {
         Task<List<TourDto>> GetAllTours();
+        Task<TourDto> GetTourBySlugAsync(string slug);
     }
 }
