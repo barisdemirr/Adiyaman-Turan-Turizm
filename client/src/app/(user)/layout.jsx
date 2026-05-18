@@ -2,18 +2,18 @@ import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "@/styles/globals.css";
 import Navbar from "@/components/layout/Navbar/Navbar";
 import Footer from "@/components/layout/Footer/Footer";
+import AnimationProvider from "@/utils/AnimationProvider";
 
 const plusJakarta = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  variable: "--font-plus-jakarta", // Senin CSS'teki adıyla BİREBİR aynı olmalı
-  display: "swap",
-  // preload: false yapabilirsin uyarı alıyorsan
+    subsets: ["latin"],
+    variable: "--font-plus-jakarta",
+    display: "swap",
 });
 
 const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter", // Senin CSS'teki adıyla BİREBİR aynı olmalı
-  display: "swap",
+    subsets: ["latin"],
+    variable: "--font-inter", 
+    display: "swap",
 });
 
 export const viewport = {
@@ -25,7 +25,7 @@ export const metadata = {
     title: "Adıyaman Turan Turizm - Discover the Lands Where History Began",
     description: "Embark on unforgettable journeys through Adıyaman and beyond. Heritage, hospitality, and expert guides await you.",
     icons: {
-        icon: "/attlogo.png", // Varsa icon yolun
+        icon: "/attlogo.png",
     },
 };
 
@@ -39,11 +39,13 @@ export default function RootLayout({ children }) {
                 />
             </head>
             <body className={`${inter.variable} ${plusJakarta.variable} antialiased`}>
-                <Navbar />
+                <AnimationProvider>
+                    <Navbar />
                     <main className="">
                         {children}
                     </main>
-                <Footer />
+                    <Footer />
+                </AnimationProvider>
             </body>
         </html>
     );

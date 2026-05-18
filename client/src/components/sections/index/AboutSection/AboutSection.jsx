@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import AboutCard from './components/AboutCard';
 
-const AboutSection = () => {
+const AboutSection = ({AboutData}) => {
   const [aboutItems, setAboutItems] = useState([
     {
       icon: "workspace_premium",
@@ -38,10 +38,10 @@ const AboutSection = () => {
         {/* Başlık Bölümü */}
         <div className="mb-10 md:mb-16 text-center">
           <h2 className="reveal font-h2 font-bold text-2xl md:text-h2 text-white mb-3 md:mb-4">
-            Neden Bizi Tercih Etmelisiniz?
+            {AboutData?.title || "Adıyaman Turizm Hakkında"}
           </h2>
           <p className="reveal font-body-md text-sm md:text-body-md text-secondary-fixed max-w-2xl mx-auto px-4 opacity-90">
-            1988'den beri misafirlerimize en kaliteli ve güvenilir seyahat deneyimini sunmak için çalışıyoruz.
+            {AboutData?.description}
           </p>
         </div>
 

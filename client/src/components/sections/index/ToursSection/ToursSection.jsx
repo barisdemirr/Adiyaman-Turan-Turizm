@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import TourCard from './components/TourCard';
 
-const ToursSection = () => {
+const ToursSection = ({ ToursData }) => {
   const [tours, setTours] = useState([
     {
       img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBeDn6IBA-nfSUZZuKt5WkXB9ISrRiflx2Q4JyrViGrSj1mKhDz3cI0mIK2PgVfJVsJsSv6vlbx9mF-jo2QEgAqcfA3nidUQkBwCT6V-gdnv-XEW5fknNkg-e8sW1SM51JM1ho5TQ84FITBLAC8q13Zi4znSOh0TNLRAjmEBtmIar5F1CjDGKydDgYdkH6WDf31P0IorZ99V_uTM9eo3ns5LLxF-zUGw0TIxR2t7nlD5a4Vur14c4YVk414vzPzfoIUJYPdje_-Da88",
@@ -55,7 +55,7 @@ const ToursSection = () => {
     },
   ]);
 
-  const isFirstRender = useRef(true);
+
 
   // category
 
@@ -74,25 +74,26 @@ const ToursSection = () => {
   const totalPages = Math.ceil(tours.filter(t => t.category === selectedCategory).length / itemsPerPage);
 
 
+  const prevPage = useRef(currentPage);
 
 
 
   useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
+    if (prevPage.current === currentPage) {
       return;
-  }
+    }
 
     if (window.innerWidth < 768) {
       const element = document.getElementById("tours-grid");
       if (element) {
-        // Kartların 100px üstüne (başlık görünsün diye) yumuşak bir geçiş yapar
         const yOffset = -100;
         const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
 
         window.scrollTo({ top: y, behavior: 'smooth' });
       }
     }
+
+    prevPage.current = currentPage;
   }, [currentPage]);
 
   return (
@@ -105,17 +106,17 @@ const ToursSection = () => {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 gap-4 md:gap-6">
           <div className="text-center md:text-left">
             <h2 className="reveal font-bold md:font-h2 text-2xl md:text-h2 text-on-surface mb-2 md:mb-4">
-              Turlarımızı Keşfedin
+              {ToursData?.title}
             </h2>
             <p className="reveal font-body-md text-sm md:text-body-md text-secondary">
-              Bölgenin en iyi yönlerini sergilemek için hazırlanmış özel programlar.
+              {ToursData?.description}
             </p>
           </div>
 
           <div className="reveal relative flex p-1 bg-surface-container-highest rounded-lg self-center md:self-end w-fit">
             {/* Günübirlik Butonu */}
             <button
-              onClick={() => {setSelectedCategory("daily"); setCurrentPage(1);}}
+              onClick={() => { setSelectedCategory("daily"); setCurrentPage(1); }}
               className="peer/daily relative cursor-pointer z-10 px-4 md:px-6 py-1.5 md:py-2 font-label-bold text-[11px] md:text-label-bold rounded transition-colors duration-300 text-on-surface"
             >
               Günübirlik
@@ -123,7 +124,7 @@ const ToursSection = () => {
 
             {/* Konaklamalı Butonu */}
             <button
-              onClick={() => {setSelectedCategory("overnight"); setCurrentPage(1);}}
+              onClick={() => { setSelectedCategory("overnight"); setCurrentPage(1); }}
               className="peer/overnight cursor-pointer relative z-10 px-4 md:px-6 py-1.5 md:py-2 font-label-bold text-[11px] md:text-label-bold rounded transition-colors duration-300 text-on-surface"
             >
               Konaklamalı

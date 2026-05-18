@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import ContactCard from './components/ContactCard';
 
-const ContactSection = () => {
+const ContactSection = ({ ContactData }) => {
   const [accounts, setAccounts] = useState([]);
 
 
@@ -51,11 +51,10 @@ const ContactSection = () => {
         {/* Başlık Bölümü */}
         <div className="mb-10 md:mb-16 text-center">
           <h2 className="reveal font-h2 font-bold text-2xl md:text-h2 text-white mb-3 md:mb-4">
-            Bizimle İletişime Geçin
+            {ContactData?.title}
           </h2>
           <p className="reveal font-body-md text-xs md:text-body-md text-secondary-fixed max-w-2xl mx-auto px-2 opacity-90">
-            Sorularınız ve rezervasyon talepleriniz için bize her zaman ulaşabilirsiniz.
-            Ekibimiz size yardımcı olmaktan mutluluk duyacaktır.
+            {ContactData?.description}
           </p>
         </div>
 

@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import ServiceCard from './components/ServiceCard';
 
-const ServicesSection = () => {
+const ServicesSection = ({ ServicesData }) => {
   const [mockServices, setMockServices] = useState([
     {
       id: 1,
@@ -30,11 +30,10 @@ const ServicesSection = () => {
       {/* Header Section */}
       <div className="mb-10 md:mb-16 text-center">
         <h2 className="reveal font-h2 text-2xl font-bold md:text-h2 text-on-surface mb-3 md:mb-4 px-2">
-          Unforgettable Journeys with Expert Guides
+          {ServicesData?.title}
         </h2>
         <p className="reveal font-body-md text-sm md:text-body-md text-secondary max-w-2xl mx-auto px-4">
-          From the peaks of Mount Nemrut to the historic streets of ancient cities, we provide comprehensive travel
-          services tailored for your comfort.
+          {ServicesData?.description}
         </p>
       </div>
       {/* Bento Grid */}

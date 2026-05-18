@@ -51,6 +51,17 @@ builder.Services.AddScoped<IServicesSectionService, ServicesSectionService>();
 builder.Services.AddScoped<IToursSectionService, ToursSectionService>();
 
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowHost", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000", "http://192.168.1.165:3000") 
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+
 var app = builder.Build();
 
 
@@ -62,6 +73,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowHost");
 
 app.UseAuthorization();
 

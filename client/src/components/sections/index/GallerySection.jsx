@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 
-const GallerySection = () => {
+const GallerySection = ({ GalleryData }) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [touchStart, setTouchStart] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -64,10 +64,10 @@ const GallerySection = () => {
         {/* Başlık Bölümü */}
         <div className="mb-10 md:mb-16 text-center">
           <h2 className="reveal font-h2 font-bold text-2xl md:text-h2 text-on-surface mb-3 md:mb-4 px-2">
-            Turlarımızdan Kareler
+            {GalleryData?.title}
           </h2>
           <p className="reveal font-body-md text-xs md:text-body-md text-secondary max-w-2xl mx-auto px-4">
-            Misafirlerimizin objektifinden unutulmaz anlar ve Anadolu'nun eşsiz güzellikleri.
+            {GalleryData?.description}
           </p>
         </div>
 

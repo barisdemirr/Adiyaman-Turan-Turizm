@@ -1,45 +1,60 @@
 "use client"
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useState, useEffect } from 'react';
 import NavLink from './components/NavLink';
 import Image from 'next/image';
 
 const Navbar = () => {
     const [isNavOpen, setIsNavOpen] = useState(false);
-
     const [activeSection, setActiveSection] = useState("");
 
-    const toggleMenu = () => setIsNavOpen(!isNavOpen);
-
+    const toggleMenu = useCallback(() => setIsNavOpen((prev) => !prev), []);
 
 
     useEffect(() => {
-        const sectionIds = ["home", "turlar", "hakkimizda", "iletisim"]; 
+
+        const sectionIds = ["home", "turlar", "hakkimizda", "iletisim"];
 
         const observerOptions = {
-            root: null, 
-            rootMargin: "-20% 0px -70% 0px", 
-            threshold: 0, 
+            root: null,
+            rootMargin: "-20% 0px -70% 0px",
+            threshold: 0,
         };
 
-        const observerCallback = (entries) => {
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
                     setActiveSection(entry.target.id);
                 }
             });
+        }, observerOptions);
+
+        const observedElements = new Set();
+
+        const handleScrollAndBind = () => {
+            sectionIds.forEach((id) => {
+                if (!observedElements.has(id)) {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        observer.observe(el);
+                        observedElements.add(id); 
+                    }
+                }
+            });
         };
 
-        const observer = new IntersectionObserver(observerCallback, observerOptions);
+        handleScrollAndBind();
 
-        sectionIds.forEach((id) => {
-            const el = document.getElementById(id);
-            if (el) observer.observe(el);
-        });
+        window.addEventListener("scroll", handleScrollAndBind, { passive: true });
 
-        return () => observer.disconnect(); 
+        return () => {
+            observer.disconnect();
+            window.removeEventListener("scroll", handleScrollAndBind);
+        };
     }, []);
+
+
 
     return (
         <header className={`fixed top-0 w-full z-50 border-b border-slate-200/50 backdrop-blur-md shadow-sm ${isNavOpen ? 'bg-white' : 'bg-white/80'}`}>
@@ -50,10 +65,10 @@ const Navbar = () => {
                 </a>
                 {/* Desktop Nav */}
                 <nav className="hidden lg:flex items-center gap-8">
-                    <NavLink href="/#" title="Anasayfa" isActive={activeSection === 'home'}/>
-                    <NavLink href="/#turlar" title="Turları Keşfet" isActive={activeSection === 'turlar'}/>
-                    <NavLink href="/#hakkimizda" title="Hakkımızda" isActive={activeSection === 'hakkimizda'}/>
-                    <NavLink href="/#iletisim" title="İletişim" isActive={activeSection === 'iletisim'}/>
+                    <NavLink href="/#" title="Anasayfa" isActive={activeSection === 'home'} />
+                    <NavLink href="/#turlar" title="Turları Keşfet" isActive={activeSection === 'turlar'} />
+                    <NavLink href="/#hakkimizda" title="Hakkımızda" isActive={activeSection === 'hakkimizda'} />
+                    <NavLink href="/#iletisim" title="İletişim" isActive={activeSection === 'iletisim'} />
                 </nav>
                 {/* CTA & Mobile Menu */}
                 <div className="flex items-center gap-4">
@@ -96,7 +111,7 @@ const Navbar = () => {
                     <a
                         href='/#hizli-rezervasyon'
                         className="w-full flex items-center justify-center bg-primary text-on-primary font-label-bold px-6 py-4 rounded-xl shadow-sm active:scale-95 transition-transform"
-                     >
+                    >
                         Hızlı Rezervasyon
                     </a>
                 </nav>

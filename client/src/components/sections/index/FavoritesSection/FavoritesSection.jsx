@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import FavoriteTourCard from './components/FavoriteTourCard';
 import Link from 'next/link';
 
-const FavoritesSection = () => {
+const FavoritesSection = ({ FavoritesData }) => {
   const [favorites, setFavorites] = useState([
     { id: 1, image: "https://cdn.akkahotels.com/Uploads/Blog/istanbul-kiz-kulesi-mobil_1.png", title: "Cappadocia Sürüşü", slug: "cappadocia-surusü" },
     { id: 2, image: "https://cdn.akkahotels.com/Uploads/Blog/antalyada-kalabalik-sezonda-tatil-yaparken-nelere-dikkat-edilmeli.jpg", title: "Antalya Tatil Pack", slug: "antalya-tatil-pack" }
@@ -15,9 +15,11 @@ const FavoritesSection = () => {
       <div className="max-w-[1280px] mx-auto">
         {/* Header Section */}
         <div className="mb-8 md:mb-12 text-center md:text-left">
-          <h2 className="reveal font-h2 text-2xl md:text-h2 text-white mb-2 md:mb-4">Favori Turlarınız</h2>
+          <h2 className="reveal font-h2 text-2xl md:text-h2 text-white mb-2 md:mb-4">
+            {FavoritesData?.title}
+          </h2>
           <p className="reveal font-body-md text-xs md:text-body-md text-secondary-fixed opacity-90">
-            Hızlı erişim için beğendiğiniz turları buraya ekleyebilirsiniz.
+            {FavoritesData?.description}
           </p>
         </div>
 
