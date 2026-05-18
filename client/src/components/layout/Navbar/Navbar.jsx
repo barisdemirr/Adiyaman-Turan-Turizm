@@ -1,19 +1,53 @@
 "use client"
 
-import React, { useCallback } from 'react';
-import { useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import NavLink from './components/NavLink';
 import Image from 'next/image';
 
 const Navbar = () => {
     const [isNavOpen, setIsNavOpen] = useState(false);
     const [activeSection, setActiveSection] = useState("");
+    const [navClass, setNavClass] = useState("translate-y-0");
 
     const toggleMenu = useCallback(() => setIsNavOpen((prev) => !prev), []);
 
+    useEffect(() => {
+        let lastScrollY = window.scrollY;
+        let accumulatedDown = 0;
+        let accumulatedUp = 0;
+
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+
+            if (currentScrollY <= 150) {
+                setNavClass("translate-y-0");
+                accumulatedDown = 0;
+                accumulatedUp = 0;
+            } else {
+                const diff = currentScrollY - lastScrollY;
+
+                if (diff > 0) {
+                    accumulatedUp = 0;
+                    accumulatedDown += diff;
+                    if (accumulatedDown >= 50) {
+                        setNavClass("-translate-y-full"); 
+                    }
+                } else if (diff < 0) {
+                    accumulatedDown = 0;
+                    accumulatedUp += Math.abs(diff);
+                    if (accumulatedUp >= 10) {
+                        setNavClass("translate-y-0"); 
+                    }
+                }
+            }
+            lastScrollY = currentScrollY;
+        };
+
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
 
     useEffect(() => {
-
         const sectionIds = ["home", "turlar", "hakkimizda", "iletisim"];
 
         const observerOptions = {
@@ -38,7 +72,7 @@ const Navbar = () => {
                     const el = document.getElementById(id);
                     if (el) {
                         observer.observe(el);
-                        observedElements.add(id); 
+                        observedElements.add(id);
                     }
                 }
             });
@@ -54,10 +88,8 @@ const Navbar = () => {
         };
     }, []);
 
-
-
     return (
-        <header className={`fixed top-0 w-full z-50 border-b border-slate-200/50 backdrop-blur-md shadow-sm ${isNavOpen ? 'bg-white' : 'bg-white/80'}`}>
+        <header className={`fixed top-0 w-full z-50 border-b border-slate-200/50 backdrop-blur-md shadow-sm transition-transform duration-300 ${navClass} ${isNavOpen ? 'bg-white' : 'bg-white/80'}`}>
             <div className="flex justify-between items-center max-w-[1280px] mx-auto px-6 h-20">
                 {/* Logo */}
                 <a className="text-xl font-extrabold tracking-tight text-slate-900 font-h4" href="#">
@@ -110,6 +142,7 @@ const Navbar = () => {
 
                     <a
                         href='/#hizli-rezervasyon'
+                        onClick={() => setIsNavOpen(false)}
                         className="w-full flex items-center justify-center bg-primary text-on-primary font-label-bold px-6 py-4 rounded-xl shadow-sm active:scale-95 transition-transform"
                     >
                         Hızlı Rezervasyon
