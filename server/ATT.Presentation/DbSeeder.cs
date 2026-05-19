@@ -218,76 +218,90 @@ namespace ATT.Presentation
             //            context.Tours.AddRange(tours);
 
 
-            if (!context.Services.Any())
-            {
-                var services = new List<Service>
-            {
-                new Service
-                {
-                    Icon = "🚌",
-                    Title = "Günübirlik Turlar",
-                    Description = "Şehrin ve çevresinin en önemli tarihi yerlerini keşfedeceğiniz, zamanı kısıtlı olanlar için kısa ve dopdolu geziler."
-                },
-                new Service
-                {
-                    Icon = "🤠",
-                    Title = "Profesyonel Rehberlik",
-                    Description = "Alanında uzman, yerel kültüre ve tarihe hakim lisanslı rehberlerimizle her anı bilgilendirici ve eğlenceli bir seyahat deneyimi."
-                },
-                new Service
-                {
-                    Icon = "🚐",
-    Title = "Konforlu Ulaşım",
-    Description = "Havalimanı transferlerinden şehir içi turlara kadar son model, klimalı ve lüks araçlarımızla güvenli ve konforlu seyahat ayrıcalığı."
-                },
-                new Service
-                {
-                    Icon = "🏛️",
-    Title = "Kültür ve Tarih Gezileri",
-    Description = "Medeniyetlerin izini sürerek kadim şehirlerin saklı kalmış hikayelerini ve ikonik yapılarını derinlemesine keşfetme fırsatı."
-                },
-                new Service
-                {
-                    Icon = "💎",
-    Title = "Kişiye Özel Butik Turlar",
-    Description = "Sadece size ve sevdiklerinize özel; rotasını, duraklarını ve zamanını tamamen sizin belirleyeceğiniz esnek gezi planları."
-                }
-             };
+            //        if (!context.Services.Any())
+            //        {
+            //            var services = new List<Service>
+            //        {
+            //            new Service
+            //            {
+            //                Icon = "🚌",
+            //                Title = "Günübirlik Turlar",
+            //                Description = "Şehrin ve çevresinin en önemli tarihi yerlerini keşfedeceğiniz, zamanı kısıtlı olanlar için kısa ve dopdolu geziler."
+            //            },
+            //            new Service
+            //            {
+            //                Icon = "🤠",
+            //                Title = "Profesyonel Rehberlik",
+            //                Description = "Alanında uzman, yerel kültüre ve tarihe hakim lisanslı rehberlerimizle her anı bilgilendirici ve eğlenceli bir seyahat deneyimi."
+            //            },
+            //            new Service
+            //            {
+            //                Icon = "🚐",
+            //Title = "Konforlu Ulaşım",
+            //Description = "Havalimanı transferlerinden şehir içi turlara kadar son model, klimalı ve lüks araçlarımızla güvenli ve konforlu seyahat ayrıcalığı."
+            //            },
+            //            new Service
+            //            {
+            //                Icon = "🏛️",
+            //Title = "Kültür ve Tarih Gezileri",
+            //Description = "Medeniyetlerin izini sürerek kadim şehirlerin saklı kalmış hikayelerini ve ikonik yapılarını derinlemesine keşfetme fırsatı."
+            //            },
+            //            new Service
+            //            {
+            //                Icon = "💎",
+            //Title = "Kişiye Özel Butik Turlar",
+            //Description = "Sadece size ve sevdiklerinize özel; rotasını, duraklarını ve zamanını tamamen sizin belirleyeceğiniz esnek gezi planları."
+            //            }
+            //         };
 
-                context.Services.AddRange(services);
+            //            context.Services.AddRange(services);
+            //        }
+
+
+            if (!context.AboutItems.Any())
+            {
+                var aboutitems = new List<AboutItem>
+{
+    new AboutItem
+    {
+        Title = "TÜRSAB Onaylı Güven",
+        Description = "A Grubu seyahat acentesi belgemizle, tüm turlarımızı yasal mevzuata ve yüksek güvenlik standartlarına tam uygun şekilde düzenliyoruz."
+    },
+    new AboutItem
+    {
+        Title = "Bölgesel Uzmanlık",
+        Description = "Kadim Mezopotamya topraklarının tarihine, saklı rotalarına ve yerel kültürüne en ince detayına kadar hakimiz."
+    },
+    new AboutItem
+    {
+        Title = "7/24 Kesintisiz Destek",
+        Description = "Rezervasyon öncesinden tur sonrasına kadar ihtiyacınız olan her an, profesyonel operasyon ekibimizle bir telefon uzağınızdayız."
+    },
+    new AboutItem
+    {
+        Title = "Esnek Rezervasyon",
+        Description = "Planlarınız değişirse endişe etmeyin; turlarımızda sunduğumuz kolay iptal ve tarih değişikliği imkanlarıyla bütçenizi güvenceye alıyoruz."
+    },
+    new AboutItem
+    {
+        Title = "Özgün Lezzet Deneyimleri",
+        Description = "Sadece turistik mekanları değil, bölgenin en meşhur ve orijinal yöresel lezzetlerini sunan gerçek lezzet duraklarını keşfediyoruz."
+    },
+    new AboutItem
+    {
+        Title = "Şeffaf Fiyat Politikası",
+        Description = "Sürpriz ödemelere yer yok! Müze girişleri, rehberlik ve transferler gibi dahil olan tüm hizmetleri tur başında net olarak belirtiyoruz."
+    },
+    new AboutItem
+    {
+        Title = "Butik ve Konforlu Gruplar",
+        Description = "Kalabalıklar arasında kaybolmamanız için tur kontenjanlarımızı sınırlı tutuyor, lüks araçlarımızla ayrıcalıklı bir seyahat sunuyoruz."
+    }
+};
+
+                context.AboutItems.AddRange(aboutitems);
             }
-
-
-
-            //    var aboutitems = new List<AboutItem>
-            //{
-            //    new AboutItem
-            //    {
-            //        Icon = "fa-solid fa-archway",
-            //        Title = "35 Yıllık Deneyim",
-            //        Description = "Roma tarihini Adıyaman'ın kalbinde hissedin."
-            //    },
-            //    new AboutItem
-            //    {
-            //        Icon = "fa-solid fa-archway",
-            //        Title = "Cendere Köprüsü & Arsemia Gezisi",
-            //        Description = "Roma tarihini Adıyaman'ın kalbinde hissedin."
-            //    },
-            //    new AboutItem
-            //    {
-            //        Icon = "fa-solid fa-archway",
-            //        Title = "Cendere Köprüsü & Arsemia Gezisi",
-            //        Description = "Roma tarihini Adıyaman'ın kalbinde hissedin."
-            //    },
-            //    new AboutItem
-            //    {
-            //        Icon = "fa-solid fa-archway",
-            //        Title = "Cendere Köprüsü & Arsemia Gezisi",
-            //        Description = "Roma tarihini Adıyaman'ın kalbinde hissedin."
-            //    },
-            //};
-
-            //context.AboutItems.AddRange(aboutitems);
+            
 
             await context.SaveChangesAsync(); 
         }

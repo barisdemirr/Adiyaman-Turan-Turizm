@@ -1,35 +1,56 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AboutCard from './components/AboutCard';
+import GetAllAboutItems from '@/services/AboutItemService';
+import AboutCardSkeleton from '@/components/ui/skeletons/AboutCardSkeleton';
 
-const AboutSection = ({AboutData}) => {
-  const [aboutItems, setAboutItems] = useState([
-    {
-      icon: "workspace_premium",
-      title: "35 Yıllık Deneyim",
-      description:
-        "Yarım asra yaklaşan tecrübemizle bölgenin en köklü acentelerinden biriyiz.",
-    },
-    {
-      icon: "explore",
-      title: "Uzman Yerel Rehberler",
-      description:
-        "Bölgeyi en iyi bilen, profesyonel rehberlerle her anı keşfedin.",
-    },
-    {
-      icon: "support_agent",
-      title: "7/24 Müşteri Desteği",
-      description:
-        "Seyahatinizin her aşamasında bir telefon uzağınızdayız.",
-    },
-    {
-      icon: "4.5⭐​",
-      title: "TÜRSAB Onaylı Güven",
-      description:
-        "Tüm turlarımız yasal mevzuata tam uygun şekilde düzenlenir.",
-    },
-  ]);
+const AboutSection = ({ AboutData }) => {
+  const [aboutItems, setAboutItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAboutItems = async () => {
+      try {
+        const data = await GetAllAboutItems();
+        setAboutItems(data);
+      } catch (error) {
+        console.error("Hakkımızda öğeleri yüklenirken hata oluştu:", error);
+      }
+      finally {
+        setIsLoading(false);
+      }
+    };
+    fetchAboutItems();
+  }, []);
+
+  useEffect(() => {
+    if (isLoading || !aboutItems || aboutItems.length === 0) return;
+
+    let observer;
+
+    const timer = setTimeout(() => {
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+
+      const elements = document.querySelectorAll(".about-grid .reveal");
+      elements.forEach((el) => observer.observe(el));
+    }, 100);
+
+    return () => {
+      clearTimeout(timer);
+      if (observer) observer.disconnect();
+    };
+  }, [isLoading, aboutItems]);
 
 
   return (
@@ -46,11 +67,15 @@ const AboutSection = ({AboutData}) => {
         </div>
 
         {/* Kartlar Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-          {aboutItems.map((card, index) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 about-grid">
+          {isLoading
+            ? 
+            Array.from({ length: 4 }).map((_, index) => (
+              <AboutCardSkeleton key={`skeleton-${index}`} />
+            ))
+            : aboutItems.map((card, index) => (
             <AboutCard
               key={index}
-              icon={card.icon}
               title={card.title}
               description={card.description}
             />

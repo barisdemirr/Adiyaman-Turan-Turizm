@@ -6,10 +6,10 @@ namespace ATT.Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ServiceController : ControllerBase
+    public class ServicesController : ControllerBase
     {
         private readonly IServiceService _serviceService;
-        public ServiceController(IServiceService serviceService)
+        public ServicesController(IServiceService serviceService)
         {
             _serviceService = serviceService;
         }

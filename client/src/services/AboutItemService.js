@@ -1,7 +1,7 @@
 import React from 'react'
 
-async function GetAllServices() {
-    const apiUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/services`;
+async function GetAllAboutItems() {
+    const apiUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/aboutitems`;
 
   try {
     const res = await fetch(apiUrl, {
@@ -19,7 +19,7 @@ async function GetAllServices() {
     return await res.json();
 
   } catch (error) {
-    console.error("[ServiceService] Kritik Hata Yakalandı:", error);
+    console.error("[AboutItemService] Kritik Hata Yakalandı:", error);
 
     throw new Error(
       "Şu anda backend servislerimize ulaşılamıyor. Lütfen .NET API'nizin ayakta ve doğru portta (örn: localhost:5001) çalıştığından emin olun."
@@ -27,4 +27,4 @@ async function GetAllServices() {
   }
 }
 
-export default GetAllServices
+export default GetAllAboutItems
