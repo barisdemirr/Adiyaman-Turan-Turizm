@@ -52,6 +52,14 @@ namespace ATT.DataAccess.Concrete.EntityFramework.Repositories.Common
                 .FirstOrDefaultAsync(filter);
         }
 
+        public async Task<List<T>> GetListByFilterAsync(Expression<Func<T, bool>> filter)
+        {
+            return await _dbSet
+                .AsNoTracking()
+                .Where(filter)
+                .ToListAsync();
+        }
+
         public async Task<int> CountAsync()
         {
             return await _dbSet.AsNoTracking().CountAsync();

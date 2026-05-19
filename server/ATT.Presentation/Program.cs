@@ -56,6 +56,8 @@ builder.Services.AddScoped<IToursSectionService, ToursSectionService>();
 builder.Services.AddScoped<ITourService, TourService>();
 builder.Services.AddScoped<IServiceService, ServiceService>();
 builder.Services.AddScoped<IAboutItemService, AboutItemService>();
+builder.Services.AddScoped<IGalleryImageService, GalleryImageService>();
+
 
 builder.Services.AddCors(options =>
 {

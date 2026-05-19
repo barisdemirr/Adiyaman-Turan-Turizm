@@ -14,6 +14,7 @@ namespace ATT.DataAccess.Abstract.Common
         Task UpdateAsync(T entity);
         Task<List<T>> GetAllAsync();
         Task<T?> GetByFilterAsync(Expression<Func<T, bool>> filter);
+        Task<List<T>> GetListByFilterAsync(Expression<Func<T, bool>> filter);
         Task<int> CountAsync();
     }
 }

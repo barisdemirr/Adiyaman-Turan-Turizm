@@ -2,39 +2,53 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import GetAllGalleryImages from '@/services/GalleryImageService';
+import GallerySkeleton from '@/components/ui/skeletons/GallerySkeleton';
 
 const GallerySection = ({ GalleryData }) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [touchStart, setTouchStart] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState('next');
+  const [images, setImages] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const images = [
-    "https://cdn.akkahotels.com/Uploads/Blog/antalyada-kalabalik-sezonda-tatil-yaparken-nelere-dikkat-edilmeli.jpg",
-    "https://cdn.akkahotels.com/Uploads/Blog/istanbul-kiz-kulesi-mobil_1.png"
-  ];
+  useEffect(() => {
+    const fetchGalleryImages = async () => {
+      try {
+        const data = await GetAllGalleryImages();
+        setImages(data);
+      } catch (error) {
+        console.error("Galeri resimleri yüklenirken hata oluştu:", error);
+      }
+      finally {
+        setIsLoading(false);
+      }
+    };
+    fetchGalleryImages();
+  }, []);
 
   const nextImage = () => {
+    if (images.length === 0) return; 
     setDirection('next');
     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
   };
 
-  // Geri Gitme
   const prevImage = () => {
+    if (images.length === 0) return; 
     setDirection('prev');
     setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
   };
 
   useEffect(() => {
-    if (!isFullscreen) {
-      const timer = setInterval(() => {
-        nextImage();
-      }, 3000);
-      return () => clearInterval(timer);
-    }
+    if (images.length === 0 || isFullscreen) return;
 
+    const timer = setInterval(() => {
+      nextImage();
+    }, 3000);
 
-  }, [isFullscreen, currentIndex]);
+    return () => clearInterval(timer);
+  }, [isFullscreen, currentIndex, images.length]);
 
 
   const minSwipeDistance = 50;
@@ -88,6 +102,10 @@ const GallerySection = ({ GalleryData }) => {
 
             {/* Görsel Konteynırı */}
             <div className="relative w-full flex items-center justify-center px-4 md:px-0 h-full">
+              {isLoading
+            ? 
+              (<GallerySkeleton />)
+            : (
               <div
                 onTouchStart={onTouchStart}
                 onTouchEnd={(e) => onTouchEnd(e)}
@@ -95,8 +113,8 @@ const GallerySection = ({ GalleryData }) => {
                 className="aspect-video cursor-zoom-in relative w-full md:w-[800px] rounded-xl md:rounded-2xl overflow-hidden shadow-xl border-2 md:border-4 border-white bg-neutral-900"
               >
                 <Image
-                  key={currentIndex} // Animasyonun tetiklenmesi için KRİTİK
-                  src={images[currentIndex]}
+                  key={currentIndex} 
+                  src={images[currentIndex].imageUrl}
                   alt={`Slide ${currentIndex}`}
                   fill
                   className={`object-contain ${direction === 'next' ? 'animate-next' : 'animate-prev'}`}
@@ -104,6 +122,7 @@ const GallerySection = ({ GalleryData }) => {
                   draggable={false}
                 />
               </div>
+              )}
             </div>
           </div>
 
@@ -136,8 +155,8 @@ const GallerySection = ({ GalleryData }) => {
                 onTouchEnd={(e) => onTouchEnd(e)}
               >
                 <Image
-                  key={currentIndex} // Tam ekranda da animasyon oynaması için
-                  src={images[currentIndex]}
+                  key={currentIndex} 
+                  src={images[currentIndex].imageUrl}
                   alt={`Full Slide ${currentIndex}`}
                   fill
                   className={`object-contain drop-shadow-2xl ${direction === 'next' ? 'animate-next' : 'animate-prev'}`}
