@@ -54,7 +54,7 @@ builder.Services.AddScoped<IHomePageService, HomePageService>();
 builder.Services.AddScoped<IServicesSectionService, ServicesSectionService>();
 builder.Services.AddScoped<IToursSectionService, ToursSectionService>();
 builder.Services.AddScoped<ITourService, TourService>();
-
+builder.Services.AddScoped<IServiceService, ServiceService>();
 
 builder.Services.AddCors(options =>
 {
@@ -86,6 +86,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 //SEEDING
+
 //using (var scope = app.Services.CreateScope())
 //{
 //    var services = scope.ServiceProvider;

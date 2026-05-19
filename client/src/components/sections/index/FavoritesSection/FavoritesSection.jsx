@@ -5,7 +5,6 @@ import FavoriteTourCard from './components/FavoriteTourCard';
 import Link from 'next/link';
 
 const FavoritesSection = ({ FavoritesData }) => {
-  // 🚀 1. DOKUNUŞ: undefined hatası riskine karşı boş dizi ile başlatalım kanka
   const [favoriteTours, setFavoriteTours] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -20,7 +19,6 @@ const FavoritesSection = ({ FavoritesData }) => {
 
     let observer;
 
-    // 🚀 2. DOKUNUŞ: Sayfa #turlar yüzünden zıplarken elemanları kaçırmasın diye sinsi bir 100ms mola
     const timer = setTimeout(() => {
       observer = new IntersectionObserver(
         (entries) => {
@@ -34,7 +32,6 @@ const FavoritesSection = ({ FavoritesData }) => {
         { threshold: 0.1 }
       );
 
-      // Artık aşağıda class'ı eklediğimiz için bu satır tıkır tıkır eleman bulacak kanka
       const elements = document.querySelectorAll(".favorites-grid .reveal");
       elements.forEach((el) => observer.observe(el));
     }, 100);
