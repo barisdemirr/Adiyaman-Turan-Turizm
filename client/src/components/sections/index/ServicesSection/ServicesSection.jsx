@@ -53,7 +53,7 @@ const ServicesSection = ({ ServicesData }) => {
     }, [isLoading, services]);
 
   return (
-    <section className="py-10 md:py-xl px-4 md:px-6 max-w-[1280px] mx-auto mt-10 md:mt-0 bg-surface">
+    <section className="py-10 md:py-xl px-4 md:px-6 max-w-[1280px] mx-auto mt-10 md:mt-0 bg-surface" id='hizmetlerimiz'>
       {/* Header Section */}
       <div className="mb-10 md:mb-16 text-center">
         <h2 className="reveal font-h2 text-2xl font-bold md:text-h2 text-on-surface mb-3 md:mb-4 px-2">

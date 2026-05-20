@@ -18,7 +18,7 @@ const nextConfig = {
         pathname: '/**', // Tüm alt klasörlere izin verir
       },
     ],
-  },
+  },  
 };
 
 export default nextConfig;

@@ -73,7 +73,7 @@ const GallerySection = ({ GalleryData }) => {
   };
 
   return (
-    <section className="py-20 md:py-10 md:py-xl px-4 md:px-6 bg-slate-50 border-y border-surface-variant/30 overflow-hidden">
+    <section className="py-20 md:py-10 md:py-xl px-4 md:px-6 bg-slate-50 border-y border-surface-variant/30 overflow-hidden" id='tur-fotograflari'>
       <div className="max-w-[1280px] mx-auto">
         {/* Başlık Bölümü */}
         <div className="mb-10 md:mb-16 text-center">
