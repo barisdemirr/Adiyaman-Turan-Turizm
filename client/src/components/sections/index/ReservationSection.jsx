@@ -4,8 +4,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import CustomSelect from '@/components/ui/CustomSelect';
 import { GetToursForReservation } from '@/services/TourService';
 
-const ReservationSection = () => {
-  const [phone, setPhone] = useState("90123456789");
+const ReservationSection = ({ phone }) => {
   const [tours, setTours] = useState([]);
   const [selectedTour, setSelectedTour] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);

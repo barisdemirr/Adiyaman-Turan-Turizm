@@ -2,8 +2,7 @@
 
 import React, { useState } from 'react'
 
-function BookingSection({ dates, price, title }) {
-    const [wpphone, setWpphone] = useState("90123456789");
+function BookingSection({ dates, price, title, phone }) {
 
     const todayTime = new Date().getTime();
     dates = dates.map(date => date.date);
@@ -54,7 +53,7 @@ function BookingSection({ dates, price, title }) {
                                     <p className="text-[9px] uppercase tracking-wider text-green-600 font-bold">uygun</p>
                                 </div>
                             </div>
-                            <a href={`https://wa.me/${wpphone}?text=${encodeURIComponent(`Merhaba, ${date} tarihine, ${title} için rezervasyon yapmak istiyorum.`)}`} target="_blank" rel="noopener noreferrer" className="w-full bg-primary text-on-primary py-2.5 md:py-3 px-4 rounded-lg font-label-bold text-xs md:text-sm hover:bg-on-primary-container transition-colors active:scale-[0.98]">
+                            <a href={`https://wa.me/${phone}?text=${encodeURIComponent(`Merhaba, ${date} tarihine, ${title} için rezervasyon yapmak istiyorum.`)}`} target="_blank" rel="noopener noreferrer" className="w-full bg-primary text-on-primary py-2.5 md:py-3 px-4 rounded-lg font-label-bold text-xs md:text-sm hover:bg-on-primary-container transition-colors active:scale-[0.98]">
                                 Rezervasyon Yap
                             </a>
                         </div>

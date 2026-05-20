@@ -6,12 +6,16 @@ import DescriptionSection from '@/components/sections/tour-detail/DescriptionSec
 import AdditionalImagerySection from '@/components/sections/tour-detail/AdditionalImagerySection';
 import BookingSection from '@/components/sections/tour-detail/BookingSection';
 import { GetTourBySlug } from '@/services/TourService';
+import { GetContactInfo } from '@/services/ContactService';
 
 const TourDetailPage = async ({ params }) => {
   const resolvedParams = await params;
   const slug = resolvedParams.slug;
 
-  const tour = await GetTourBySlug(slug);
+  const [tour, contact] = await Promise.all([
+    GetTourBySlug(slug),
+    GetContactInfo()
+  ]);
 
   return (
     <div className='flex justify-center mt-24'>
@@ -21,7 +25,7 @@ const TourDetailPage = async ({ params }) => {
         <InfoBarSection type={tour.type} duration={tour.duration} price={tour.price} />
         <div className="max-w-[1280px] mx-auto px-4 md:px-6 mt-8 md:mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12">
           <DescriptionSection description={tour.description} extras={tour.extras}/>
-          <BookingSection  dates={tour.dates} price={tour.price} title={tour.title} />
+          <BookingSection  dates={tour.dates} price={tour.price} title={tour.title} phone={contact?.whatsappPhone} />
         </div>
         <AdditionalImagerySection photos={tour.images} />
       </div>

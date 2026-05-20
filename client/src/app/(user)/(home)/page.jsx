@@ -8,22 +8,26 @@ import GallerySection from "@/components/sections/index/GallerySection";
 import AboutSection from "@/components/sections/index/AboutSection/AboutSection";
 import ContactSection from "@/components/sections/index/ContactSection/ContactSection";
 import GetAllSections from '@/services/HomeService';
+import { GetContactInfo } from '@/services/ContactService';
 
 
 export default async function HomePage() {
   
-  const sections = await GetAllSections();
+  const [sections, contact] = await Promise.all([
+    GetAllSections(),
+    GetContactInfo()
+  ]);
 
   return (
     <div>
       <HeroSection HeroData={sections?.heroSection} />
-      <ReservationSection />
+      <ReservationSection phone={contact?.whatsappPhone} />
       <ServicesSection ServicesData={sections?.servicesSection} />
       <FavoritesSection FavoritesData={sections?.favoritesSection} />
       <ToursSection ToursData={sections?.toursSection} />
       <AboutSection AboutData={sections?.aboutSection} />
       <GallerySection GalleryData={sections?.gallerySection} />
-      <ContactSection ContactData={sections?.contactSection} />
+      <ContactSection ContactData={sections?.contactSection} contact={contact} />
     </div>
   );
 }

@@ -2,6 +2,8 @@ using ATT.Core.Entities;
 using ATT.DataAccess.Abstract;
 using ATT.DataAccess.Concrete.EntityFramework.Context;
 using ATT.DataAccess.Concrete.EntityFramework.Repositories.Common;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace ATT.DataAccess.Concrete.EntityFramework.Repositories
 {
@@ -10,5 +12,11 @@ namespace ATT.DataAccess.Concrete.EntityFramework.Repositories
         public ContactInfoRepository(ATTDbContext context) : base(context)
         {
         }
+
+        public async Task<ContactInfo> GetAllContact()
+        {
+            return await _context.Set<ContactInfo>().AsNoTracking().FirstOrDefaultAsync();
+        }
+        
     }
 }

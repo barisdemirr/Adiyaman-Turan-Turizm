@@ -3,42 +3,42 @@
 import React, { useState } from 'react';
 import ContactCard from './components/ContactCard';
 
-const ContactSection = ({ ContactData }) => {
+const ContactSection = ({ ContactData, contact }) => {
   const [accounts, setAccounts] = useState([]);
 
 
   const contactItems = [
     {
-      href: "https://wa.me/905000000000",
+      href: `https://wa.me/${contact?.whatsappPhone}`,
       icon: "chat",
       bgColor: "bg-green-500/20",
       textColor: "text-green-400",
       label: "WhatsApp",
-      content: "+90 500 000 00 00",
+      content: contact?.whatsappPhone,
     },
     {
-      href: "tel:+904160000000",
+      href: `tel:${contact?.phone}`,
       icon: "call",
       bgColor: "bg-primary-fixed/20",
       textColor: "text-primary-fixed",
       label: "Telefon",
-      content: "+90 416 000 00 00",
+      content: contact?.phone,
     },
     {
-      href: "mailto:info@adiyamanturan.com",
+      href: `mailto:${contact?.email}`,
       icon: "mail",
       bgColor: "bg-blue-500/20",
       textColor: "text-blue-400",
       label: "E-posta",
-      content: "info@adiyamanturan.com",
+      content: contact?.email,
     },
     {
-      href: "https://instagram.com/adiyamanturanturizm",
+      href: `https://instagram.com/${contact?.instagramUsername}`,
       icon: "photo_camera",
       bgColor: "bg-pink-500/20",
       textColor: "text-pink-400",
       label: "Instagram",
-      content: "@adiyamanturanturizm",
+      content: contact?.instagramUsername,
     },
   ];
 
