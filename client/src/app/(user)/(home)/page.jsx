@@ -13,21 +13,18 @@ import { GetContactInfo } from '@/services/ContactService';
 
 export default async function HomePage() {
   
-  const [sections, contact] = await Promise.all([
-    GetAllSections(),
-    GetContactInfo()
-  ]);
+  const sections = await GetAllSections();
 
   return (
     <div>
       <HeroSection HeroData={sections?.heroSection} />
-      <ReservationSection phone={contact?.whatsappPhone} />
+      <ReservationSection />
       <ServicesSection ServicesData={sections?.servicesSection} />
       <FavoritesSection FavoritesData={sections?.favoritesSection} />
       <ToursSection ToursData={sections?.toursSection} />
       <AboutSection AboutData={sections?.aboutSection} />
       <GallerySection GalleryData={sections?.gallerySection} />
-      <ContactSection ContactData={sections?.contactSection} contact={contact} />
+      <ContactSection ContactData={sections?.contactSection} />
     </div>
   );
 }

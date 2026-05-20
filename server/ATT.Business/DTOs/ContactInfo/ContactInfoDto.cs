@@ -8,9 +8,7 @@ namespace ATT.Business.DTOs.ContactInfo
 {
     public class ContactInfoDto
     {
-        public string WhatsappPhone { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
-        public string InstagramUsername { get; set; }
+        public string Name { get; set; }
+        public string Value { get; set; }
     }
 }

@@ -258,50 +258,76 @@ namespace ATT.Presentation
             //        }
 
 
-            if (!context.AboutItems.Any())
-            {
-                var aboutitems = new List<AboutItem>
-{
-    new AboutItem
-    {
-        Title = "TÜRSAB Onaylı Güven",
-        Description = "A Grubu seyahat acentesi belgemizle, tüm turlarımızı yasal mevzuata ve yüksek güvenlik standartlarına tam uygun şekilde düzenliyoruz."
-    },
-    new AboutItem
-    {
-        Title = "Bölgesel Uzmanlık",
-        Description = "Kadim Mezopotamya topraklarının tarihine, saklı rotalarına ve yerel kültürüne en ince detayına kadar hakimiz."
-    },
-    new AboutItem
-    {
-        Title = "7/24 Kesintisiz Destek",
-        Description = "Rezervasyon öncesinden tur sonrasına kadar ihtiyacınız olan her an, profesyonel operasyon ekibimizle bir telefon uzağınızdayız."
-    },
-    new AboutItem
-    {
-        Title = "Esnek Rezervasyon",
-        Description = "Planlarınız değişirse endişe etmeyin; turlarımızda sunduğumuz kolay iptal ve tarih değişikliği imkanlarıyla bütçenizi güvenceye alıyoruz."
-    },
-    new AboutItem
-    {
-        Title = "Özgün Lezzet Deneyimleri",
-        Description = "Sadece turistik mekanları değil, bölgenin en meşhur ve orijinal yöresel lezzetlerini sunan gerçek lezzet duraklarını keşfediyoruz."
-    },
-    new AboutItem
-    {
-        Title = "Şeffaf Fiyat Politikası",
-        Description = "Sürpriz ödemelere yer yok! Müze girişleri, rehberlik ve transferler gibi dahil olan tüm hizmetleri tur başında net olarak belirtiyoruz."
-    },
-    new AboutItem
-    {
-        Title = "Butik ve Konforlu Gruplar",
-        Description = "Kalabalıklar arasında kaybolmamanız için tur kontenjanlarımızı sınırlı tutuyor, lüks araçlarımızla ayrıcalıklı bir seyahat sunuyoruz."
-    }
-};
+            //            if (!context.AboutItems.Any())
+            //            {
+            //                var aboutitems = new List<AboutItem>
+            //{
+            //    new AboutItem
+            //    {
+            //        Title = "TÜRSAB Onaylı Güven",
+            //        Description = "A Grubu seyahat acentesi belgemizle, tüm turlarımızı yasal mevzuata ve yüksek güvenlik standartlarına tam uygun şekilde düzenliyoruz."
+            //    },
+            //    new AboutItem
+            //    {
+            //        Title = "Bölgesel Uzmanlık",
+            //        Description = "Kadim Mezopotamya topraklarının tarihine, saklı rotalarına ve yerel kültürüne en ince detayına kadar hakimiz."
+            //    },
+            //    new AboutItem
+            //    {
+            //        Title = "7/24 Kesintisiz Destek",
+            //        Description = "Rezervasyon öncesinden tur sonrasına kadar ihtiyacınız olan her an, profesyonel operasyon ekibimizle bir telefon uzağınızdayız."
+            //    },
+            //    new AboutItem
+            //    {
+            //        Title = "Esnek Rezervasyon",
+            //        Description = "Planlarınız değişirse endişe etmeyin; turlarımızda sunduğumuz kolay iptal ve tarih değişikliği imkanlarıyla bütçenizi güvenceye alıyoruz."
+            //    },
+            //    new AboutItem
+            //    {
+            //        Title = "Özgün Lezzet Deneyimleri",
+            //        Description = "Sadece turistik mekanları değil, bölgenin en meşhur ve orijinal yöresel lezzetlerini sunan gerçek lezzet duraklarını keşfediyoruz."
+            //    },
+            //    new AboutItem
+            //    {
+            //        Title = "Şeffaf Fiyat Politikası",
+            //        Description = "Sürpriz ödemelere yer yok! Müze girişleri, rehberlik ve transferler gibi dahil olan tüm hizmetleri tur başında net olarak belirtiyoruz."
+            //    },
+            //    new AboutItem
+            //    {
+            //        Title = "Butik ve Konforlu Gruplar",
+            //        Description = "Kalabalıklar arasında kaybolmamanız için tur kontenjanlarımızı sınırlı tutuyor, lüks araçlarımızla ayrıcalıklı bir seyahat sunuyoruz."
+            //    }
+            //};
 
-                context.AboutItems.AddRange(aboutitems);
-            }
-            
+            //                context.AboutItems.AddRange(aboutitems);
+            //}
+
+
+            //if (!context.ContactInfos.Any())
+            //{
+            //    var contactinfos = new List<ContactInfo>
+            //    {
+            //        new ContactInfo
+            //        {
+            //            Name = "Whatsapp",
+            //            Value = "05432101122"
+            //        },
+            //        new ContactInfo
+            //        {
+            //            Name = "Email",
+            //            Value = "info@turan.com"
+            //        },
+            //        new ContactInfo
+            //        {
+            //            Name = "Instagram",
+            //            Value = "adiyamanturanturizm"
+            //        },
+
+            //    };
+
+            //    context.ContactInfos.AddRange(contactinfos);
+
+            //}
 
             await context.SaveChangesAsync(); 
         }

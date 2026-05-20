@@ -17,17 +17,23 @@ namespace ATT.Business.Concrete
             _contactInfoRepository = contactInfoRepository;
         }
 
-        public async Task<ContactInfoDto> GetAllContactInfos()
+        public async Task<List<ContactInfoDto>> GetAllContactInfos()
         {
-            var contact = await _contactInfoRepository.GetAllContact();
+            var list = await _contactInfoRepository.GetAllAsync();
 
+            var contactInfos = list.Select(ci => new ContactInfoDto { Name = ci.Name, Value = ci.Value }).ToList();
+
+            return contactInfos;
+        }
+
+        public async Task<ContactInfoDto> GetContactByName(string name)
+        {
+            var contact = await _contactInfoRepository.GetByFilterAsync(x => x.Name == name);
 
             return new ContactInfoDto
             {
-                InstagramUsername = contact.InstagramUsername,
-                WhatsappPhone = contact.WhatsappPhone,
-                Phone = contact.Phone,
-                Email = contact.Email
+                Name = contact.Name,
+                Value = contact.Value
             };
         }
     }

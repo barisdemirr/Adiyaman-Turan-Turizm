@@ -12,11 +12,5 @@ namespace ATT.DataAccess.Concrete.EntityFramework.Repositories
         public ContactInfoRepository(ATTDbContext context) : base(context)
         {
         }
-
-        public async Task<ContactInfo> GetAllContact()
-        {
-            return await _context.Set<ContactInfo>().AsNoTracking().FirstOrDefaultAsync();
-        }
-        
     }
 }

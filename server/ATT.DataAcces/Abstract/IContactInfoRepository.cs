@@ -6,6 +6,5 @@ namespace ATT.DataAccess.Abstract
 {
     public interface IContactInfoRepository : IGenericRepository<ContactInfo>
     {
-        Task<ContactInfo> GetAllContact();
     }
 }

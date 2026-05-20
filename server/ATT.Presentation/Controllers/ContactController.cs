@@ -15,9 +15,17 @@ namespace ATT.Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetContact() 
+        public async Task<IActionResult> GetAllContact() 
         {
-            var contact = await _contactInfoService.GetAllContactInfos();
+            var contacts = await _contactInfoService.GetAllContactInfos();
+
+            return Ok(contacts);
+        }
+
+        [HttpGet("{name}")]
+        public async Task<IActionResult> GetAllContact(string name)
+        {
+            var contact = await _contactInfoService.GetContactByName(name);
 
             return Ok(contact);
         }

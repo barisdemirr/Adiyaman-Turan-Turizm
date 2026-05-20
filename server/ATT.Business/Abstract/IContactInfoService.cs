@@ -9,6 +9,7 @@ namespace ATT.Business.Abstract
 {
     public interface IContactInfoService
     {
-        Task<ContactInfoDto> GetAllContactInfos();
+        Task<List<ContactInfoDto>> GetAllContactInfos();
+        Task<ContactInfoDto> GetContactByName(string name);
     }
 }
