@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { GetServiceItemById, UpdateServiceItem } from '@/services/ServiceService';
 
 export default function ServiceCardEditPage() {
     const router = useRouter();
@@ -26,18 +27,18 @@ export default function ServiceCardEditPage() {
     useEffect(() => {
         const fetchServiceData = async () => {
             try {
-                await new Promise((resolve) => setTimeout(resolve, 1000));
+                const data = await GetServiceItemById(id);
 
-                const backendData = {
-                    icon: '🚀',
-                    title: 'Kişiye Özel Tur Rotaları',
-                    description: 'Tamamen sizin tercihlerinize göre şekillendirilmiş özel seyahat planlama hizmeti.'
+                const cardData = {
+                    icon: data.icon || '',
+                    title: data.title || '',
+                    description: data.description || ''
                 };
 
-                setFormData(backendData);
-                setInitialData(backendData);
+                setFormData(cardData);
+                setInitialData(cardData);
             } catch (err) {
-                setError('Veriler yüklenirken sistemsel bir hata oluştu.');
+                setError(err.message || 'Veriler yüklenirken sistemsel bir hata oluştu.');
             } finally {
                 setIsLoading(false);
             }
@@ -63,23 +64,11 @@ export default function ServiceCardEditPage() {
             return;
         }
 
-        const updatedFields = {};
-        let changeCount = 0;
+        const hasChanges = formData.icon.trim() !== initialData.icon ||
+            formData.title.trim() !== initialData.title ||
+            formData.description.trim() !== initialData.description;
 
-        if (formData.icon.trim() !== initialData.icon) {
-            updatedFields.icon = formData.icon.trim();
-            changeCount++;
-        }
-        if (formData.title.trim() !== initialData.title) {
-            updatedFields.title = formData.title.trim();
-            changeCount++;
-        }
-        if (formData.description.trim() !== initialData.description) {
-            updatedFields.description = formData.description.trim();
-            changeCount++;
-        }
-
-        if (changeCount === 0) {
+        if (!hasChanges) {
             setError('Herhangi bir değişiklik algılanmadı. Lütfen güncelleme yaptıktan sonra tekrar deneyiniz.');
             window.scrollTo({ top: 0, behavior: 'smooth' });
             return;
@@ -88,13 +77,17 @@ export default function ServiceCardEditPage() {
         setIsSubmitting(true);
 
         try {
-            await new Promise((resolve) => setTimeout(resolve, 1500));
-            console.log(updatedFields);
+            await UpdateServiceItem({
+                id: Number(id),
+                icon: formData.icon.trim(),
+                title: formData.title.trim(),
+                description: formData.description.trim()
+            });
 
-            alert('Servis kartı başarıyla güncellendi kanka!');
+            alert('Servis kartı başarıyla güncellendi!');
             router.push('/admin/service-cards');
         } catch (err) {
-            setError('Bağlantı hatası oluştu. Lütfen veri tabanı protokollerini kontrol edip tekrar deneyiniz.');
+            setError(err.message || 'Bağlantı hatası oluştu. Lütfen veri tabanı protokollerini kontrol edip tekrar deneyiniz.');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         } finally {
             setIsSubmitting(false);
@@ -118,7 +111,7 @@ export default function ServiceCardEditPage() {
 
                 <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
                     {isLoading ? (
-                        <div className="p-12 text-center text-slate-500 font-medium">
+                        <div className="p-12 text-center text-slate-500 font-medium animate-pulse">
                             Mevcut servis bilgileri getiriliyor, lütfen bekleyiniz...
                         </div>
                     ) : (
@@ -173,14 +166,14 @@ export default function ServiceCardEditPage() {
                                 <button
                                     type="button"
                                     onClick={() => router.push('/admin/service-cards')}
-                                    className="px-6 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-lg transition-colors text-sm"
+                                    className="px-6 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-lg transition-colors text-sm cursor-pointer"
                                 >
                                     İptal
                                 </button>
                                 <button
                                     type="submit"
                                     disabled={isSubmitting}
-                                    className="px-6 py-2.5 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 focus:ring-4 focus:ring-primary/20 transition-colors disabled:opacity-50 text-sm"
+                                    className="px-6 py-2.5 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 focus:ring-4 focus:ring-primary/20 transition-colors disabled:opacity-50 text-sm cursor-pointer"
                                 >
                                     {isSubmitting ? 'Kaydediliyor...' : 'Değişiklikleri Kaydet'}
                                 </button>

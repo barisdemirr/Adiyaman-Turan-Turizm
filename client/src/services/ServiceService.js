@@ -27,4 +27,90 @@ async function GetAllServices() {
   }
 }
 
-export default GetAllServices
+const AddServiceItem = async (serviceData) => {
+    try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/Services`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(serviceData),
+        });
+
+        const textData = await response.text();
+
+        if (!response.ok) {
+            const errorObj = textData ? JSON.parse(textData) : {};
+            throw new Error(errorObj.message || 'Hizmet ekleme işlemi başarısız oldu.');
+        }
+
+        return textData ? JSON.parse(textData) : { success: true };
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+const GetServiceItemById = async (id) => {
+    try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/Services/${id}`);
+        const textData = await response.text();
+
+        if (!response.ok) {
+            const errorObj = textData ? JSON.parse(textData) : {};
+            throw new Error(errorObj.message || 'Servis bilgisi getirilirken bir hata oluştu.');
+        }
+
+        return textData ? JSON.parse(textData) : null;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+const UpdateServiceItem = async (serviceData) => {
+    try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/Services`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(serviceData),
+        });
+
+        const textData = await response.text();
+
+        if (!response.ok) {
+            const errorObj = textData ? JSON.parse(textData) : {};
+            throw new Error(errorObj.message || 'Güncelleme işlemi başarısız oldu.');
+        }
+
+        return textData ? JSON.parse(textData) : { success: true };
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+
+const DeleteServiceItem = async (id) => {
+    try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/Services/${id}`, {
+            method: 'DELETE',
+        });
+
+        const textData = await response.text();
+
+        if (!response.ok) {
+            const errorObj = textData ? JSON.parse(textData) : {};
+            throw new Error(errorObj.message || 'Silme işlemi başarısız oldu.');
+        }
+
+        return textData ? JSON.parse(textData) : { success: true };
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+export {GetAllServices, AddServiceItem, GetServiceItemById, UpdateServiceItem, DeleteServiceItem }

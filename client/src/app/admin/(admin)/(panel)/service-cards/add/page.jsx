@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { AddServiceItem } from '@/services/ServiceService';
 
 export default function ServiceCardAddPage() {
     const router = useRouter();
@@ -30,8 +31,8 @@ export default function ServiceCardAddPage() {
         setIsSubmitting(true);
 
         try {
-            await new Promise((resolve) => setTimeout(resolve, 1500));
-            alert('Yeni servis kartı başarıyla eklendi kanka!');
+            await AddServiceItem(formData);
+            alert('Yeni servis kartı başarıyla eklendi!');
             router.push('/admin/service-cards');
         } catch (err) {
             setError('Bağlantı hatası oluştu. Lütfen veri tabanı protokollerini kontrol edip tekrar deneyiniz.');
