@@ -1,6 +1,5 @@
 import React from 'react';
 
-// Backend'den gelecek verileri şimdilik prop olarak kabul ediyoruz kanka, bağlaması çok kolay olacak
 export default async function DashboardPage({
     adminName = "Admin",
     tourCount = 0,

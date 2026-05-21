@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { UpdateAboutItem, GetAboutItemById } from '@/services/AboutItemService';
 
 export default function AboutCardEditPage() {
     const router = useRouter();
@@ -24,17 +25,17 @@ export default function AboutCardEditPage() {
     useEffect(() => {
         const fetchCardData = async () => {
             try {
-                await new Promise((resolve) => setTimeout(resolve, 1000));
+                const data = await GetAboutItemById(id);
 
-                const backendData = {
-                    title: 'Geniş Araç Filosu',
-                    description: 'En son model konforlu lüks araçlarımızla seyahat deneyiminizi üst seviyeye çıkarıyoruz.'
+                const cardData = {
+                    title: data.title || '',
+                    description: data.description || ''
                 };
 
-                setFormData(backendData);
-                setInitialData(backendData);
+                setFormData(cardData);
+                setInitialData(cardData); 
             } catch (err) {
-                setError('Veriler yüklenirken sistemsel bir hata oluştu.');
+                setError(err.message || 'Veriler yüklenirken sistemsel bir hata oluştu.');
             } finally {
                 setIsLoading(false);
             }
@@ -60,19 +61,11 @@ export default function AboutCardEditPage() {
             return;
         }
 
-        const updatedFields = {};
-        let changeCount = 0;
+        // Değişiklik kontrolü aynen kalıyor
+        const hasChanges = formData.title.trim() !== initialData.title ||
+            formData.description.trim() !== initialData.description;
 
-        if (formData.title.trim() !== initialData.title) {
-            updatedFields.title = formData.title.trim();
-            changeCount++;
-        }
-        if (formData.description.trim() !== initialData.description) {
-            updatedFields.description = formData.description.trim();
-            changeCount++;
-        }
-
-        if (changeCount === 0) {
+        if (!hasChanges) {
             setError('Herhangi bir değişiklik algılanmadı. Lütfen güncelleme yaptıktan sonra tekrar deneyiniz.');
             window.scrollTo({ top: 0, behavior: 'smooth' });
             return;
@@ -81,10 +74,13 @@ export default function AboutCardEditPage() {
         setIsSubmitting(true);
 
         try {
-            await new Promise((resolve) => setTimeout(resolve, 1500));
-            console.log(updatedFields);
+            await UpdateAboutItem({
+                id: Number(id),
+                title: formData.title.trim(),
+                description: formData.description.trim()
+            });
 
-            alert('Hakkımızda kartı başarıyla güncellendi kanka!');
+            alert('Hakkımızda kartı başarıyla güncellendi!');
             router.push('/admin/about-cards');
         } catch (err) {
             setError('Bağlantı hatası oluştu. Lütfen tekrar deneyiniz.');

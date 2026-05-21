@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { AddAboutItem } from '@/services/AboutItemService';
 
 export default function AboutCardAddPage() {
     const router = useRouter();
@@ -29,8 +30,8 @@ export default function AboutCardAddPage() {
         setIsSubmitting(true);
 
         try {
-            await new Promise((resolve) => setTimeout(resolve, 1500));
-            alert('Yeni hakkımızda kartı başarıyla eklendi kanka!');
+            await AddAboutItem(formData);
+            alert('Yeni hakkımızda kartı başarıyla eklendi!');
             router.push('/admin/about-cards');
         } catch (err) {
             setError('Bağlantı hatası oluştu. Lütfen tekrar deneyiniz.');

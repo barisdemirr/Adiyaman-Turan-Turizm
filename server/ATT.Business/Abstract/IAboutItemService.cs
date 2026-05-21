@@ -10,5 +10,9 @@ namespace ATT.Business.Abstract
     public interface IAboutItemService
     {
         Task<List<AboutItemDto>> GetAllAboutItems();
+        Task<AboutItemDto> GetAboutItemByIdAsync(int id);
+        Task<bool> AddAboutItemAsync(CreateAboutItemDto dto);
+        Task<bool> UpdateAboutItemAsync(UpdateAboutItemDto dto);
+        Task<bool> DeleteAboutItemAsync(int id);
     }
 }

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ATT.Business.DTOs.AboutItems
 {
-    public class AboutItemDto
+    public class UpdateAboutItemDto
     {
-        public int Id { get; set; }
+        public int Id { get; set; } 
         public string Title { get; set; }
         public string Description { get; set; }
     }
