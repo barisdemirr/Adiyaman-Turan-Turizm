@@ -1,24 +1,21 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { UpdateContactField, GetAllContacts } from '@/services/ContactService';
 
 export default function ContactInfoManagementPage() {
     const [contactList, setContactList] = useState([]);
     const [initialData, setInitialData] = useState([]);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [isSaving, setIsSaving] = useState(false);
+
+    const [savingName, setSavingName] = useState(null);
 
     useEffect(() => {
         const fetchContactFields = async () => {
             try {
-                await new Promise((resolve) => setTimeout(resolve, 1000));
-                const backendData = [
-                    { id: 1, title: 'Telefon (Phone)', value: '+90 (532) 123 45 67' },
-                    { id: 2, title: 'E-posta (Email)', value: 'iletisim@portfolio.com' },
-                    { id: 3, title: 'WhatsApp', value: 'https://wa.me/905321234567' },
-                    { id: 4, title: 'Instagram', value: '@kankatravels' },
-                ];
+                const backendData = await GetAllContacts();
+
                 setContactList(backendData);
                 setInitialData(JSON.parse(JSON.stringify(backendData)));
             } catch (err) {
@@ -30,43 +27,42 @@ export default function ContactInfoManagementPage() {
         fetchContactFields();
     }, []);
 
-    const handleValueChange = (id, value) => {
+    const handleValueChange = (name, value) => {
         setContactList((prev) =>
-            prev.map((item) => (item.id === id ? { ...item, value } : item))
+            prev.map((item) => (item.name === name ? { ...item, value } : item))
         );
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSaveSingleField = async (name) => {
         setError(null);
 
-        const hasEmptyField = contactList.some(item => !item.value.trim());
-        if (hasEmptyField) {
-            setError('Zorunlu alanlar boş bırakılamaz. Lütfen tüm alanları doldurunuz.');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        const targetItem = contactList.find(item => item.name === name);
+        const initialItem = initialData.find(item => item.name === name);
+
+        if (!targetItem.value.trim()) {
+            setError(`${targetItem.name} alanı boş bırakılamaz.`);
             return;
         }
 
-        const isChanged = JSON.stringify(contactList) !== JSON.stringify(initialData);
-
-        if (!isChanged) {
-            setError('Herhangi bir değişiklik algılanmadı. Lütfen güncelleme yaptıktan sonra tekrar deneyiniz.');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (targetItem.value.trim() === initialItem.value) {
+            setError(`${targetItem.name} alanında herhangi bir değişiklik algılanmadı.`);
             return;
         }
 
-        setIsSaving(true);
+        setSavingName(name);
 
         try {
-            await new Promise((resolve) => setTimeout(resolve, 1500));
-            console.log(contactList);
-            alert('İletişim bilgileri başarıyla güncellendi kanka!');
-            setInitialData(JSON.parse(JSON.stringify(contactList)));
+            await UpdateContactField(name, targetItem.value.trim());
+
+            alert(`${targetItem.name} başarıyla güncellendi brom!`);
+
+            setInitialData((prev) =>
+                prev.map((item) => (item.name === name ? { ...item, value: targetItem.value.trim() } : item))
+            );
         } catch (err) {
-            setError('Değişiklikler kaydedilirken sunucu hatası oluştu.');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setError(err.message || 'Değişiklik kaydedilirken bir sunucu hatası oluştu.');
         } finally {
-            setIsSaving(false);
+            setSavingName(null);
         }
     };
 
@@ -77,7 +73,7 @@ export default function ContactInfoManagementPage() {
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-slate-900">İletişim Bilgileri Yönetimi</h1>
                     <p className="text-slate-500 mt-1">
-                        Sitenizde yer alan aktif iletişim kanallarının içeriklerini buradan takip edebilir ve düzenleyebilirsiniz.
+                        Sitenizde yer alan aktif iletişim kanallarının içeriklerini tek tek yanlarındaki butonlardan güncelleyebilirsiniz.
                     </p>
                 </div>
 
@@ -89,72 +85,92 @@ export default function ContactInfoManagementPage() {
                 )}
 
                 {isLoading ? (
-                    <div className="p-12 text-center text-slate-500 font-medium bg-white rounded-xl border border-slate-200 shadow-sm">
+                    <div className="p-12 text-center text-slate-500 font-medium bg-white rounded-xl border border-slate-200 shadow-sm animate-pulse">
                         Mevcut iletişim bilgileri getiriliyor, lütfen bekleyiniz...
                     </div>
                 ) : (
-                    <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="space-y-6">
+                        {/* Mobil Görünüm */}
                         <div className="grid grid-cols-1 gap-4 md:hidden">
                             {contactList.map((item) => (
-                                <div key={item.id} className="bg-white border border-slate-200 p-5 rounded-xl shadow-sm space-y-3">
+                                <div key={item.name} className="bg-white border border-slate-200 p-5 rounded-xl shadow-sm space-y-3">
                                     <div>
                                         <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Kanal</span>
-                                        <p className="text-sm font-semibold text-slate-800 mt-0.5">{item.title}</p>
+                                        <p className="text-sm font-semibold text-slate-800 mt-0.5">{item.name}</p>
                                     </div>
                                     <div>
                                         <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Güncel Değer</span>
                                         <input
                                             type="text"
                                             value={item.value}
-                                            onChange={(e) => handleValueChange(item.id, e.target.value)}
+                                            onChange={(e) => handleValueChange(item.name, e.target.value)} // Burayı name yaptık
                                             className="w-full mt-1 px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-800 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-200"
                                         />
+                                    </div>
+                                    <div className="pt-2 flex justify-end">
+                                        <button
+                                            type="button"
+                                            disabled={savingName !== null}
+                                            onClick={() => handleSaveSingleField(item.name)}
+                                            className="px-4 py-2 bg-primary text-white text-xs font-semibold rounded-lg hover:bg-primary/90 transition-colors cursor-pointer disabled:opacity-50"
+                                        >
+                                            {savingName === item.name ? 'Kaydediliyor...' : 'Kaydet'}
+                                        </button>
                                     </div>
                                 </div>
                             ))}
                         </div>
 
+                        {/* Masaüstü Görünüm */}
                         <div className="hidden md:block bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
                             <table className="w-full text-left border-collapse">
                                 <thead>
                                     <tr className="bg-slate-50 border-b border-slate-200">
-                                        <th className="px-6 py-4 text-sm font-medium text-slate-500 w-1/3">İletişim Kanalı</th>
-                                        <th className="px-6 py-4 text-sm font-medium text-slate-500">Güncel Değer</th>
+                                        <th className="px-6 py-4 text-sm font-medium text-slate-500 w-1/4">İletişim Kanalı</th>
+                                        <th className="px-6 py-4 text-sm font-medium text-slate-500 w-7/12">Güncel Değer</th>
+                                        <th className="px-6 py-4 text-sm font-medium text-slate-500 text-right">Aksiyon</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {contactList.map((item) => (
                                         <tr
-                                            key={item.id}
+                                            key={item.name}
                                             className="border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors"
                                         >
                                             <td className="px-6 py-4 text-sm font-semibold text-slate-800">
-                                                {item.title}
+                                                {item.name}
                                             </td>
                                             <td className="px-6 py-4">
                                                 <input
                                                     type="text"
                                                     value={item.value}
-                                                    onChange={(e) => handleValueChange(item.id, e.target.value)}
+                                                    onChange={(e) => handleValueChange(item.name, e.target.value)} // Burayı name yaptık
                                                     className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-800 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-200"
                                                 />
+                                            </td>
+                                            <td className="px-6 py-4 text-right">
+                                                <button
+                                                    type="button"
+                                                    disabled={savingName !== null}
+                                                    onClick={() => handleSaveSingleField(item.name)}
+                                                    className="px-4 py-2 bg-primary text-white text-xs font-semibold rounded-lg hover:bg-primary/90 transition-colors cursor-pointer disabled:opacity-50 inline-flex items-center gap-1 shadow-sm"
+                                                >
+                                                    {savingName === item.name ? (
+                                                        <span>Kaydediliyor...</span>
+                                                    ) : (
+                                                        <>
+                                                            <span className="material-symbols-outlined text-sm">save</span>
+                                                            <span>Kaydet</span>
+                                                        </>
+                                                    )}
+                                                </button>
                                             </td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </table>
                         </div>
-
-                        <div className="flex justify-end pt-2">
-                            <button
-                                type="submit"
-                                disabled={isSaving}
-                                className="px-6 py-2.5 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 focus:ring-4 focus:ring-primary/20 transition-colors disabled:opacity-50 text-sm shadow-sm cursor-pointer"
-                            >
-                                {isSaving ? 'Kaydediliyor...' : 'Değişiklikleri Kaydet'}
-                            </button>
-                        </div>
-                    </form>
+                    </div>
                 )}
             </div>
         </main>

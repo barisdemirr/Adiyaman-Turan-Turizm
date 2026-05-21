@@ -36,5 +36,20 @@ namespace ATT.Business.Concrete
                 Value = contact.Value
             };
         }
+
+        public async Task<bool> UpdateContactValueByNameAsync(UpdateContactFieldDto dto)
+        {
+            var contactInfo = await _contactInfoRepository.GetByFilterAsync(x => x.Name == dto.Name);
+
+            if (contactInfo == null)
+            {
+                return false; 
+            }
+
+            contactInfo.Value = dto.Value;
+
+            await _contactInfoRepository.UpdateAsync(contactInfo);
+            return true;
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace ATT.Business.Abstract
     {
         Task<List<ContactInfoDto>> GetAllContactInfos();
         Task<ContactInfoDto> GetContactByName(string name);
+        Task<bool> UpdateContactValueByNameAsync(UpdateContactFieldDto dto);
     }
 }
