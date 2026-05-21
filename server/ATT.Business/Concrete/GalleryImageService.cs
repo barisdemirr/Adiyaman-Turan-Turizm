@@ -1,4 +1,4 @@
-﻿using ATT.Business.Abstract.Sections;
+﻿using ATT.Business.Abstract;
 using ATT.Business.DTOs.Image;
 using ATT.DataAccess.Abstract;
 using System;

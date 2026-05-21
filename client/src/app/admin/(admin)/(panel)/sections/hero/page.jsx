@@ -108,7 +108,7 @@ export default function HeroManagementPage() {
 
         try {
             await new Promise((resolve) => setTimeout(resolve, 1500));
-            alert('Giriş bölümü içerikleri başarıyla güncellendi kanka!');
+            alert('Giriş bölümü içerikleri başarıyla güncellendi!');
             setInitialData({
                 title: formData.title,
                 tag: formData.tag,

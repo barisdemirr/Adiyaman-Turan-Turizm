@@ -1,10 +1,10 @@
-﻿using ATT.Business.DTOs.AboutSection;
-using ATT.Business.DTOs.ContactSection;
-using ATT.Business.DTOs.FavoritesSection;
-using ATT.Business.DTOs.GallerySection;
-using ATT.Business.DTOs.HeroSection;
-using ATT.Business.DTOs.ServicesSection;
-using ATT.Business.DTOs.ToursSection;
+﻿using ATT.Business.DTOs.Sections.AboutSection;
+using ATT.Business.DTOs.Sections.ContactSection;
+using ATT.Business.DTOs.Sections.FavoritesSection;
+using ATT.Business.DTOs.Sections.GallerySection;
+using ATT.Business.DTOs.Sections.HeroSection;
+using ATT.Business.DTOs.Sections.ServicesSection;
+using ATT.Business.DTOs.Sections.ToursSection;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,4 @@
-﻿using ATT.Business.Abstract.Sections;
+﻿using ATT.Business.Abstract;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

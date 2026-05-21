@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ATT.Business.DTOs.HeroSection
+namespace ATT.Business.DTOs.Sections.HeroSection
 {
     public class HeroSectionDto : SectionBaseDto
     {

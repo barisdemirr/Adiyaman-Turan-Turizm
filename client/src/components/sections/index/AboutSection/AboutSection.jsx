@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import AboutCard from './components/AboutCard';
-import GetAllAboutItems from '@/services/AboutItemService';
+import {GetAllAboutItems} from '@/services/AboutItemService';
 import AboutCardSkeleton from '@/components/ui/skeletons/AboutCardSkeleton';
 
 const AboutSection = ({ AboutData }) => {

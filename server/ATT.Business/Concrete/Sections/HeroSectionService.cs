@@ -1,5 +1,5 @@
 ﻿using ATT.Business.Abstract.Sections;
-using ATT.Business.DTOs.HeroSection;
+using ATT.Business.DTOs.Sections.HeroSection;
 using ATT.DataAccess.Abstract.Sections;
 using ATT.DataAccess.Concrete.EntityFramework.Repositories;
 using System;

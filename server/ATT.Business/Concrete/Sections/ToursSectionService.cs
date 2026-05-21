@@ -1,9 +1,11 @@
 ﻿using ATT.Business.Abstract.Sections;
-using ATT.Business.DTOs.ServicesSection;
-using ATT.Business.DTOs.ToursSection;
+using ATT.Business.DTOs.Sections.ContactSection;
+using ATT.Business.DTOs.Sections.ToursSection;
 using ATT.Core.Entities;
+using ATT.Core.Entities.Sections;
 using ATT.DataAccess.Abstract.Sections;
 using ATT.DataAccess.Concrete.EntityFramework.Repositories;
+using ATT.DataAccess.Concrete.EntityFramework.Repositories.Sections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +33,16 @@ namespace ATT.Business.Concrete.Sections
                 Title = tours.Title,
                 Description = tours.Description
             };
+        }
+
+        public async Task<bool> UpdateToursSectionAsync(UpdateToursSectionDto dto)
+        {
+            var exists = await _toursSectionRepository.GetSectionAsync();
+            if (exists == null) return false;
+
+            var entity = new ToursSection { Id = exists.Id, Title = dto.Title, Description = dto.Description };
+            await _toursSectionRepository.UpdateAsync(entity);
+            return true;
         }
     }
 }

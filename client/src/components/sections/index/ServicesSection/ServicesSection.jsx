@@ -2,7 +2,7 @@
 
 import React, { useState,useEffect, use } from 'react';
 import ServiceCard from './components/ServiceCard';
-import GetAllServices from '@/services/ServiceService';
+import {GetAllServices} from '@/services/ServiceService';
 import ServiceCardSkeleton from '@/components/ui/skeletons/ServiceCardSkeleton';
 
 const ServicesSection = ({ ServicesData }) => {

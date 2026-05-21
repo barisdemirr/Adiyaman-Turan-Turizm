@@ -58,7 +58,6 @@ export default function AdminLoginPage() {
                         <span className="material-icons text-2xl">admin_panel_settings</span>
                     </div>
                     <h1 className="text-2xl font-bold text-gray-900">Admin Panel</h1>
-                    <p className="text-gray-500 dark:text-gray-400 mt-2">Manage your portfolio content</p>
                 </div>
 
                 <div className="bg-white dark:bg-[#231630] rounded-xl shadow-xl border border-gray-100 dark:border-gray-800 overflow-hidden relative z-10">

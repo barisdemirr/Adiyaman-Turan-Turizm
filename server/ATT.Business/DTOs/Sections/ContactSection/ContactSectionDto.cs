@@ -5,10 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ATT.Business.DTOs.ServicesSection
+namespace ATT.Business.DTOs.Sections.ContactSection
 {
-    public class ServicesSectionDto : SectionBaseDto
+    public class ContactSectionDto : SectionBaseDto
     {
-       
     }
 }

@@ -1,4 +1,5 @@
-﻿using ATT.Business.DTOs.ServicesSection;
+﻿using ATT.Business.DTOs.Sections.GallerySection;
+using ATT.Business.DTOs.Sections.ServicesSection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace ATT.Business.Abstract.Sections
     public interface IServicesSectionService
     {
         Task<ServicesSectionDto> GetServicesSection();
+        Task<bool> UpdateServicesSectionAsync(UpdateServicesSectionDto dto);
     }
 }

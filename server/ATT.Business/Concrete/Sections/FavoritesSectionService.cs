@@ -1,8 +1,10 @@
 ﻿using ATT.Business.Abstract.Sections;
-using ATT.Business.DTOs.ContactSection;
-using ATT.Business.DTOs.FavoritesSection;
+using ATT.Business.DTOs.Sections.ContactSection;
+using ATT.Business.DTOs.Sections.FavoritesSection;
+using ATT.Core.Entities.Sections;
 using ATT.DataAccess.Abstract.Sections;
 using ATT.DataAccess.Concrete.EntityFramework.Repositories;
+using ATT.DataAccess.Concrete.EntityFramework.Repositories.Sections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +32,16 @@ namespace ATT.Business.Concrete.Sections
                 Title = favorites.Title,
                 Description = favorites.Description
             };
+        }
+
+        public async Task<bool> UpdateFavoritesSectionAsync(UpdateFavoritesSectionDto dto)
+        {
+            var exists = await _favoritesSectionRepository.GetSectionAsync();
+            if (exists == null) return false;
+
+            var entity = new FavoritesSection { Id = exists.Id, Title = dto.Title, Description = dto.Description };
+            await _favoritesSectionRepository.UpdateAsync(entity);
+            return true;
         }
     }
 }

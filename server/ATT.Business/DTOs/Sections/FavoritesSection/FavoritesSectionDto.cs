@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ATT.Business.DTOs.AboutSection
+namespace ATT.Business.DTOs.Sections.FavoritesSection
 {
-    public class AboutSectionDto : SectionBaseDto
+    public class FavoritesSectionDto : SectionBaseDto
     {
     }
 }

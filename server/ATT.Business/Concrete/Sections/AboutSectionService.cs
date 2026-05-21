@@ -1,6 +1,6 @@
 ﻿using ATT.Business.Abstract.Sections;
-using ATT.Business.DTOs.AboutSection;
-using ATT.Business.DTOs.HeroSection;
+using ATT.Business.DTOs.Sections.AboutSection;
+using ATT.Core.Entities.Sections;
 using ATT.DataAccess.Abstract.Sections;
 using ATT.DataAccess.Concrete.EntityFramework.Repositories;
 using System;
@@ -30,6 +30,17 @@ namespace ATT.Business.Concrete.Sections
                 Title = about.Title,
                 Description = about.Description
             };
+        }
+
+
+        public async Task<bool> UpdateAboutSectionAsync(UpdateAboutSectionDto dto)
+        {
+            var exists = await _aboutSectionRepository.GetSectionAsync();
+            if (exists == null) return false;
+
+            var entity = new AboutSection { Id = exists.Id, Title = dto.Title, Description = dto.Description };
+            await _aboutSectionRepository.UpdateAsync(entity);
+            return true;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using ATT.Business.DTOs.FavoritesSection;
+﻿using ATT.Business.DTOs.Sections.AboutSection;
+using ATT.Business.DTOs.Sections.FavoritesSection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace ATT.Business.Abstract.Sections
     public interface IFavoritesSectionService
     {
         Task<FavoritesSectionDto> GetFavoritesSection();
+        Task<bool> UpdateFavoritesSectionAsync(UpdateFavoritesSectionDto dto);
     }
 }

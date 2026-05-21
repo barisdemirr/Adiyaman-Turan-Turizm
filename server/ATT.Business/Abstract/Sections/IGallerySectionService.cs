@@ -1,4 +1,4 @@
-﻿using ATT.Business.DTOs.GallerySection;
+﻿using ATT.Business.DTOs.Sections.GallerySection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +10,6 @@ namespace ATT.Business.Abstract.Sections
     public interface IGallerySectionService
     {
         Task<GallerySectionDto> GetGallerySection();
+        Task<bool> UpdateGallerySectionAsync(UpdateGallerySectionDto dto);
     }
 }

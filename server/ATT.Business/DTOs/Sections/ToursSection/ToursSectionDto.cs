@@ -5,9 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ATT.Business.DTOs.GallerySection
+namespace ATT.Business.DTOs.Sections.ToursSection
 {
-    public class GallerySectionDto : SectionBaseDto
+    public class ToursSectionDto : SectionBaseDto
     {
+
     }
 }
