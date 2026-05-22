@@ -21,7 +21,7 @@ const HeroSection = ({ HeroData }) => {
         <Image
           alt="Mount Nemrut stone heads at sunrise"
           className="object-cover object-center"
-          src={HeroData?.backgroundImageUrl}
+          src={`${process.env.NEXT_PUBLIC_BASE_URL}${HeroData?.backgroundImageUrl}`}
           fill
           sizes="(max-width: 768px) 100vw, 1900px"
           priority

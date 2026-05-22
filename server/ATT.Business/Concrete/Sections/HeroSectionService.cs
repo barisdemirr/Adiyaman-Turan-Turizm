@@ -1,4 +1,5 @@
-﻿using ATT.Business.Abstract.Sections;
+﻿using ATT.Business.Abstract;
+using ATT.Business.Abstract.Sections;
 using ATT.Business.DTOs.Sections.HeroSection;
 using ATT.DataAccess.Abstract.Sections;
 using ATT.DataAccess.Concrete.EntityFramework.Repositories;
@@ -13,9 +14,11 @@ namespace ATT.Business.Concrete.Sections
     public class HeroSectionService : IHeroSectionService
     {
         private readonly IHeroSectionRepository _heroSectionRepository;
-        public HeroSectionService(IHeroSectionRepository heroSectionRepository)
+        private readonly IImageService _imageService;
+        public HeroSectionService(IHeroSectionRepository heroSectionRepository, IImageService imageService)
         {
             _heroSectionRepository = heroSectionRepository;
+            _imageService = imageService;
         }
 
         public async Task<HeroSectionDto> GetHeroSection() 
@@ -31,6 +34,27 @@ namespace ATT.Business.Concrete.Sections
                 Tag = hero.Tag,
                 BackgroundImageUrl = hero.BackgroundImageUrl,
             };
+        }
+
+
+        public async Task<bool> UpdateHeroSectionAsync(UpdateHeroSectionDto dto)
+        {
+            var hero = await _heroSectionRepository.GetSectionAsync();
+            if (hero == null) return false;
+
+            hero.Title = dto.Title;
+            hero.Description = dto.Description;
+            hero.Tag = dto.Tag;
+
+            if (dto.ImageStream != null && !string.IsNullOrEmpty(dto.ImageFileName))
+            {
+                string newImagePath = await _imageService.ScaleAndUploadImageAsync(dto.ImageStream, dto.ImageFileName, "hero", 1080);
+
+                hero.BackgroundImageUrl = newImagePath;
+            }
+
+            await _heroSectionRepository.UpdateAsync(hero);
+            return true;
         }
     }
 }

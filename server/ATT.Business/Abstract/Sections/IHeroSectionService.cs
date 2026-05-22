@@ -10,5 +10,6 @@ namespace ATT.Business.Abstract.Sections
     public interface IHeroSectionService
     {
         Task<HeroSectionDto> GetHeroSection();
+        Task<bool> UpdateHeroSectionAsync(UpdateHeroSectionDto dto);
     }
 }

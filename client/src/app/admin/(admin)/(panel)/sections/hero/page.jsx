@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { GetHeroSection, UpdateHeroSection } from '@/services/Sections/HeroSectionService';
 
 export default function HeroManagementPage() {
     const [formData, setFormData] = useState({
@@ -25,23 +26,25 @@ export default function HeroManagementPage() {
     useEffect(() => {
         const fetchHeroData = async () => {
             try {
-                await new Promise((resolve) => setTimeout(resolve, 1000));
-                const backendData = {
-                    title: 'Dünyayı Bizimle Keşfedin',
-                    tag: 'Macera Dolu Rotalar',
-                    description: 'Hayalinizdeki tatili planlamak ve unutulmaz anılar biriktirmek için en doğru yerdesiniz.',
-                    bgImage: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800'
-                };
-
-                setFormData({
-                    title: backendData.title,
-                    tag: backendData.tag,
-                    description: backendData.description
-                });
-                setInitialData(backendData);
-                setImagePreview(backendData.bgImage);
+                const data = await GetHeroSection();
+                if (data) {
+                    setFormData({
+                        title: data.title || '',
+                        tag: data.tag || '',
+                        description: data.description || ''
+                    });
+                    setInitialData({
+                        title: data.title || '',
+                        tag: data.tag || '',
+                        description: data.description || '',
+                        bgImage: data.backgroundImageUrl || ''
+                    });
+                    if (data.backgroundImageUrl) {
+                        setImagePreview(`${process.env.NEXT_PUBLIC_BASE_URL}${data.backgroundImageUrl}`);
+                    }
+                }
             } catch (err) {
-                setError('Veriler yüklenirken sistemsel bir hata oluştu.');
+                setError(err.message || 'Veriler yüklenirken sistemsel bir hata oluştu.');
             } finally {
                 setIsLoading(false);
             }
@@ -84,17 +87,26 @@ export default function HeroManagementPage() {
         if (formData.title.trim() !== initialData.title) {
             data.append('title', formData.title.trim());
             changeCount++;
+        } else {
+            data.append('title', initialData.title);
         }
+
         if (formData.tag.trim() !== initialData.tag) {
             data.append('tag', formData.tag.trim());
             changeCount++;
+        } else {
+            data.append('tag', initialData.tag);
         }
+
         if (formData.description.trim() !== initialData.description) {
             data.append('description', formData.description.trim());
             changeCount++;
+        } else {
+            data.append('description', initialData.description);
         }
+
         if (bgImageFile) {
-            data.append('bgImage', bgImageFile);
+            data.append('imageFile', bgImageFile);
             changeCount++;
         }
 
@@ -107,17 +119,18 @@ export default function HeroManagementPage() {
         setIsSaving(true);
 
         try {
-            await new Promise((resolve) => setTimeout(resolve, 1500));
+            await UpdateHeroSection(data);
             alert('Giriş bölümü içerikleri başarıyla güncellendi!');
+
             setInitialData({
-                title: formData.title,
-                tag: formData.tag,
-                description: formData.description,
+                title: formData.title.trim(),
+                tag: formData.tag.trim(),
+                description: formData.description.trim(),
                 bgImage: imagePreview
             });
             setBgImageFile(null);
         } catch (err) {
-            setError('Değişiklikler kaydedilirken sunucu hatası oluştu.');
+            setError(err.message || 'Değişiklikler kaydedilirken sunucu hatası oluştu.');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         } finally {
             setIsSaving(false);

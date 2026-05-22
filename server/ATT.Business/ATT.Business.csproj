@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="SkiaSharp" Version="3.119.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ATT.Core\ATT.Core.csproj" />
     <ProjectReference Include="..\ATT.DataAcces\ATT.DataAccess.csproj" />
   </ItemGroup>

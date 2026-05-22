@@ -27,3 +27,5 @@ server/AdiyamanTuran.API/appsettings.Development.json
 *.db
 *.db-shm
 *.db-wal
+**/wwwroot/uploads/*
+!**/wwwroot/uploads/.gitkeep

@@ -15,7 +15,7 @@ namespace ATT.Presentation.Controllers.Sections
         public GallerySectionController(IGallerySectionService gallerySectionService)
         {
             _gallerySectionService = gallerySectionService;
-        }
+        } 
 
         [HttpGet] 
         public async Task<IActionResult> GetGallerySection()
