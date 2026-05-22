@@ -32,6 +32,15 @@ namespace ATT.DataAccess.Concrete.EntityFramework.Repositories
                 .AsNoTracking()          
                 .FirstOrDefaultAsync(t => t.Slug == slug);
         }
+        public async Task<Tour?> GetByIdWithDetailsAsync(int id)
+        {
+            return await _context.Tours
+                .Include(t => t.Images) 
+                .Include(t => t.Dates)   
+                .Include(t => t.Extras)
+                .AsNoTracking()          
+                .FirstOrDefaultAsync(t => t.Id == id);
+        }
 
         public async Task<List<TResult>> GetSelectedAsync<TResult>(Expression<Func<Tour, TResult>> selector)
         {

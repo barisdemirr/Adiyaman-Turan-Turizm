@@ -11,6 +11,11 @@ namespace ATT.Business.Abstract
     {
         Task<List<TourDto>> GetAllTours();
         Task<TourDto> GetTourBySlugAsync(string slug);
+        Task<TourDto> GetTourByIdAsync(int id);
         Task<List<TourReservationDto>> GetToursForReservationAsync();
+        Task<List<TourAdminDto>> GetAllToursAdmin();
+        Task CreateTourAsync(CreateTourDto dto);
+        Task UpdateTourAsync(UpdateTourDto dto);
+        Task DeleteTourAsync(int id);
     }
 }

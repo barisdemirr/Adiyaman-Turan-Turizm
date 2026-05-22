@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { CreateTour } from '@/services/TourService';
 
 export default function TourAddPage() {
     const router = useRouter();
@@ -20,8 +21,8 @@ export default function TourAddPage() {
     const [mainImg, setMainImg] = useState(null);
     const [mainPreview, setMainPreview] = useState(null);
 
-    const [extraImgs, setExtraImgs] = useState([]);
-    const [extraPreviews, setExtraPreviews] = useState([]);
+    // 🎯 Ek resimleri ve galeride görünme durumlarını tek bir state içinde topluyoruz kanka
+    const [extraImages, setExtraImages] = useState([]); // [{ file, preview, isInGallery }]
 
     const [error, setError] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -57,22 +58,36 @@ export default function TourAddPage() {
         setMainPreview(null);
     };
 
+    // 🎯 Yeni ek resimler seçildiğinde tetiklenen fonksiyon
     const handleExtraChange = (e) => {
         const files = Array.from(e.target.files);
         if (files.length > 0) {
-            setExtraImgs((prev) => [...prev, ...files]);
-            const newPreviews = files.map((file) => URL.createObjectURL(file));
-            setExtraPreviews((prev) => [...prev, ...newPreviews]);
+            const newEntries = files.map((file) => ({
+                file,
+                preview: URL.createObjectURL(file),
+                isInGallery: false // Varsayılan olarak galeri seçeneği kapalı geliyor kanka
+            }));
+            setExtraImages((prev) => [...prev, ...newEntries]);
         }
     };
 
+    // 🎯 Resmin altındaki checkbox tıklandığında değeri tersine çeviren fonksiyon
+    const handleGalleryCheckChange = (index) => {
+        setExtraImages((prev) =>
+            prev.map((img, i) => i === index ? { ...img, isInGallery: !img.isInGallery } : img)
+        );
+    };
+
     const removeExtra = (index) => {
-        setExtraImgs((prev) => prev.filter((_, i) => i !== index));
-        setExtraPreviews((prev) => prev.filter((_, i) => i !== index));
+        setExtraImages((prev) => prev.filter((_, i) => i !== index));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log('Form verileri:', formData);
+        console.log('Banner dosyası:', bannerImg);
+        console.log('Ana resim dosyası:', mainImg);
+        console.log('Ek resimler:', extraImages);
         setError(null);
 
         const trimmedPrice = formData.price.trim();
@@ -102,12 +117,29 @@ export default function TourAddPage() {
         setIsSubmitting(true);
 
         try {
-            await new Promise((resolve) => setTimeout(resolve, 2000));
-            alert('Yeni tur planlaması sisteme başarıyla kaydedildi kanka!');
+            const data = new FormData();
+            data.append('title', formData.title.trim());
+            data.append('shortDescription', formData.shortDescription.trim());
+            data.append('description', formData.description.trim());
+            data.append('price', trimmedPrice);
+            data.append('duration', formData.duration.trim());
+            data.append('category', formData.category);
+
+            data.append('bannerFile', bannerImg);
+            data.append('mainFile', mainImg);
+
+            extraImages.forEach((img, index) => {
+                data.append(`images[${index}].file`, img.file);
+                data.append(`images[${index}].isInGallery`, img.isInGallery);
+            });
+
+            await CreateTour(data);
+
+            alert('Yeni tur planlaması sisteme başarıyla kaydedildi!');
             router.push('/admin/tours');
         } catch (err) {
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            setError('Veri tabanı senkronizasyon hatası. Lütfen ağ protokollerini denetleyip tekrar deneyiniz.');
+            setError(err.message || 'Sistemsel bir hata oluştu, lütfen tekrar deneyiniz.');
         } finally {
             setIsSubmitting(false);
         }
@@ -298,21 +330,35 @@ export default function TourAddPage() {
                                 Ek Resimler
                             </label>
 
+                            {/* 🎯 Grid yapısını checkbox sığacak şekilde dikey esnek yaptık kanka */}
                             <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4 mb-3">
-                                {extraPreviews.map((src, index) => (
-                                    <div key={index} className="relative border border-slate-200 rounded-xl overflow-hidden bg-slate-50 h-24 w-full">
-                                        <img src={src} alt="Ek Görsel" className="w-full h-full object-cover" />
-                                        <button
-                                            type="button"
-                                            onClick={() => removeExtra(index)}
-                                            className="absolute top-1.5 right-1.5 w-5 h-5 bg-red-600 text-white rounded-full flex items-center justify-center shadow-md hover:bg-red-700 transition-colors"
-                                        >
-                                            <span className="material-symbols-outlined text-xs font-bold">close</span>
-                                        </button>
+                                {extraImages.map((img, index) => (
+                                    <div key={index} className="flex flex-col gap-2 border border-slate-200 rounded-xl p-2 bg-slate-50/50">
+                                        <div className="relative h-24 w-full rounded-lg overflow-hidden bg-slate-100">
+                                            <img src={img.preview} alt="Ek Görsel" className="w-full h-full object-cover" />
+                                            <button
+                                                type="button"
+                                                onClick={() => removeExtra(index)}
+                                                className="absolute top-1 right-1 w-5 h-5 bg-red-600 text-white rounded-full flex items-center justify-center shadow-md hover:bg-red-700 transition-colors"
+                                            >
+                                                <span className="material-symbols-outlined text-xs font-bold">close</span>
+                                            </button>
+                                        </div>
+
+                                        {/* 🎯 Her bir ek görselin altına gelen o efsane checkbox paneli */}
+                                        <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-600 cursor-pointer select-none px-1 py-0.5">
+                                            <input
+                                                type="checkbox"
+                                                checked={img.isInGallery}
+                                                onChange={() => handleGalleryCheckChange(index)}
+                                                className="w-4 h-4 rounded border-slate-300 text-primary focus:ring-primary/20 accent-primary cursor-pointer"
+                                            />
+                                            Galeri'ye ekle
+                                        </label>
                                     </div>
                                 ))}
 
-                                <div className="border-2 border-dashed border-slate-200 rounded-xl p-4 text-center hover:bg-slate-50 transition-colors relative flex flex-col items-center justify-center h-24">
+                                <div className="border-2 border-dashed border-slate-200 rounded-xl p-4 text-center hover:bg-slate-50 transition-colors relative {extraImages.length > 0 ? 'h-36' : 'h-24'} flex flex-col items-center justify-center min-h-[134px]">
                                     <input
                                         type="file"
                                         accept="image/*"
@@ -327,7 +373,7 @@ export default function TourAddPage() {
                                 </div>
                             </div>
                             <small className="text-xs text-slate-400 block">
-                                💡 İsteğe bağlıdır.
+                                💡 İsteğe bağlıdır. Eklenen resimlerin yanındaki kutucuğu işaretleyerek genel galeride de görünmesini sağlayabilirsiniz brom.
                             </small>
                         </div>
 

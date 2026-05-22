@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { GetHeroSection, UpdateHeroSection } from '@/services/Sections/HeroSectionService';
+import Image from 'next/image';
 
 export default function HeroManagementPage() {
     const [formData, setFormData] = useState({
@@ -200,7 +201,14 @@ export default function HeroManagementPage() {
                                     </div>
                                 ) : (
                                     <div className="relative border border-slate-200 rounded-xl overflow-hidden bg-slate-50 h-48 w-full max-w-md shadow-sm">
-                                        <img src={imagePreview} alt="Hero Arka Planı" className="w-full h-full object-cover" />
+                                        <Image
+                                            src={imagePreview}
+                                            alt="Hero Arka Planı"
+                                            className="object-cover"
+                                            fill
+                                            quality={10}
+                                            sizes="(max-width: 768px) 100vw, 500px"
+                                        />
                                         <button
                                             type="button"
                                             onClick={handleRemoveImage}

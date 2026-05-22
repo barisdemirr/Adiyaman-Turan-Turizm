@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import { GetDatesByTourId, CreateTourDate, DeleteTourDate } from '@/services/TourDatesService';
 
 export default function TourDatesManagementPage() {
     const router = useRouter();
@@ -19,19 +20,14 @@ export default function TourDatesManagementPage() {
     const fetchDates = async () => {
         setIsLoading(true);
         try {
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-            const mockDates = [
-                { id: 0, dateString: '2026-05-19' },
-                { id: 1, dateString: '2026-06-25' },
-                { id: 2, dateString: '2026-07-02' },
-                { id: 3, dateString: '2026-07-15' },
-                { id: 4, dateString: '2026-07-29' },
-                { id: 5, dateString: '2026-08-12' },
-                { id: 6, dateString: '2026-08-26' }
-            ];
-            setDates(mockDates);
+            const data = await GetDatesByTourId(tourId);
+            const formattedDates = data.map((item) => ({
+                id: item.id,
+                dateString: item.date.split('T')[0]
+            }));
+            setDates(formattedDates);
         } catch (error) {
-            console.error(error);
+            alert(error.message);
         } finally {
             setIsLoading(false);
         }
@@ -48,10 +44,11 @@ export default function TourDatesManagementPage() {
         if (!confirmed) return;
 
         try {
+            await DeleteTourDate(id);
             setDates((prev) => prev.filter((item) => item.id !== id));
             alert('Tarih başarıyla kaldırıldı!');
         } catch (error) {
-            console.error(error);
+            alert(error.message);
         }
     };
 
@@ -66,12 +63,12 @@ export default function TourDatesManagementPage() {
 
         setIsSubmitting(true);
         try {
-            await new Promise((resolve) => setTimeout(resolve, 1500));
+            await CreateTourDate(tourId, selectedDate);
             handleCloseModal();
             alert(`Yeni tur tarihi başarıyla eklendi kanka! ${formatDateForDisplay(selectedDate)} tarihinde operasyon planlandı.`);
             await fetchDates();
         } catch (error) {
-            console.error(error);
+            alert(error.message);
         } finally {
             setIsSubmitting(false);
         }
@@ -130,7 +127,6 @@ export default function TourDatesManagementPage() {
                                                         calendar_today
                                                     </span>
                                                     <span className="text-sm font-semibold text-slate-800 font-mono">
-                                                        {/* 🎯 Raw veri yerine ekranda noktayla göstermek için formatladık */}
                                                         {formatDateForDisplay(item.dateString)}
                                                     </span>
                                                 </div>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { GetAllToursAdmin, DeleteTour } from '@/services/TourService';
 
 export default function ToursManagementPage() {
     const [tours, setTours] = useState([]);
@@ -11,13 +12,8 @@ export default function ToursManagementPage() {
     useEffect(() => {
         const fetchTours = async () => {
             try {
-                const mockData = [
-                    { id: 1, title: 'Kapadokya Balon Turu', price: '4.500 TL' },
-                    { id: 2, title: 'Ege & Akdeniz Gemi Turu', price: '12.500 TL' },
-                    { id: 3, title: 'Karadeniz Yaylalar Turu', price: '6.800 TL' },
-                    { id: 4, title: 'Mardin & Göbeklitepe Kültür Turu', price: '8.200 TL' },
-                ];
-                setTours(mockData);
+                const data = await GetAllToursAdmin();
+                setTours(data);
             } catch (error) {
                 console.error(error);
             } finally {
@@ -29,14 +25,15 @@ export default function ToursManagementPage() {
     }, []);
 
     const handleDelete = async (id) => {
-        const confirmed = window.confirm('Bu turu silmek istediğinize emin misiniz kanka?');
+        const confirmed = window.confirm('Bu turu silmek istediğinize emin misiniz?');
         if (!confirmed) return;
 
         try {
+            await DeleteTour(id); 
             setTours((prev) => prev.filter((item) => item.id !== id));
             alert('Tur başarıyla silindi!');
         } catch (error) {
-            console.error(error);
+            alert(error.message || 'Silme işlemi sırasında bir kriz çıktı.');
         }
     };
 
@@ -82,7 +79,7 @@ export default function ToursManagementPage() {
 
                 {isLoading ? (
                     <div className="bg-white border border-slate-200 rounded-xl p-10 text-center text-slate-500 font-medium shadow-sm">
-                        Turlar yükleniyor kanka, bekletiyorum...
+                        Turlar yükleniyor, bekleyiniz...
                     </div>
                 ) : (
                     <>
@@ -96,7 +93,7 @@ export default function ToursManagementPage() {
                                         </div>
                                         <div className="text-right flex-shrink-0">
                                             <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Fiyat</span>
-                                            <p className="text-sm font-bold text-primary mt-0.5 whitespace-nowrap">{item.price}</p>
+                                            <p className="text-sm font-bold text-primary mt-0.5 whitespace-nowrap">{item.price} TL</p>
                                         </div>
                                     </div>
                                     <div className="pt-3 border-t border-slate-100 flex gap-2 items-center">
@@ -150,7 +147,7 @@ export default function ToursManagementPage() {
                                                 {item.title}
                                             </td>
                                             <td className="px-6 py-4 text-sm font-bold text-primary">
-                                                {item.price}
+                                                {item.price} TL
                                             </td>
                                             <td className="px-6 py-4 text-sm text-right flex justify-end gap-4 items-center">
                                                 <Link

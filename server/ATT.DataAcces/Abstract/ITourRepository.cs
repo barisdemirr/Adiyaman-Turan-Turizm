@@ -8,6 +8,7 @@ namespace ATT.DataAccess.Abstract
     {
         Task<List<Tour>> GetAllWithDetailsAsync();
         Task<Tour?> GetBySlugWithDetailsAsync(string slug);
+        Task<Tour?> GetByIdWithDetailsAsync(int id);
         Task<List<TResult>> GetSelectedAsync<TResult>(Expression<Func<Tour, TResult>> selector);
     }
 }

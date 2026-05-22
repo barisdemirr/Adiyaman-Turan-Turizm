@@ -21,7 +21,7 @@ const HeroSliderSection = ({ img }) => {
         <div className="relative z-10 flex w-full h-full items-center justify-center">
           <div className="relative w-full h-full">
             <Image
-              src={img}
+              src={`${process.env.NEXT_PUBLIC_BASE_URL}${img}`}
               alt="Mount Nemrut Sunrise"
               fill
               className="object-contain drop-shadow-2xl w-auto h-full"

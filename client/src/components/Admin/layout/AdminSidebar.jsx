@@ -72,7 +72,7 @@ export default function AdminSidebar() {
                             <span className="material-icons-round text-xl">dashboard</span>
                         </div>
                         <span className="font-bold text-lg tracking-tight text-slate-900">
-                            Portfolio<span className="text-primary">Admin</span>
+                            Admin<span className="text-primary">Panel</span>
                         </span>
                     </div>
 

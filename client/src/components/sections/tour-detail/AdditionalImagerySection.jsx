@@ -75,7 +75,7 @@ const AdditionalImagerySection = ({ photos }) => {
             <Image
               className="w-full h-auto rounded-lg md:rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] cursor-zoom-in"
               alt={`Tour Image ${image.id + 1}`}
-              src={image.imageUrl}
+              src={`${process.env.NEXT_PUBLIC_BASE_URL}${image.imageUrl}`}
               width={0}
               height={0}
               sizes='(max-width: 768px) 100vw, 800px'

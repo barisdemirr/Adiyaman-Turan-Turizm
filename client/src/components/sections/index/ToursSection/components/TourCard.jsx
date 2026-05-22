@@ -10,7 +10,7 @@ function TourCard({ title, shortDescription, bannerImage, price, slug, duration 
                 <img
                     alt={title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    src={bannerImage}
+                    src={`${process.env.NEXT_PUBLIC_BASE_URL}${bannerImage}`}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                 <div className="absolute bottom-3 left-3 right-3 text-left">
