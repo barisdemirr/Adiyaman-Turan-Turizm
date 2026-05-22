@@ -58,6 +58,7 @@ builder.Services.AddScoped<IServiceService, ServiceService>();
 builder.Services.AddScoped<IAboutItemService, AboutItemService>();
 builder.Services.AddScoped<IGalleryImageService, GalleryImageService>();    
 builder.Services.AddScoped<IContactInfoService, ContactInfoService>();
+builder.Services.AddScoped<IImageService, ImageService>();
 
 
 builder.Services.AddCors(options =>
@@ -84,6 +85,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors("AllowHost");
+
+app.UseStaticFiles();
 
 app.UseAuthorization();
 
