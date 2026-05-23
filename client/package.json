@@ -10,6 +10,7 @@
   "dependencies": {
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/forms": "^0.5.11",
+    "material-symbols": "^0.44.9",
     "next": "^15.5.18",
     "react": "19.2.4",
     "react-dom": "19.2.4"

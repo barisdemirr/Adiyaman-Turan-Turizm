@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { GetDatesByTourId, CreateTourDate, DeleteTourDate } from '@/services/TourDatesService';
 
-export default function TourDatesManagementPage() {
+function TourDatesManagementPage() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const tourId = searchParams.get('id');
@@ -215,5 +215,14 @@ export default function TourDatesManagementPage() {
 
             </div>
         </main>
+    );
+}
+
+
+export default function EditTourDatesPage() {
+    return (
+        <Suspense fallback={<div className="p-5 text-center text-gray-500">Yükleniyor...</div>}>
+            <TourDatesManagementPage />
+        </Suspense>
     );
 }

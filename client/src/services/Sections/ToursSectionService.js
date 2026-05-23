@@ -1,9 +1,18 @@
+import { GetAdminToken } from "../AuthService";
+
+
 const UpdateToursSection = async (sectionData) => {
+    const token = GetAdminToken();
+    if (!token) {
+        throw new Error('Yönetici olarak giriş yapmanız gerekiyor.');
+    }
+
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/ToursSection`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(sectionData),
         });
@@ -23,8 +32,18 @@ const UpdateToursSection = async (sectionData) => {
 };
 
 const GetToursSection = async () => {
+    const token = GetAdminToken();
+    if (!token) {
+        throw new Error('Yönetici olarak giriş yapmanız gerekiyor.');
+    }
+
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/ToursSection`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/ToursSection`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
         const textData = await response.text();
 
         if (!response.ok) {

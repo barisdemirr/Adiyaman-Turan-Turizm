@@ -1,10 +1,12 @@
 ﻿using ATT.Business.Abstract;
 using ATT.Business.DTOs.AboutItems;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ATT.Presentation.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class AboutItemsController : ControllerBase
@@ -15,6 +17,7 @@ namespace ATT.Presentation.Controllers
             _aboutItemService = aboutItemService;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAllAboutItems()
         {

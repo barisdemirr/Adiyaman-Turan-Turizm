@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { UpdateAboutItem, GetAboutItemById } from '@/services/AboutItemService';
 
-export default function AboutCardEditPage() {
+function AboutCardEditPage() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const id = searchParams.get('id');
@@ -33,7 +33,7 @@ export default function AboutCardEditPage() {
                 };
 
                 setFormData(cardData);
-                setInitialData(cardData); 
+                setInitialData(cardData);
             } catch (err) {
                 setError(err.message || 'Veriler yüklenirken sistemsel bir hata oluştu.');
             } finally {
@@ -61,7 +61,6 @@ export default function AboutCardEditPage() {
             return;
         }
 
-        // Değişiklik kontrolü aynen kalıyor
         const hasChanges = formData.title.trim() !== initialData.title ||
             formData.description.trim() !== initialData.description;
 
@@ -163,5 +162,13 @@ export default function AboutCardEditPage() {
                 </div>
             </div>
         </main>
+    );
+}
+
+export default function EditAboutCardPage() {
+    return (
+        <Suspense fallback={<div className="p-5 text-center text-gray-500">Yükleniyor...</div>}>
+            <AboutCardEditPage />
+        </Suspense>
     );
 }

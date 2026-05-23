@@ -1,4 +1,5 @@
 import React from 'react'
+import { GetAdminToken } from "./AuthService";
 
 async function GetAllServices() {
     const apiUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/services`;
@@ -28,11 +29,17 @@ async function GetAllServices() {
 }
 
 const AddServiceItem = async (serviceData) => {
+    const token = GetAdminToken();
+    if (!token) {
+        throw new Error('Yönetici olarak giriş yapmanız gerekiyor.');
+    }
+
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/Services`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(serviceData),
         });
@@ -52,8 +59,18 @@ const AddServiceItem = async (serviceData) => {
 };
 
 const GetServiceItemById = async (id) => {
+    const token = GetAdminToken();
+    if (!token) {
+        throw new Error('Yönetici olarak giriş yapmanız gerekiyor.');
+    }
+
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/Services/${id}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/Services/${id}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
         const textData = await response.text();
 
         if (!response.ok) {
@@ -69,11 +86,17 @@ const GetServiceItemById = async (id) => {
 };
 
 const UpdateServiceItem = async (serviceData) => {
+    const token = GetAdminToken();
+    if (!token) {
+        throw new Error('Yönetici olarak giriş yapmanız gerekiyor.');
+    }
+
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/Services`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(serviceData),
         });
@@ -94,9 +117,17 @@ const UpdateServiceItem = async (serviceData) => {
 
 
 const DeleteServiceItem = async (id) => {
+    const token = GetAdminToken();
+    if (!token) {
+        throw new Error('Yönetici olarak giriş yapmanız gerekiyor.');
+    }
+
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/Services/${id}`, {
             method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         });
 
         const textData = await response.text();

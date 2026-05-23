@@ -1,9 +1,17 @@
+import { GetAdminToken } from "../AuthService";
+
 const UpdateGallerySection = async (sectionData) => {
+    const token = GetAdminToken();
+    if (!token) {
+        throw new Error('Yönetici olarak giriş yapmanız gerekiyor.');
+    }
+
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/GallerySection`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(sectionData),
         });
@@ -23,8 +31,18 @@ const UpdateGallerySection = async (sectionData) => {
 };
 
 const GetGallerySection = async () => {
+    const token = GetAdminToken();
+    if (!token) {
+        throw new Error('Yönetici olarak giriş yapmanız gerekiyor.');
+    }
+
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/GallerySection`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/GallerySection`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
         const textData = await response.text();
 
         if (!response.ok) {

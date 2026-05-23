@@ -1,9 +1,17 @@
+import { GetAdminToken } from "../AuthService";
+
 const UpdateFavoritesSection = async (sectionData) => {
+    const token = GetAdminToken();
+    if (!token) {
+        throw new Error('Yönetici olarak giriş yapmanız gerekiyor.');
+    }
+
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/FavoritesSection`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
+                "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify(sectionData),
         });
@@ -23,8 +31,18 @@ const UpdateFavoritesSection = async (sectionData) => {
 };
 
 const GetFavoritesSection = async () => {
+    const token = GetAdminToken();
+    if (!token) {
+        throw new Error('Yönetici olarak giriş yapmanız gerekiyor.');
+    }
+
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/FavoritesSection`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/FavoritesSection`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
         const textData = await response.text();
 
         if (!response.ok) {

@@ -1,4 +1,5 @@
 import React from 'react'
+import { GetAdminToken } from "./AuthService";
 
 async function GetAllContacts() {
     const apiUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/contact`;
@@ -54,11 +55,17 @@ async function GetContactByName(name) {
 }
 
  const UpdateContactField = async (name, value) => {
+    const token = GetAdminToken();
+    if (!token) {
+        throw new Error('Yönetici olarak giriş yapmanız gerekiyor.');
+    }
+
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/Contact/update-field`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({ name, value }),
         });

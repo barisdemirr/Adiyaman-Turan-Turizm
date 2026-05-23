@@ -1,5 +1,6 @@
 ﻿using ATT.Business.Abstract;
 using ATT.Business.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

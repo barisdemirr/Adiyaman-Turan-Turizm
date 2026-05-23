@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+// 🎯 Senin yazdığın servisi buraya çekiyoruz kanka
+import { LoginAdmin } from '@/services/AuthService';
 
 export default function AdminLoginPage() {
     const router = useRouter();
@@ -22,11 +24,13 @@ export default function AdminLoginPage() {
         e.preventDefault();
         setError(null);
 
+        // 1. Temel Boşluk Kontrolü
         if (!formData.username.trim() || !formData.password) {
             setError('Kullanıcı adı ve şifre alanları boş bırakılamaz.');
             return;
         }
 
+        // 2. 8-16 Karakter Validasyonu
         if (formData.password.length < 8 || formData.password.length > 16) {
             setError('Güvenlik protokolü gereği şifreler en az 8, en fazla 16 karakter uzunluğunda olmalıdır.');
             return;
@@ -35,15 +39,14 @@ export default function AdminLoginPage() {
         setIsLoading(true);
 
         try {
-            await new Promise((resolve) => setTimeout(resolve, 1500));
+            // 🎯 3. Senin servisi şak diye tetikliyoruz, çerezleri o zaten hallediyor
+            await LoginAdmin(formData.username, formData.password);
 
-            if (formData.username === 'admin' && formData.password === '12345678') {
-                router.push('/admin');
-            } else {
-                setError('Hatalı kullanıcı adı veya şifre girdiniz.');
-            }
+            // Giriş başarılıysa panale fırlat kanka
+            router.push('/admin/');
+
         } catch (err) {
-            setError('Sunucu bağlantısı sağlanamadı.');
+            setError(err.message);
         } finally {
             setIsLoading(false);
         }
@@ -57,7 +60,7 @@ export default function AdminLoginPage() {
                     <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 text-primary mb-4">
                         <span className="material-icons text-2xl">admin_panel_settings</span>
                     </div>
-                    <h1 className="text-2xl font-bold text-gray-900">Admin Panel</h1>
+                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Admin Panel</h1>
                 </div>
 
                 <div className="bg-white dark:bg-[#231630] rounded-xl shadow-xl border border-gray-100 dark:border-gray-800 overflow-hidden relative z-10">
@@ -117,7 +120,7 @@ export default function AdminLoginPage() {
                                 <button
                                     type="submit"
                                     disabled={isLoading}
-                                    className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-semibold rounded-lg text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary shadow-lg shadow-primary/30 transition-all duration-200 transform hover:-translate-y-0.5 disabled:opacity-50 disabled:transform-none"
+                                    className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-semibold rounded-lg text-white bg-primary hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary shadow-lg shadow-primary/30 transition-all duration-200 transform hover:-translate-y-0.5 disabled:opacity-50 disabled:transform-none cursor-pointer"
                                 >
                                     {isLoading ? 'Sign In...' : 'Sign In'}
                                     <span className="absolute right-4 inset-y-0 flex items-center pl-3">

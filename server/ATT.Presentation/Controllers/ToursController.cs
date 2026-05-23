@@ -1,11 +1,13 @@
 ﻿using ATT.Business.Abstract;
 using ATT.Business.DTOs.Tour;
 using ATT.Presentation.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ATT.Presentation.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class ToursController : ControllerBase
@@ -16,6 +18,7 @@ namespace ATT.Presentation.Controllers
             _tourService = tourService;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAllTours()
         {
@@ -24,6 +27,7 @@ namespace ATT.Presentation.Controllers
             return Ok(tourList);
         }
 
+        [AllowAnonymous]
         [HttpGet("{slug}")]
         public async Task<IActionResult> GetBySlug(string slug)
         {
@@ -44,6 +48,7 @@ namespace ATT.Presentation.Controllers
             return Ok(tour);
         }
 
+        [AllowAnonymous]
         [HttpGet("reservation")]
         public async Task<IActionResult> GetToursForReservation()
         {

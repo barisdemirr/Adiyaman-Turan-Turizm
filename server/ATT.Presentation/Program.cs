@@ -4,6 +4,7 @@ using ATT.Business.Abstract.Sections;
 using ATT.Business.Concrete;
 using ATT.Business.Concrete.Common;
 using ATT.Business.Concrete.Sections;
+using ATT.Core.Entities;
 using ATT.DataAccess.Abstract;
 using ATT.DataAccess.Abstract.Common;
 using ATT.DataAccess.Abstract.Sections;
@@ -12,8 +13,12 @@ using ATT.DataAccess.Concrete.EntityFramework.Repositories;
 using ATT.DataAccess.Concrete.EntityFramework.Repositories.Common;
 using ATT.DataAccess.Concrete.EntityFramework.Repositories.Sections;
 using ATT.Presentation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +47,7 @@ builder.Services.AddScoped<IAboutSectionRepository, AboutSectionRepository>();
 builder.Services.AddScoped<IContactSectionRepository, ContactSectionRepository>();
 builder.Services.AddScoped<IAboutItemRepository, AboutItemRepository>();
 builder.Services.AddScoped<IContactInfoRepository, ContactInfoRepository>();
+builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 
 
 builder.Services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
@@ -60,6 +66,9 @@ builder.Services.AddScoped<IGalleryImageService, GalleryImageService>();
 builder.Services.AddScoped<IContactInfoService, ContactInfoService>();
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<ITourDateService, TourDateService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IJwtService,  JwtService>();
+builder.Services.AddScoped<IPasswordHasher<Admin>, PasswordHasher<Admin>>();
 
 
 builder.Services.AddCors(options =>
@@ -70,6 +79,26 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
+});
+
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+    };
 });
 
 
@@ -89,6 +118,7 @@ app.UseCors("AllowHost");
 
 app.UseStaticFiles();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

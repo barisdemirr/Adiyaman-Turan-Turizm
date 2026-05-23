@@ -44,13 +44,12 @@ const HeroSection = ({ HeroData }) => {
 
   return (
     <section className="relative h-[110vh] flex items-center justify-center overflow-hidden" id='home'>
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 h-[110vh] w-auto">
         <Image
-          alt="Mount Nemrut stone heads at sunrise"
+          alt="Banner"
           className="object-cover object-center"
           src={`${process.env.NEXT_PUBLIC_BASE_URL}${HeroData?.backgroundImageUrl}`}
           fill
-          sizes="(max-width: 768px) 100vw, 1900px"
           priority
         />
         <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent"></div>

@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { GetTourById, UpdateTour } from '@/services/TourService';
 import Image from 'next/image';
 
-export default function TourEditPage() {
+function TourEditPage() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const id = searchParams.get('id');
@@ -379,5 +379,14 @@ export default function TourEditPage() {
                 </div>
             </div>
         </main>
+    );
+}
+
+
+export default function EditTourPage() {
+    return (
+        <Suspense fallback={<div className="p-5 text-center text-gray-500">Yükleniyor...</div>}>
+            <TourEditPage />
+        </Suspense>
     );
 }

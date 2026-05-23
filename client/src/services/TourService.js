@@ -1,4 +1,5 @@
 import React from 'react'
+import { GetAdminToken } from "./AuthService";
 
 async function GetAllTours() {
     const apiUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/tours`;
@@ -84,13 +85,18 @@ async function GetToursForReservation() {
 }
 
 async function GetAllToursAdmin() {
-    const apiUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/tours/admin`;
+  const apiUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/tours/admin`;
+  const token = GetAdminToken();
+  if (!token) {
+    throw new Error('Yönetici olarak giriş yapmanız gerekiyor.');
+  }
 
   try {
     const res = await fetch(apiUrl, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
       },
     });
 
@@ -110,9 +116,17 @@ async function GetAllToursAdmin() {
 }
 
 async function CreateTour(formData) {
+    const token = GetAdminToken();
+    if (!token) {
+        throw new Error('Yönetici olarak giriş yapmanız gerekiyor.');
+    }
+
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/tours`, {
             method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
             body: formData,
         });
 
@@ -134,10 +148,18 @@ async function CreateTour(formData) {
 
 
 async function GetTourById(id) {
+  const token = GetAdminToken();
+  if (!token) {
+      throw new Error('Yönetici olarak giriş yapmanız gerekiyor.');
+  }
+
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/tours/${id}`, {
             method: 'GET',
-            cache: 'no-store'
+            cache: 'no-store',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         });
 
         if (!response.ok) {
@@ -150,10 +172,18 @@ async function GetTourById(id) {
 }
 
 async function UpdateTour(formData) {
+    const token = GetAdminToken();
+    if (!token) {
+        throw new Error('Yönetici olarak giriş yapmanız gerekiyor.');
+    }
+
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/tours`, {
-            method: 'PUT', 
-            body: formData, 
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            body: formData,
         });
 
         if (!response.ok) {
@@ -172,9 +202,17 @@ async function UpdateTour(formData) {
 }
 
 async function DeleteTour(id) {
+    const token = GetAdminToken();
+    if (!token) {
+        throw new Error('Yönetici olarak giriş yapmanız gerekiyor.');
+    }
+
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/tours/${id}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         });
 
         if (!response.ok) {

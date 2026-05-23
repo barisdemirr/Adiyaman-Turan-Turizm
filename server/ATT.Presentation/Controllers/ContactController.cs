@@ -1,10 +1,12 @@
 ﻿using ATT.Business.Abstract;
 using ATT.Business.DTOs.ContactInfo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ATT.Presentation.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class ContactController : ControllerBase
@@ -15,6 +17,7 @@ namespace ATT.Presentation.Controllers
             _contactInfoService = contactInfoService;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAllContact() 
         {
@@ -23,6 +26,7 @@ namespace ATT.Presentation.Controllers
             return Ok(contacts);
         }
 
+        [AllowAnonymous]
         [HttpGet("{name}")]
         public async Task<IActionResult> GetAllContact(string name)
         {

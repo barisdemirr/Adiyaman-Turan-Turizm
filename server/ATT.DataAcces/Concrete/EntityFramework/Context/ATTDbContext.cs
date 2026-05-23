@@ -1,6 +1,7 @@
 ﻿using ATT.Core.Entities.Common;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using ATT.Core.Entities;
 
 namespace ATT.DataAccess.Concrete.EntityFramework.Context
 {
@@ -8,13 +9,13 @@ namespace ATT.DataAccess.Concrete.EntityFramework.Context
     {
         public ATTDbContext(DbContextOptions<ATTDbContext> options) : base(options) { }
 
-        public DbSet<Core.Entities.AboutItem> AboutItems { get; set; }
-        public DbSet<Core.Entities.Image> Images { get; set; }
-        public DbSet<Core.Entities.Tour> Tours { get; set; }
-        public DbSet<Core.Entities.TourDate> TourDates { get; set; }
-        public DbSet<Core.Entities.TourExtra> TourExtras { get; set; }
-        public DbSet<Core.Entities.Service> Services { get; set; }
-        public DbSet<Core.Entities.ContactInfo> ContactInfos { get; set; }
+        public DbSet<AboutItem> AboutItems { get; set; }
+        public DbSet<Image> Images { get; set; }
+        public DbSet<Tour> Tours { get; set; }
+        public DbSet<TourDate> TourDates { get; set; }
+        public DbSet<TourExtra> TourExtras { get; set; }
+        public DbSet<Service> Services { get; set; }
+        public DbSet<ContactInfo> ContactInfos { get; set; }
         public DbSet<Core.Entities.Sections.HeroSection> HeroSections { get; set; }
         public DbSet<Core.Entities.Sections.AboutSection> AboutSections { get; set; }
         public DbSet<Core.Entities.Sections.ToursSection> ToursSections { get; set; }
@@ -22,6 +23,7 @@ namespace ATT.DataAccess.Concrete.EntityFramework.Context
         public DbSet<Core.Entities.Sections.ContactSection> ContactSections { get; set; }
         public DbSet<Core.Entities.Sections.GallerySection> GallerySections { get; set; }
         public DbSet<Core.Entities.Sections.FavoritesSection> FavoritesSections { get; set; }
+        public DbSet<Admin> Admins { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

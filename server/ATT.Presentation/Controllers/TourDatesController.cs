@@ -1,10 +1,12 @@
 ﻿using ATT.Business.Abstract;
 using ATT.Business.DTOs.TourDate;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ATT.Presentation.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class TourDatesController : ControllerBase
@@ -16,6 +18,7 @@ namespace ATT.Presentation.Controllers
             _tourDateService = tourDateService;
         }
 
+        [AllowAnonymous]
         [HttpGet("{tourId:int}")]
         public async Task<IActionResult> GetDatesByTourId(int tourId)
         {

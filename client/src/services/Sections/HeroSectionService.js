@@ -1,6 +1,17 @@
+import { GetAdminToken } from "../AuthService";
+
 const GetHeroSection = async () => {
+    const token = GetAdminToken();
+    if (!token) {
+        throw new Error('Yönetici olarak giriş yapmanız gerekiyor.');
+    }
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/HeroSection`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/HeroSection`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
         const textData = await response.text();
 
         if (!response.ok) {
@@ -16,9 +27,17 @@ const GetHeroSection = async () => {
 };
 
 const UpdateHeroSection = async (formDataPayload) => {
+    const token = GetAdminToken();
+    if (!token) {
+        throw new Error('Yönetici olarak giriş yapmanız gerekiyor.');
+    }
+
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/HeroSection`, {
             method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
             body: formDataPayload, 
         });
 

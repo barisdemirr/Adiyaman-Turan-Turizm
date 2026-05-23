@@ -122,7 +122,7 @@ namespace ATT.Business.Concrete
         public async Task CreateTourAsync(CreateTourDto dto)
         {
             string bannerPath = await _imageService.ScaleAndUploadImageAsync(dto.BannerStream, dto.BannerFileName, "tours/banners", 600);
-            string mainPath = await _imageService.ScaleAndUploadImageAsync(dto.MainStream, dto.MainFileName, "tours/mains", 800);
+            string mainPath = await _imageService.ScaleAndUploadImageAsync(dto.MainStream, dto.MainFileName, "tours/mains", 1080);
 
             var tour = new Tour
             {
@@ -140,7 +140,7 @@ namespace ATT.Business.Concrete
 
             foreach (var imgDto in dto.Images)
             {
-                string extraPath = await _imageService.ScaleAndUploadImageAsync(imgDto.FileStream, imgDto.FileName, "tours/extras", 800);
+                string extraPath = await _imageService.ScaleAndUploadImageAsync(imgDto.FileStream, imgDto.FileName, "tours/extras", 1080);
 
                 tour.Images.Add(new Image
                 {
@@ -200,7 +200,7 @@ namespace ATT.Business.Concrete
             if (dto.MainStream != null && dto.MainStream.Length > 0)
             {
                 DeletePhysicalFile(tour.ImageUrl);
-                tour.ImageUrl = await _imageService.ScaleAndUploadImageAsync(dto.MainStream, dto.MainFileName, "tours/mains", 800);
+                tour.ImageUrl = await _imageService.ScaleAndUploadImageAsync(dto.MainStream, dto.MainFileName, "tours/mains", 1080);
             }
 
             foreach (var existingDto in dto.ExistingImages)
@@ -225,7 +225,7 @@ namespace ATT.Business.Concrete
 
             foreach (var newImgDto in dto.NewImages)
             {
-                string extraPath = await _imageService.ScaleAndUploadImageAsync(newImgDto.FileStream, newImgDto.FileName, "tours/extras", 800);
+                string extraPath = await _imageService.ScaleAndUploadImageAsync(newImgDto.FileStream, newImgDto.FileName, "tours/extras", 1080);
 
                 tour.Images.Add(new Image
                 {

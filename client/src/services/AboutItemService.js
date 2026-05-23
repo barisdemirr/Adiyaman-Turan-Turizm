@@ -1,7 +1,10 @@
+import { GetAdminToken } from "./AuthService";
+
 import React from 'react'
 
 async function GetAllAboutItems() {
     const apiUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/aboutitems`;
+    
 
     try {
         const res = await fetch(apiUrl, {
@@ -28,8 +31,18 @@ async function GetAllAboutItems() {
 }
 
 const GetAboutItemById = async (id) => {
+    const token = GetAdminToken();
+    if (!token) {
+        throw new Error('Yönetici olarak giriş yapmanız gerekiyor.');
+    }
+
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/AboutItems/${id}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/AboutItems/${id}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
 
         if (!response.ok) {
             // json() yerine text() alıyoruz ki boş hata gövdelerinde patlamasın kanka
@@ -55,11 +68,17 @@ const GetAboutItemById = async (id) => {
 
 
 const AddAboutItem = async (aboutItemData) => {
+    const token = GetAdminToken();
+    if (!token) {
+        throw new Error('Yönetici olarak giriş yapmanız gerekiyor.');
+    }
+
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/AboutItems`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(aboutItemData),
         });
@@ -78,11 +97,17 @@ const AddAboutItem = async (aboutItemData) => {
 
 
 const UpdateAboutItem = async (aboutItemData) => {
+    const token = GetAdminToken();
+    if (!token) {
+        throw new Error('Yönetici olarak giriş yapmanız gerekiyor.');
+    }
+
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/AboutItems`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(aboutItemData),
         });
@@ -101,9 +126,17 @@ const UpdateAboutItem = async (aboutItemData) => {
 
 
 const DeleteAboutItem = async (id) => {
+    const token = GetAdminToken();
+    if (!token) {
+        throw new Error('Yönetici olarak giriş yapmanız gerekiyor.');
+    }
+
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/AboutItems/${id}`, {
             method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         });
 
         const textData = await response.text();

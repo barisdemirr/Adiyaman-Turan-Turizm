@@ -2,11 +2,13 @@
 using ATT.Business.Concrete.Sections;
 using ATT.Business.DTOs.Sections.HeroSection;
 using ATT.Presentation.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ATT.Presentation.Controllers.Sections
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class HeroSectionController : ControllerBase

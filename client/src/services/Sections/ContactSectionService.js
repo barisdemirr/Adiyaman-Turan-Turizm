@@ -1,9 +1,17 @@
+import { GetAdminToken } from "../AuthService";
+
 const UpdateContactSection = async (sectionData) => {
+    const token = GetAdminToken();
+    if (!token) {
+        throw new Error('Yönetici olarak giriş yapmanız gerekiyor.');
+    }
+
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/ContactSection`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(sectionData),
         });
@@ -23,8 +31,18 @@ const UpdateContactSection = async (sectionData) => {
 };
 
 const GetContactSection = async () => {
+    const token = GetAdminToken();
+    if (!token) {
+        throw new Error('Yönetici olarak giriş yapmanız gerekiyor.');
+    }
+
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/ContactSection`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/ContactSection`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
         const textData = await response.text();
 
         if (!response.ok) {

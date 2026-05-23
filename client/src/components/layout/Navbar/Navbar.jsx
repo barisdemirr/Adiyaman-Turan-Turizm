@@ -93,7 +93,7 @@ const Navbar = () => {
             <div className="flex justify-between items-center max-w-[1280px] mx-auto px-6 h-20">
                 {/* Logo */}
                 <a className="text-xl font-extrabold tracking-tight text-slate-900 font-h4" href="#">
-                    <Image src="/attlogonavbar.png" loading="eager" alt="Adıyaman Turan Turizm" width={0} height={0} sizes="100vw" className='h-[40px] sm:h-[50px] lg:h-[60px] w-auto' />
+                    <Image src="/attlogonavbar.png" loading="eager" alt="Adıyaman Turan Turizm" width={110} height={40} className='object-contain' />
                 </a>
                 {/* Desktop Nav */}
                 <nav className="hidden lg:flex items-center gap-8">

@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { GetServiceItemById, UpdateServiceItem } from '@/services/ServiceService';
 
-export default function ServiceCardEditPage() {
+ function ServiceCardEditPage() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const id = searchParams.get('id');
@@ -184,5 +184,13 @@ export default function ServiceCardEditPage() {
                 </div>
             </div>
         </main>
+    );
+}
+
+export default function EditServiceCardPage() {
+    return (
+        <Suspense fallback={<div className="p-5 text-center text-gray-500">Yükleniyor...</div>}>
+            <ServiceCardEditPage />
+        </Suspense>
     );
 }

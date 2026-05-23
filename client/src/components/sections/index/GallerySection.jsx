@@ -114,7 +114,7 @@ const GallerySection = ({ GalleryData }) => {
               >
                 <Image
                   key={currentIndex} 
-                  src={images[currentIndex].imageUrl}
+                  src={`${process.env.NEXT_PUBLIC_BASE_URL}${images[currentIndex].imageUrl}`}
                   alt={`Slide ${currentIndex}`}
                   fill
                   className={`object-contain ${direction === 'next' ? 'animate-next' : 'animate-prev'}`}
@@ -156,7 +156,7 @@ const GallerySection = ({ GalleryData }) => {
               >
                 <Image
                   key={currentIndex} 
-                  src={images[currentIndex].imageUrl}
+                  src={`${process.env.NEXT_PUBLIC_BASE_URL}${images[currentIndex].imageUrl}`}
                   alt={`Full Slide ${currentIndex}`}
                   fill
                   className={`object-contain drop-shadow-2xl ${direction === 'next' ? 'animate-next' : 'animate-prev'}`}

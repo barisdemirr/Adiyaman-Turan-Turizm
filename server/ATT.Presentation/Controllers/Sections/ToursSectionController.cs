@@ -1,11 +1,13 @@
 ﻿using ATT.Business.Abstract.Sections;
 using ATT.Business.DTOs.Sections.AboutSection;
 using ATT.Business.DTOs.Sections.ToursSection;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ATT.Presentation.Controllers.Sections
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class ToursSectionController : ControllerBase
