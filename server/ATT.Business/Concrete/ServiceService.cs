@@ -2,6 +2,7 @@
 using ATT.Business.DTOs.Service;
 using ATT.Core.Entities;
 using ATT.DataAccess.Abstract;
+using ATT.DataAccess.Concrete.EntityFramework.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -87,6 +88,13 @@ namespace ATT.Business.Concrete
 
             await _serviceRepository.RemoveAsync(serviceItem); 
             return true;
+        }
+
+        public async Task<int> CountServices()
+        {
+            var number = await _serviceRepository.CountAsync();
+
+            return number;
         }
     }
 }

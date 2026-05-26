@@ -34,4 +34,9 @@ function GetAdminToken() {
     return document.cookie.match(/admin_token=([^;]+)/)?.[1] || null;
 }
 
-export { LoginAdmin, LogoutAdmin, GetAdminToken };
+function GetAdminUsername() {
+    if (typeof document === 'undefined') return null;
+    return document.cookie.match(/admin_username=([^;]+)/)?.[1] || null;
+}
+
+export { LoginAdmin, LogoutAdmin, GetAdminToken, GetAdminUsername };

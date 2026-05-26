@@ -113,13 +113,6 @@ const Navbar = () => {
                 </nav>
                 {/* CTA & Mobile Menu */}
                 <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container text-body-sm font-label-bold cursor-pointer">
-                        <span className="material-symbols-outlined text-sm w-6 h-6 inline-flex items-center justify-center overflow-hidden shrink-0" data-icon="language">
-                            language
-                        </span>
-                        <span>EN</span>
-                    </div>
-                    <div className="hidden lg:block w-px h-6 bg-surface-variant"></div>
                     <a
                         href='/#hizli-rezervasyon'
                         className="hidden lg:inline-flex items-center justify-center bg-primary text-on-primary font-label-bold text-label-bold px-6 py-3 rounded-full hover:bg-tertiary transition-colors scale-95 active:scale-90 shadow-sm"

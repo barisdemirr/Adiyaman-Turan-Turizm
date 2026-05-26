@@ -4,6 +4,7 @@ using ATT.Presentation.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace ATT.Presentation.Controllers
 {
@@ -20,6 +21,7 @@ namespace ATT.Presentation.Controllers
 
         [AllowAnonymous]
         [HttpGet]
+        [EnableRateLimiting("PublicGetPolicy")]
         public async Task<IActionResult> GetAllTours()
         {
             var tourList = await _tourService.GetAllTours();
@@ -28,6 +30,7 @@ namespace ATT.Presentation.Controllers
         }
 
         [AllowAnonymous]
+        [EnableRateLimiting("PublicGetPolicy")]
         [HttpGet("{slug}")]
         public async Task<IActionResult> GetBySlug(string slug)
         {
@@ -48,7 +51,9 @@ namespace ATT.Presentation.Controllers
             return Ok(tour);
         }
 
+
         [AllowAnonymous]
+        [EnableRateLimiting("PublicGetPolicy")]
         [HttpGet("reservation")]
         public async Task<IActionResult> GetToursForReservation()
         {
@@ -63,6 +68,15 @@ namespace ATT.Presentation.Controllers
             var tourList = await _tourService.GetAllToursAdmin();
 
             return Ok(tourList);
+        }
+
+
+        [HttpGet("toursnumber")]
+        public async Task<IActionResult> GetToursNumber()
+        {
+            var res = await _tourService.CountTours();
+
+            return Ok(res);
         }
 
         [HttpPost]

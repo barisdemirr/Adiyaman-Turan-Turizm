@@ -1,8 +1,10 @@
 ﻿using ATT.Business.Abstract;
+using ATT.Business.Concrete;
 using ATT.Business.DTOs.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace ATT.Presentation.Controllers
 {
@@ -19,6 +21,7 @@ namespace ATT.Presentation.Controllers
 
         [AllowAnonymous]
         [HttpGet]
+        [EnableRateLimiting("PublicGetPolicy")]
         public async Task<IActionResult> GetAllServices()
         {
             var serviceList = await _serviceService.GetAllServices();
@@ -71,6 +74,14 @@ namespace ATT.Presentation.Controllers
             }
 
             return Ok(new { message = "Servis kartı başarıyla silindi." });
+        }
+
+        [HttpGet("servicesnumber")]
+        public async Task<IActionResult> GetServicesNumber()
+        {
+            var res = await _serviceService.CountServices();
+
+            return Ok(res);
         }
     }
 }

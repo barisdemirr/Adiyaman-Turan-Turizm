@@ -296,5 +296,11 @@ namespace ATT.Business.Concrete
         }
 
 
+        public async Task<int> CountTours()
+        {
+            var number = await _tourRepository.CountAsync();
+
+            return number;
+        }
     }
 }

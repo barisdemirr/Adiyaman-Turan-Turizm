@@ -3,6 +3,7 @@ using ATT.Business.DTOs.Admin;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace ATT.Presentation.Controllers
 {
@@ -18,6 +19,7 @@ namespace ATT.Presentation.Controllers
         }
 
         [HttpPost("login")]
+        [EnableRateLimiting("StrictLoginPolicy")]
         public async Task<IActionResult> Login([FromBody] AdminLoginDto dto)
         {
             var token = await _authService.LoginAsync(dto);
@@ -25,7 +27,7 @@ namespace ATT.Presentation.Controllers
             if (token == null)
                 return BadRequest(new { message = "Kullanıcı adı veya şifre hatalı." });
 
-            return Ok(new
+            return Ok(new 
             {
                 token = token,
                 username = dto.Username,

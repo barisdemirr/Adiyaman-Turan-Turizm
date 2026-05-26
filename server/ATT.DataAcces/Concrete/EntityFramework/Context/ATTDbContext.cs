@@ -28,6 +28,10 @@ namespace ATT.DataAccess.Concrete.EntityFramework.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Admin>()
+                .HasIndex(x => x.Username)
+                .IsUnique();
+
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

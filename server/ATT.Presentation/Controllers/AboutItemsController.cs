@@ -3,6 +3,7 @@ using ATT.Business.DTOs.AboutItems;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace ATT.Presentation.Controllers
 {
@@ -19,6 +20,7 @@ namespace ATT.Presentation.Controllers
 
         [AllowAnonymous]
         [HttpGet]
+        [EnableRateLimiting("PublicGetPolicy")]
         public async Task<IActionResult> GetAllAboutItems()
         {
             var aboutItemList = await _aboutItemService.GetAllAboutItems();

@@ -69,6 +69,7 @@ builder.Services.AddScoped<ITourDateService, TourDateService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IJwtService,  JwtService>();
 builder.Services.AddScoped<IPasswordHasher<Admin>, PasswordHasher<Admin>>();
+builder.Services.AddScoped<IAdminService, AdminService>();
 
 
 builder.Services.AddCors(options =>
@@ -102,6 +103,45 @@ builder.Services.AddAuthentication(options =>
 });
 
 
+builder.Services.AddRateLimiter(options =>
+{
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+    options.AddPolicy("StrictLoginPolicy", context =>
+    {
+        var ipAddress = context.Connection.RemoteIpAddress?.ToString()
+            ?? context.Request.Headers["X-Forwarded-For"].ToString()
+            ?? "anonymous";
+
+        return System.Threading.RateLimiting.RateLimitPartition.GetFixedWindowLimiter(
+            partitionKey: ipAddress,
+            factory: _ => new System.Threading.RateLimiting.FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 5,
+                Window = TimeSpan.FromMinutes(1),
+                QueueLimit = 0
+            });
+    });
+
+    options.AddPolicy("PublicGetPolicy", context =>
+    {
+        var ipAddress = context.Connection.RemoteIpAddress?.ToString()
+            ?? context.Request.Headers["X-Forwarded-For"].ToString()
+            ?? "anonymous";
+
+        return System.Threading.RateLimiting.RateLimitPartition.GetSlidingWindowLimiter(
+            partitionKey: ipAddress,
+            factory: _ => new System.Threading.RateLimiting.SlidingWindowRateLimiterOptions
+            {
+                PermitLimit = 60,
+                Window = TimeSpan.FromMinutes(1),
+                SegmentsPerWindow = 3,
+                QueueLimit = 0
+            });
+    });
+});
+
+
 var app = builder.Build();
 
 
@@ -117,6 +157,8 @@ app.UseHttpsRedirection();
 app.UseCors("AllowHost");
 
 app.UseStaticFiles();
+
+app.UseRateLimiter();
 
 app.UseAuthentication();
 app.UseAuthorization();

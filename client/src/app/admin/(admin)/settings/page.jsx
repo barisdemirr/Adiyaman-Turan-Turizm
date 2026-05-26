@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { GetAdminDetails, ChangePassword, ChangeUsername } from "@/services/AdminService";
+import { GetAdminUsername } from "@/services/AuthService";
 
 export default function AdminProfilePage() {
     const [profile, setProfile] = useState({
@@ -15,6 +17,11 @@ export default function AdminProfilePage() {
         confirmNewPassword: ''
     });
 
+    // Kullanıcı adı formu state'i
+    const [isUsernameModalOpen, setIsUsernameModalOpen] = useState(false);
+    const [newUsername, setNewUsername] = useState('');
+    const [usernameError, setUsernameError] = useState(null);
+
     const [isLoading, setIsLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -23,14 +30,17 @@ export default function AdminProfilePage() {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                await new Promise((resolve) => setTimeout(resolve, 800));
-                // Backend'den gelen mock veri
+                const currentUsername = GetAdminUsername() || 'admin';
+
+                const data = await GetAdminDetails(currentUsername);
+
                 setProfile({
-                    fullName: 'Yazılım Destek',
-                    username: 'admin_destek'
+                    fullName: data.nameSurname,
+                    username: data.username
                 });
             } catch (err) {
                 console.error(err);
+                setError(err.message || "Profil bilgileri yüklenirken bir hata oluştu.");
             } finally {
                 setIsLoading(false);
             }
@@ -47,6 +57,48 @@ export default function AdminProfilePage() {
         setIsModalOpen(false);
         setPasswordData({ currentPassword: '', newPassword: '', confirmNewPassword: '' });
         setError(null);
+    };
+
+    const handleCloseUsernameModal = () => {
+        setIsUsernameModalOpen(false);
+        setNewUsername('');
+        setUsernameError(null);
+    };
+
+    const handleUsernameSubmit = async (e) => {
+        e.preventDefault();
+        setUsernameError(null);
+
+        if (!newUsername.trim()) {
+            setUsernameError('Kullanıcı adı alanı boş bırakılamaz.');
+            return;
+        }
+
+        if (newUsername.trim() === profile.username) {
+            setUsernameError('Yeni kullanıcı adı mevcut kullanıcı adınız ile aynı olamaz.');
+            return;
+        }
+
+        setIsSubmitting(true);
+        try {
+            const dto = {
+                currentUsername: profile.username,
+                newUsername: newUsername.trim()
+            };
+
+            await ChangeUsername(dto);
+
+            // Arayüzdeki veriyi güncelle ve cookie'yi tazele
+            setProfile((prev) => ({ ...prev, username: newUsername.trim() }));
+            document.cookie = `admin_username=${newUsername.trim()}; path=/;`;
+
+            alert('Kullanıcı adın başarıyla güncellendi!');
+            handleCloseUsernameModal();
+        } catch (err) {
+            setUsernameError(err.message || 'Kullanıcı adı güncellenirken sunucu tarafında bir hata oluştu.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const handlePasswordSubmit = async (e) => {
@@ -73,20 +125,32 @@ export default function AdminProfilePage() {
             return;
         }
 
+        // 3. Uyuşma Kontrolü
         if (passwordData.newPassword !== passwordData.confirmNewPassword) {
             setError('Yeni şifreler birbiriyle eşleşmiyor, kontrol ediniz.');
             return;
         }
 
+        // 4. Eski Şifreyle Aynı Olma Kontrolü
+        if (passwordData.newPassword === passwordData.currentPassword) {
+            setError('Yeni şifreniz mevcut şifrenizle aynı olamaz.');
+            return;
+        }
+
         setIsSubmitting(true);
         try {
-            await new Promise((resolve) => setTimeout(resolve, 1500));
-            console.log("Backend'e giden şifre paketi:", passwordData);
+            const dto = {
+                username: profile.username,
+                currentPassword: passwordData.currentPassword,
+                newPassword: passwordData.newPassword
+            };
+
+            await ChangePassword(dto);
 
             alert('Şifren başarıyla güncellendi! Bir sonraki girişte yeni şifreni kullanabilirsin.');
             handleCloseModal();
         } catch (err) {
-            setError('Şifre güncellenirken sunucu tarafında bir hata oluştu.');
+            setError(err.message || 'Şifre güncellenirken sunucu tarafında bir hata oluştu.');
         } finally {
             setIsSubmitting(false);
         }
@@ -132,7 +196,14 @@ export default function AdminProfilePage() {
                                 </div>
                             </div>
 
-                            <div className="bg-slate-50/50 p-6 border-t border-slate-100 flex justify-end">
+                            <div className="bg-slate-50/50 p-6 border-t border-slate-100 flex justify-end gap-3">
+                                <button
+                                    onClick={() => setIsUsernameModalOpen(true)}
+                                    className="bg-white border border-slate-300 hover:border-primary hover:text-primary text-slate-700 font-bold py-2.5 px-6 rounded-xl transition-all duration-200 shadow-sm text-sm flex items-center gap-2 cursor-pointer"
+                                >
+                                    <span className="material-symbols-outlined text-lg">person_edit</span>
+                                    Kullanıcı Adını Güncelle
+                                </button>
                                 <button
                                     onClick={() => setIsModalOpen(true)}
                                     className="bg-white border border-slate-300 hover:border-primary hover:text-primary text-slate-700 font-bold py-2.5 px-6 rounded-xl transition-all duration-200 shadow-sm text-sm flex items-center gap-2 cursor-pointer"
@@ -205,6 +276,58 @@ export default function AdminProfilePage() {
                                     <button
                                         type="button"
                                         onClick={handleCloseModal}
+                                        disabled={isSubmitting}
+                                        className="px-5 py-2.5 text-slate-500 hover:text-slate-800 font-bold transition-colors text-sm cursor-pointer disabled:opacity-50"
+                                    >
+                                        İptal
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        disabled={isSubmitting}
+                                        className="bg-primary hover:bg-primary/90 text-white font-bold py-2.5 px-8 rounded-xl transition-all duration-200 shadow-md text-sm cursor-pointer disabled:opacity-50 min-w-[140px]"
+                                    >
+                                        {isSubmitting ? 'Güncelleniyor...' : 'Güncelle'}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                )}
+
+                {/* Kullanıcı Adı Güncelleme Modal (Pop-up) */}
+                {isUsernameModalOpen && (
+                    <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4 animate-fade-in">
+                        <div className="bg-white rounded-2xl shadow-2xl border border-slate-100 max-w-md w-full overflow-hidden transform transition-all p-8">
+
+                            <div className="mb-6">
+                                <h3 className="text-xl font-bold text-slate-900">Kullanıcı Adı Ayarları</h3>
+                                <p className="text-sm text-slate-500 mt-1">Lütfen yeni kullanıcı adınızı giriniz.</p>
+                            </div>
+
+                            {usernameError && (
+                                <div className="mb-6 p-3 bg-red-50 border border-red-100 text-red-700 rounded-xl text-xs font-semibold flex items-center gap-2">
+                                    <span className="material-symbols-outlined text-base">error</span>
+                                    {usernameError}
+                                </div>
+                            )}
+
+                            <form onSubmit={handleUsernameSubmit} className="space-y-5">
+                                <div>
+                                    <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Yeni Kullanıcı Adı</label>
+                                    <input
+                                        type="text"
+                                        name="newUsername"
+                                        value={newUsername}
+                                        onChange={(e) => setNewUsername(e.target.value)}
+                                        className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                                        placeholder="yeni_kullanici_adi"
+                                    />
+                                </div>
+
+                                <div className="flex items-center justify-end gap-3 pt-4">
+                                    <button
+                                        type="button"
+                                        onClick={handleCloseUsernameModal}
                                         disabled={isSubmitting}
                                         className="px-5 py-2.5 text-slate-500 hover:text-slate-800 font-bold transition-colors text-sm cursor-pointer disabled:opacity-50"
                                     >

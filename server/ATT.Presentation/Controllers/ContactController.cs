@@ -3,6 +3,7 @@ using ATT.Business.DTOs.ContactInfo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace ATT.Presentation.Controllers
 {
@@ -18,6 +19,7 @@ namespace ATT.Presentation.Controllers
         }
 
         [AllowAnonymous]
+        [EnableRateLimiting("PublicGetPolicy")]
         [HttpGet]
         public async Task<IActionResult> GetAllContact() 
         {
@@ -27,6 +29,7 @@ namespace ATT.Presentation.Controllers
         }
 
         [AllowAnonymous]
+        [EnableRateLimiting("PublicGetPolicy")]
         [HttpGet("{name}")]
         public async Task<IActionResult> GetAllContact(string name)
         {

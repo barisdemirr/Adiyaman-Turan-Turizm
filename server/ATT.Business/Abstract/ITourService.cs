@@ -17,5 +17,6 @@ namespace ATT.Business.Abstract
         Task CreateTourAsync(CreateTourDto dto);
         Task UpdateTourAsync(UpdateTourDto dto);
         Task DeleteTourAsync(int id);
+        Task<int> CountTours();
     }
 }

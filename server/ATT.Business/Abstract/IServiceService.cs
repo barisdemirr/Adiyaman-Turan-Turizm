@@ -14,5 +14,6 @@ namespace ATT.Business.Abstract
         Task<ServiceDto> GetServiceItemByIdAsync(int id); 
         Task<bool> UpdateServiceItemAsync(UpdateServiceDto dto);
         Task<bool> DeleteServiceItemAsync(int id);
+        Task<int> CountServices();
     }
 }

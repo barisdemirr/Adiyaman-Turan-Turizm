@@ -3,6 +3,7 @@ using ATT.Business.DTOs.TourDate;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace ATT.Presentation.Controllers
 {
@@ -20,6 +21,7 @@ namespace ATT.Presentation.Controllers
 
         [AllowAnonymous]
         [HttpGet("{tourId:int}")]
+        [EnableRateLimiting("PublicGetPolicy")]
         public async Task<IActionResult> GetDatesByTourId(int tourId)
         {
             var dates = await _tourDateService.GetDatesByTourIdAsync(tourId);
