@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-// 🎯 Senin yazdığın servisi buraya çekiyoruz kanka
 import { LoginAdmin } from '@/services/AuthService';
 
 export default function AdminLoginPage() {
@@ -24,13 +23,11 @@ export default function AdminLoginPage() {
         e.preventDefault();
         setError(null);
 
-        // 1. Temel Boşluk Kontrolü
         if (!formData.username.trim() || !formData.password) {
             setError('Kullanıcı adı ve şifre alanları boş bırakılamaz.');
             return;
         }
 
-        // 2. 8-16 Karakter Validasyonu
         if (formData.password.length < 8 || formData.password.length > 16) {
             setError('Güvenlik protokolü gereği şifreler en az 8, en fazla 16 karakter uzunluğunda olmalıdır.');
             return;
@@ -39,10 +36,8 @@ export default function AdminLoginPage() {
         setIsLoading(true);
 
         try {
-            // 🎯 3. Senin servisi şak diye tetikliyoruz, çerezleri o zaten hallediyor
             await LoginAdmin(formData.username, formData.password);
 
-            // Giriş başarılıysa panale fırlat kanka
             router.push('/admin/');
 
         } catch (err) {

@@ -21,7 +21,6 @@ export default function TourAddPage() {
     const [mainImg, setMainImg] = useState(null);
     const [mainPreview, setMainPreview] = useState(null);
 
-    // 🎯 Ek resimleri ve galeride görünme durumlarını tek bir state içinde topluyoruz kanka
     const [extraImages, setExtraImages] = useState([]); // [{ file, preview, isInGallery }]
 
     const [error, setError] = useState(null);
@@ -58,20 +57,18 @@ export default function TourAddPage() {
         setMainPreview(null);
     };
 
-    // 🎯 Yeni ek resimler seçildiğinde tetiklenen fonksiyon
     const handleExtraChange = (e) => {
         const files = Array.from(e.target.files);
         if (files.length > 0) {
             const newEntries = files.map((file) => ({
                 file,
                 preview: URL.createObjectURL(file),
-                isInGallery: false // Varsayılan olarak galeri seçeneği kapalı geliyor kanka
+                isInGallery: false 
             }));
             setExtraImages((prev) => [...prev, ...newEntries]);
         }
     };
 
-    // 🎯 Resmin altındaki checkbox tıklandığında değeri tersine çeviren fonksiyon
     const handleGalleryCheckChange = (index) => {
         setExtraImages((prev) =>
             prev.map((img, i) => i === index ? { ...img, isInGallery: !img.isInGallery } : img)
@@ -330,7 +327,6 @@ export default function TourAddPage() {
                                 Ek Resimler
                             </label>
 
-                            {/* 🎯 Grid yapısını checkbox sığacak şekilde dikey esnek yaptık kanka */}
                             <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4 mb-3">
                                 {extraImages.map((img, index) => (
                                     <div key={index} className="flex flex-col gap-2 border border-slate-200 rounded-xl p-2 bg-slate-50/50">
@@ -373,7 +369,7 @@ export default function TourAddPage() {
                                 </div>
                             </div>
                             <small className="text-xs text-slate-400 block">
-                                💡 İsteğe bağlıdır. Eklenen resimlerin yanındaki kutucuğu işaretleyerek genel galeride de görünmesini sağlayabilirsiniz brom.
+                                💡 İsteğe bağlıdır. Eklenen resimlerin yanındaki kutucuğu işaretleyerek genel galeride de görünmesini sağlayabilirsiniz.
                             </small>
                         </div>
 

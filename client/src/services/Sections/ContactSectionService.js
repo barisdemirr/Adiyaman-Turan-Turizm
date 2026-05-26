@@ -47,7 +47,7 @@ const GetContactSection = async () => {
 
         if (!response.ok) {
             const errorObj = textData ? JSON.parse(textData) : {};
-            throw new Error(errorObj.message || 'İletişim başlık bilgisi getirilemedi kanka.');
+            throw new Error(errorObj.message || 'İletişim başlık bilgisi getirilemedi.');
         }
 
         return textData ? JSON.parse(textData) : null;

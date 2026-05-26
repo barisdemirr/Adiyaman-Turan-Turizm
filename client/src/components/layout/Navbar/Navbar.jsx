@@ -30,13 +30,13 @@ const Navbar = () => {
                     accumulatedUp = 0;
                     accumulatedDown += diff;
                     if (accumulatedDown >= 50) {
-                        setNavClass("-translate-y-full"); 
+                        setNavClass("-translate-y-full");
                     }
                 } else if (diff < 0) {
                     accumulatedDown = 0;
                     accumulatedUp += Math.abs(diff);
                     if (accumulatedUp >= 10) {
-                        setNavClass("translate-y-0"); 
+                        setNavClass("translate-y-0");
                     }
                 }
             }
@@ -93,7 +93,16 @@ const Navbar = () => {
             <div className="flex justify-between items-center max-w-[1280px] mx-auto px-6 h-20">
                 {/* Logo */}
                 <a className="text-xl font-extrabold tracking-tight text-slate-900 font-h4" href="#">
-                    <Image src="/attlogonavbar.png" loading="eager" alt="Adıyaman Turan Turizm" width={110} height={40} className='object-contain' />
+                    <Image
+                        src="/attlogonavbar.png"
+                        loading="eager"
+                        alt="Adıyaman Turan Turizm"
+                        fetchPriority="high"
+                        width={110}
+                        height={40}
+                        className="object-contain"
+                        quality={75}
+                    />
                 </a>
                 {/* Desktop Nav */}
                 <nav className="hidden lg:flex items-center gap-8">
@@ -105,7 +114,7 @@ const Navbar = () => {
                 {/* CTA & Mobile Menu */}
                 <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container text-body-sm font-label-bold cursor-pointer">
-                        <span className="material-symbols-outlined text-sm" data-icon="language">
+                        <span className="material-symbols-outlined text-sm w-6 h-6 inline-flex items-center justify-center overflow-hidden shrink-0" data-icon="language">
                             language
                         </span>
                         <span>EN</span>
@@ -123,7 +132,7 @@ const Navbar = () => {
                         onClick={toggleMenu}
                         className="lg:hidden p-2 text-on-surface hover:bg-surface-container rounded-full transition-colors"
                     >
-                        <span className="material-symbols-outlined">
+                        <span className="material-symbols-outlined w-6 h-6 inline-flex items-center justify-center overflow-hidden shrink-0">
                             {isNavOpen ? 'close' : 'menu'}
                         </span>
                     </button>

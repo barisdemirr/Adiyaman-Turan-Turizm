@@ -1,6 +1,8 @@
 ﻿using ATT.Business.Abstract;
 using ATT.Business.Abstract.Sections;
 using ATT.Business.DTOs.Sections.HeroSection;
+using ATT.Core.Entities;
+using ATT.DataAccess.Abstract;
 using ATT.DataAccess.Abstract.Sections;
 using ATT.DataAccess.Concrete.EntityFramework.Repositories;
 using System;
@@ -46,8 +48,11 @@ namespace ATT.Business.Concrete.Sections
             hero.Description = dto.Description;
             hero.Tag = dto.Tag;
 
+
             if (dto.ImageStream != null && !string.IsNullOrEmpty(dto.ImageFileName))
             {
+                DeletePhysicalFile(hero.BackgroundImageUrl);
+
                 string newImagePath = await _imageService.ScaleAndUploadImageAsync(dto.ImageStream, dto.ImageFileName, "hero", 1080);
 
                 hero.BackgroundImageUrl = newImagePath;
@@ -55,6 +60,27 @@ namespace ATT.Business.Concrete.Sections
 
             await _heroSectionRepository.UpdateAsync(hero);
             return true;
+        }
+
+        private void DeletePhysicalFile(string? relativePath)
+        {
+            if (string.IsNullOrWhiteSpace(relativePath)) return;
+
+            try
+            {
+                var cleanPath = relativePath.StartsWith("/") ? relativePath.Substring(1) : relativePath;
+
+                var fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", cleanPath);
+
+                if (File.Exists(fullPath))
+                {
+                    File.Delete(fullPath);
+                }
+            }
+            catch (Exception)
+            {
+
+            }
         }
     }
 }

@@ -40,7 +40,7 @@ function TourDatesManagementPage() {
     }, [tourId]);
 
     const handleDelete = async (id) => {
-        const confirmed = window.confirm('Bu tarihi silmek istediğinize emin misiniz kanka?');
+        const confirmed = window.confirm('Bu tarihi silmek istediğinize emin misiniz?');
         if (!confirmed) return;
 
         try {
@@ -65,7 +65,7 @@ function TourDatesManagementPage() {
         try {
             await CreateTourDate(tourId, selectedDate);
             handleCloseModal();
-            alert(`Yeni tur tarihi başarıyla eklendi kanka! ${formatDateForDisplay(selectedDate)} tarihinde operasyon planlandı.`);
+            alert(`Yeni tur tarihi başarıyla eklendi! ${formatDateForDisplay(selectedDate)} tarihine tur planlandı.`);
             await fetchDates();
         } catch (error) {
             alert(error.message);
@@ -111,7 +111,7 @@ function TourDatesManagementPage() {
                         <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
                             {dates.filter((item) => item.dateString >= todayStr).length === 0 ? (
                                 <div className="text-center py-6 text-sm text-slate-400 font-medium">
-                                    Bu tura tanımlanmış aktif veya ileri tarihli bir operasyon bulunmamaktadır kanka.
+                                    Bu tura tanımlanmış aktif veya ileri tarihli bir operasyon bulunmamaktadır.
                                 </div>
                             ) : (
                                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">

@@ -7,7 +7,7 @@ async function GetDatesByTourId(tourId) {
             method: 'GET',
             cache: 'no-store'
         });
-        if (!response.ok) throw new Error('Tur tarihleri sunucudan çekilemedi kanka.');
+        if (!response.ok) throw new Error('Tur tarihleri sunucudan çekilemedi.');
         return await response.json();
     } catch (error) {
         throw new Error(error.message || 'Ağ hatası oluştu.');
@@ -34,7 +34,7 @@ async function CreateTourDate(tourId, dateString) {
         });
 
         if (!response.ok) {
-            throw new Error('Yeni tarih sisteme kaydedilemedi brom.');
+            throw new Error('Yeni tarih sisteme kaydedilemedi.');
         }
 
         return await response.json();

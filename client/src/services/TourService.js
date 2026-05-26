@@ -9,8 +9,7 @@ async function GetAllTours() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-      },
-      next: { revalidate: 3600 } 
+      }
     });
 
     if (!res.ok) {
@@ -37,8 +36,7 @@ async function GetTourBySlug(slug) {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-      },
-      next: { revalidate: 3600 }
+      }
     });
 
     if (!res.ok) {
@@ -65,8 +63,7 @@ async function GetToursForReservation() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-      },
-      next: { revalidate: 3600 }
+      }
     });
 
     if (!res.ok) {

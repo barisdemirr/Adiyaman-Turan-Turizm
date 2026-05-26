@@ -8,8 +8,8 @@ async function GetAllSections() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-      },
-      next: { revalidate: 3600 } 
+      }
+      
     });
 
     if (!res.ok) {

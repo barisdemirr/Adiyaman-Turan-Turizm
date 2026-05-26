@@ -1,10 +1,11 @@
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
-import "material-symbols/outlined.css";
+import 'material-symbols/outlined.css';
 import "@/styles/globals.css";
 import Navbar from "@/components/layout/Navbar/Navbar";
 import Footer from "@/components/layout/Footer/Footer";
 import AnimationProvider from "@/components/ui/AnimationProvider";
 import HandleHashScroll from "@/components/ui/HandleHashScroll";
+export const dynamic = "force-dynamic";
 
 const plusJakarta = Plus_Jakarta_Sans({
     subsets: ["latin"],
@@ -78,7 +79,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="tr" className="light" data-scroll-behavior="smooth">
-            <head />
+            
             <body className={`${inter.variable} ${plusJakarta.variable} antialiased`}>
                 <AnimationProvider>
                     <Navbar />

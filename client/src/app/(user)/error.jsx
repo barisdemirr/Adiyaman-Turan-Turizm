@@ -5,7 +5,6 @@ import Link from "next/link";
 
 export default function GlobalError({ error, reset }) {
     useEffect(() => {
-        // Hatayı konsola basıyoruz ki debug ederken ne olduğunu görebilelim kanka
         console.error("Uygulama Hatası Yakalandı:", error);
     }, [error]);
 

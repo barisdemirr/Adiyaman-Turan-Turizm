@@ -44,7 +44,7 @@ namespace ATT.Presentation.Controllers
             var result = await _serviceService.GetServiceItemByIdAsync(id);
             if (result == null)
             {
-                return NotFound(new { message = "Aradığın servis kartı bulunamadı kanka." });
+                return NotFound(new { message = "Aradığın servis kartı bulunamadı." });
             }
             return Ok(result);
         }
@@ -55,9 +55,9 @@ namespace ATT.Presentation.Controllers
             var result = await _serviceService.UpdateServiceItemAsync(dto);
             if (!result)
             {
-                return NotFound(new { message = "Güncellenmek istenen servis kartı bulunamadı kanka." });
+                return NotFound(new { message = "Güncellenmek istenen servis kartı bulunamadı." });
             }
-            return Ok(new { message = "Servis kartı başarıyla güncellendi brom." });
+            return Ok(new { message = "Servis kartı başarıyla güncellendi." });
         }
 
         [HttpDelete("{id}")] 
@@ -67,10 +67,10 @@ namespace ATT.Presentation.Controllers
 
             if (!result)
             {
-                return NotFound(new { message = "Silinmek istenen servis kartı bulunamadı kanka." });
+                return NotFound(new { message = "Silinmek istenen servis kartı bulunamadı." });
             }
 
-            return Ok(new { message = "Servis kartı başarıyla silindi brom." });
+            return Ok(new { message = "Servis kartı başarıyla silindi." });
         }
     }
 }

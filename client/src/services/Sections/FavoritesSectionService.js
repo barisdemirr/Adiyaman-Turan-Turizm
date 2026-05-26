@@ -47,7 +47,7 @@ const GetFavoritesSection = async () => {
 
         if (!response.ok) {
             const errorObj = textData ? JSON.parse(textData) : {};
-            throw new Error(errorObj.message || 'Popüler rotalar başlık bilgisi getirilemedi kanka.');
+            throw new Error(errorObj.message || 'Popüler rotalar başlık bilgisi getirilemedi.');
         }
 
         return textData ? JSON.parse(textData) : null;

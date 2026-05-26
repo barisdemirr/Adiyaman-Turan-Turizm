@@ -198,7 +198,7 @@ function TourEditPage() {
 
             await UpdateTour(data);
 
-            alert('Tur bilgileri başarıyla güncellendi kanka!');
+            alert('Tur bilgileri başarıyla güncellendi!');
             router.push('/admin/tours');
         } catch (err) {
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -365,7 +365,7 @@ function TourEditPage() {
                                         <span className="text-[11px] text-slate-500 font-medium">Görsel Ekle</span>
                                     </div>
                                 </div>
-                                <small className="text-xs text-slate-400 block">💡 Eklenen resimlerin yanındaki kutucukları güncelleyerek genel galerideki görünme durumlarını yönetebilirsiniz kanka.</small>
+                                <small className="text-xs text-slate-400 block">💡 Eklenen resimlerin yanındaki kutucukları güncelleyerek genel galerideki görünme durumlarını yönetebilirsiniz.</small>
                             </div>
 
                             <div className="pt-4 flex justify-end gap-3">

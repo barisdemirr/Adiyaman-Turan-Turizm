@@ -45,7 +45,6 @@ const GetAboutItemById = async (id) => {
         });
 
         if (!response.ok) {
-            // json() yerine text() alıyoruz ki boş hata gövdelerinde patlamasın kanka
             const errorText = await response.text();
             let errorMessage = 'Kart bilgisi getirilirken bir hata oluştu.';
 

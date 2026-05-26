@@ -1,4 +1,5 @@
 import '@/styles/admin-globals.css';
+export const dynamic = "force-dynamic";
 
 export const metadata = {
     title: 'Admin Login - Turan Turizm',

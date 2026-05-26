@@ -241,7 +241,7 @@ namespace ATT.Business.Concrete
         {
             var tour = await _tourRepository.GetByIdWithDetailsAsync(id);
             if (tour == null)
-                throw new Exception("Silinmek istenen tur sistemde bulunamadı kanka.");
+                throw new Exception("Silinmek istenen tur sistemde bulunamadı.");
 
             DeletePhysicalFile(tour.BannerImgUrl);
             DeletePhysicalFile(tour.ImageUrl);

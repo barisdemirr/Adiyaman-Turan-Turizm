@@ -54,7 +54,7 @@ export default function ContactInfoManagementPage() {
         try {
             await UpdateContactField(name, targetItem.value.trim());
 
-            alert(`${targetItem.name} başarıyla güncellendi brom!`);
+            alert(`${targetItem.name} başarıyla güncellendi!`);
 
             setInitialData((prev) =>
                 prev.map((item) => (item.name === name ? { ...item, value: targetItem.value.trim() } : item))

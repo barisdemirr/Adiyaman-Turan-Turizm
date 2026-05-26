@@ -1,6 +1,7 @@
 import React from 'react';
 import AdminSidebar from '@/components/Admin/layout/AdminSidebar';
 import '@/styles/admin-globals.css';
+export const dynamic = "force-dynamic";
 
 export const metadata = {
     title: 'Dashboard Sections Management',
